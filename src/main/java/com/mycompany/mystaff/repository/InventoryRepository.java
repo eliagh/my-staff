@@ -1,15 +1,13 @@
 package com.mycompany.mystaff.repository;
 
-import com.mycompany.mystaff.domain.Inventory;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import org.springframework.data.jpa.repository.*;
-
+import com.mycompany.mystaff.domain.Inventory;
 
 /**
  * Spring Data JPA repository for the Inventory entity.
  */
-@SuppressWarnings("unused")
 @Repository
 public interface InventoryRepository extends JpaRepository<Inventory, Long> {
 

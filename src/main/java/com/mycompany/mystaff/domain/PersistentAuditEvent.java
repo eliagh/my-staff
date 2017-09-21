@@ -1,77 +1,82 @@
 package com.mycompany.mystaff.domain;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 /**
  * Persist AuditEvent managed by the Spring Boot actuator
+ * 
  * @see org.springframework.boot.actuate.audit.AuditEvent
  */
 @Entity
 @Table(name = "jhi_persistent_audit_event")
 public class PersistentAuditEvent implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "event_id")
-    private Long id;
+  private static final long serialVersionUID = 1L;
 
-    @NotNull
-    @Column(nullable = false)
-    private String principal;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "event_id")
+  private Long id;
 
-    @Column(name = "event_date")
-    private Instant auditEventDate;
-    @Column(name = "event_type")
-    private String auditEventType;
+  @NotNull
+  @Column(nullable = false)
+  private String principal;
 
-    @ElementCollection
-    @MapKeyColumn(name = "name")
-    @Column(name = "value")
-    @CollectionTable(name = "jhi_persistent_audit_evt_data", joinColumns=@JoinColumn(name="event_id"))
-    private Map<String, String> data = new HashMap<>();
+  @Column(name = "event_date")
+  private Instant auditEventDate;
+  @Column(name = "event_type")
+  private String auditEventType;
 
-    public Long getId() {
-        return id;
-    }
+  @ElementCollection
+  @MapKeyColumn(name = "name")
+  @Column(name = "value")
+  @CollectionTable(name = "jhi_persistent_audit_evt_data", joinColumns = @JoinColumn(name = "event_id"))
+  private Map<String, String> data = new HashMap<>();
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public String getPrincipal() {
-        return principal;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public void setPrincipal(String principal) {
-        this.principal = principal;
-    }
+  public String getPrincipal() {
+    return principal;
+  }
 
-    public Instant getAuditEventDate() {
-        return auditEventDate;
-    }
+  public void setPrincipal(String principal) {
+    this.principal = principal;
+  }
 
-    public void setAuditEventDate(Instant auditEventDate) {
-        this.auditEventDate = auditEventDate;
-    }
+  public Instant getAuditEventDate() {
+    return auditEventDate;
+  }
 
-    public String getAuditEventType() {
-        return auditEventType;
-    }
+  public void setAuditEventDate(Instant auditEventDate) {
+    this.auditEventDate = auditEventDate;
+  }
 
-    public void setAuditEventType(String auditEventType) {
-        this.auditEventType = auditEventType;
-    }
+  public String getAuditEventType() {
+    return auditEventType;
+  }
 
-    public Map<String, String> getData() {
-        return data;
-    }
+  public void setAuditEventType(String auditEventType) {
+    this.auditEventType = auditEventType;
+  }
 
-    public void setData(Map<String, String> data) {
-        this.data = data;
-    }
+  public Map<String, String> getData() {
+    return data;
+  }
+
+  public void setData(Map<String, String> data) {
+    this.data = data;
+  }
+
 }

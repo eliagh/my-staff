@@ -1,18 +1,19 @@
 package com.mycompany.mystaff.service;
 
-import com.mycompany.mystaff.domain.Company;
-import com.mycompany.mystaff.repository.CompanyRepository;
-import com.mycompany.mystaff.repository.search.CompanySearchRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.mycompany.mystaff.domain.Company;
+import com.mycompany.mystaff.repository.CompanyRepository;
+import com.mycompany.mystaff.repository.search.CompanySearchRepository;
 
 /**
  * Service Implementation for managing Company.
@@ -21,75 +22,74 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 @Transactional
 public class CompanyService {
 
-    private final Logger log = LoggerFactory.getLogger(CompanyService.class);
+  private final Logger log = LoggerFactory.getLogger(CompanyService.class);
 
-    private final CompanyRepository companyRepository;
+  private final CompanyRepository companyRepository;
 
-    private final CompanySearchRepository companySearchRepository;
+  private final CompanySearchRepository companySearchRepository;
 
-    public CompanyService(CompanyRepository companyRepository, CompanySearchRepository companySearchRepository) {
-        this.companyRepository = companyRepository;
-        this.companySearchRepository = companySearchRepository;
-    }
+  public CompanyService(CompanyRepository companyRepository, CompanySearchRepository companySearchRepository) {
+    this.companyRepository = companyRepository;
+    this.companySearchRepository = companySearchRepository;
+  }
 
-    /**
-     * Save a company.
-     *
-     * @param company the entity to save
-     * @return the persisted entity
-     */
-    public Company save(Company company) {
-        log.debug("Request to save Company : {}", company);
-        Company result = companyRepository.save(company);
-        companySearchRepository.save(result);
-        return result;
-    }
+  /**
+   * Save a company.
+   *
+   * @param company the entity to save
+   * @return the persisted entity
+   */
+  public Company save(Company company) {
+    log.debug("Request to save Company : {}", company);
+    Company result = companyRepository.save(company);
+    companySearchRepository.save(result);
+    return result;
+  }
 
-    /**
-     *  Get all the companies.
-     *
-     *  @return the list of entities
-     */
-    @Transactional(readOnly = true)
-    public List<Company> findAll() {
-        log.debug("Request to get all Companies");
-        return companyRepository.findAll();
-    }
+  /**
+   * Get all the companies.
+   *
+   * @return the list of entities
+   */
+  @Transactional(readOnly = true)
+  public List<Company> findAll() {
+    log.debug("Request to get all Companies");
+    return companyRepository.findAll();
+  }
 
-    /**
-     *  Get one company by id.
-     *
-     *  @param id the id of the entity
-     *  @return the entity
-     */
-    @Transactional(readOnly = true)
-    public Company findOne(Long id) {
-        log.debug("Request to get Company : {}", id);
-        return companyRepository.findOne(id);
-    }
+  /**
+   * Get one company by id.
+   *
+   * @param id the id of the entity
+   * @return the entity
+   */
+  @Transactional(readOnly = true)
+  public Company findOne(Long id) {
+    log.debug("Request to get Company : {}", id);
+    return companyRepository.findOne(id);
+  }
 
-    /**
-     *  Delete the  company by id.
-     *
-     *  @param id the id of the entity
-     */
-    public void delete(Long id) {
-        log.debug("Request to delete Company : {}", id);
-        companyRepository.delete(id);
-        companySearchRepository.delete(id);
-    }
+  /**
+   * Delete the company by id.
+   *
+   * @param id the id of the entity
+   */
+  public void delete(Long id) {
+    log.debug("Request to delete Company : {}", id);
+    companyRepository.delete(id);
+    companySearchRepository.delete(id);
+  }
 
-    /**
-     * Search for the company corresponding to the query.
-     *
-     *  @param query the query of the search
-     *  @return the list of entities
-     */
-    @Transactional(readOnly = true)
-    public List<Company> search(String query) {
-        log.debug("Request to search Companies for query {}", query);
-        return StreamSupport
-            .stream(companySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
-    }
+  /**
+   * Search for the company corresponding to the query.
+   *
+   * @param query the query of the search
+   * @return the list of entities
+   */
+  @Transactional(readOnly = true)
+  public List<Company> search(String query) {
+    log.debug("Request to search Companies for query {}", query);
+    return StreamSupport.stream(companySearchRepository.search(queryStringQuery(query)).spliterator(), false).collect(Collectors.toList());
+  }
+
 }
