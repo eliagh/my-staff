@@ -19,4 +19,4 @@ spring:
 
 jhipster:
     registry:
-        password: admin
+        password: ${PROD_JHIPSTER_REGISTRY_PASSWORD}

@@ -3,10 +3,6 @@
 # In prod profile, properties will be overwriten by the ones defined in bootstrap-prod.yml
 # ===================================================================
 
-jhipster:
-    registry:
-        password: admin
-
 spring:
     application:
         name: mystaff
@@ -24,3 +20,7 @@ spring:
             profile: dev # profile(s) of the property source
             label: master # toggle to switch to a different version of the configuration as stored in git
             # it can be set to any label, branch or commit of the configuration source Git repository
+
+jhipster:
+    registry:
+        password: ${DEV_JHIPSTER_REGISTRY_PASSWORD}
