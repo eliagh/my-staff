@@ -1,0 +1,29 @@
+{
+    "mystaffApp": {
+        "item" : {
+            "home": {
+                "title": "Items",
+                "createLabel": "Creeare o nouă entitate Item",
+                "createOrEditLabel": "Creeare sau editare Item",
+                "search": "Căutare după Item"
+            },
+            "created": "A fost creată o nouă entitate Item cu identificatorul {{ param }}",
+            "updated": "Item cu identificatorul {{ param }} a fost actualizată",
+            "deleted": "Item cu identificatorul {{ param }} a fost ștearsă",
+            "delete": {
+                "question": "Sunteți sigur că doriți să ștergeți Item {{ id }}?"
+            },
+            "detail": {
+                "title": "Item"
+            },
+            "name": "Name",
+            "pictureUrl": "Picture Url",
+            "pricePerUnit": "Price Per Unit",
+            "unit": "Unit",
+            "code": "Code",
+            "description": "Description",
+            "showInShop": "Show In Shop",
+            "company": "Company"
+        }
+    }
+}

@@ -1,0 +1,38 @@
+{
+    "mystaffApp": {
+        "customer" : {
+            "home": {
+                "title": "Customers",
+                "createLabel": "Dodaj Customer",
+                "createOrEditLabel": "Dodaj lub edytuj: Customer",
+                "search": "Szukaj Customer"
+            },
+            "created": "Utworzono nowy Customer z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono Customer z identyfikatorem {{ param }}",
+            "deleted": "Usunięto Customer z identyfikatorem {{ param }}",
+            "delete": {
+                "question": "Czy na pewno chcesz usunąć Customer {{ id }}?"
+            },
+            "detail": {
+                "title": "Customer"
+            },
+            "firstName": "First Name",
+            "midleName": "Midle Name",
+            "lastName": "Last Name",
+            "login": "Login",
+            "passwordHash": "Password Hash",
+            "phone": "Phone",
+            "email": "Email",
+            "imageUrl": "Image Url",
+            "activated": "Activated",
+            "langKey": "Lang Key",
+            "activationKey": "Activation Key",
+            "resetKey": "Reset Key",
+            "createdDate": "Created Date",
+            "resetDate": "Reset Date",
+            "lastModifiedBy": "Last Modified By",
+            "lastModifiedDate": "Last Modified Date",
+            "company": "Company"
+        }
+    }
+}

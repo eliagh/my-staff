@@ -1,0 +1,31 @@
+{
+    "mystaffApp": {
+        "appointment" : {
+            "home": {
+                "title": "Appointments",
+                "createLabel": "Crear nuevo Appointment",
+                "createOrEditLabel": "Crear o editar Appointment",
+                "search": "Search for Appointment"
+            },
+            "created": "Un nuevo Appointment ha sido creado con el identificador {{ param }}",
+            "updated": "Un Appointment ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Appointment ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Appointment {{ id }}?"
+            },
+            "detail": {
+                "title": "Appointment"
+            },
+            "when": "When",
+            "label": "Label",
+            "isRecurring": "Is Recurring",
+            "isFlexible": "Is Flexible",
+            "notes": "Notes",
+            "reminder": "Reminder",
+            "customer": "Customer",
+            "activityBooked": "Activity Booked",
+            "location": "Location",
+            "provider": "Provider"
+        }
+    }
+}

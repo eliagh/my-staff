@@ -1,0 +1,31 @@
+{
+    "mystaffApp": {
+        "appointment" : {
+            "home": {
+                "title": "Appointments",
+                "createLabel": "Створити новий Appointment",
+                "createOrEditLabel": "Створити чи редагувати Appointment",
+                "search": "Знайти Appointment"
+            },
+            "created": "Новий Appointment створений з ідентифікатором {{ param }}",
+            "updated": "Appointment оновлений з ідентифікатором {{ param }}",
+            "deleted": "Appointment видалений з ідентифікатором {{ param }}",
+            "delete": {
+                "question": "Ви впевнені, що хочете видалити Appointment {{ id }}?"
+            },
+            "detail": {
+                "title": "Appointment"
+            },
+            "when": "When",
+            "label": "Label",
+            "isRecurring": "Is Recurring",
+            "isFlexible": "Is Flexible",
+            "notes": "Notes",
+            "reminder": "Reminder",
+            "customer": "Customer",
+            "activityBooked": "Activity Booked",
+            "location": "Location",
+            "provider": "Provider"
+        }
+    }
+}

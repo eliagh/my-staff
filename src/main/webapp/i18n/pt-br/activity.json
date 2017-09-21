@@ -1,0 +1,33 @@
+{
+    "mystaffApp": {
+        "activity" : {
+            "home": {
+                "title": "Activities",
+                "createLabel": "Criar novo Activity",
+                "createOrEditLabel": "Criar ou editar Activity",
+                "search": "Pesquisar por Activity"
+            },
+            "created": "Um novo Activity foi criado com o identificador {{ param }}",
+            "updated": "Um Activity foi atualizado com o identificador {{ param }}",
+            "deleted": "Um Activity foi deletado com o identificador {{ param }}",
+            "delete": {
+                "question": "Tem certeza de que deseja excluir Activity {{ id }}?"
+            },
+            "detail": {
+                "title": "Activity"
+            },
+            "name": "Name",
+            "logo": "Logo",
+            "description": "Description",
+            "price": "Price",
+            "durationMinutes": "Duration Minutes",
+            "preDurationMinutes": "Pre Duration Minutes",
+            "postDurationMinutes": "Post Duration Minutes",
+            "isNrivate": "Is Nrivate",
+            "colorCode": "Color Code",
+            "cancellationTime": "Cancellation Time",
+            "location": "Location",
+            "category": "Category"
+        }
+    }
+}

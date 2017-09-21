@@ -1,0 +1,30 @@
+{
+    "mystaffApp": {
+        "location" : {
+            "home": {
+                "title": "Locations",
+                "createLabel": "Skapa en ny Location",
+                "createOrEditLabel": "Skapa eller ändra en Location",
+                "search": "Sök efter Location"
+            },
+            "created": "En ny Location är skapad med id {{ param }}",
+            "updated": "En Location är uppdaterad med id  {{ param }}",
+            "deleted": "En Location är borttagen med id  {{ param }}",
+            "delete": {
+                "question": "Är du säker på att du vill ta bort Location {{ id }}?"
+            },
+            "detail": {
+                "title": "Location"
+            },
+            "name": "Name",
+            "address1": "Address 1",
+            "address2": "Address 2",
+            "address3": "Address 3",
+            "number": "Number",
+            "postcode": "Postcode",
+            "city": "City",
+            "stateProvince": "State Province",
+            "company": "Company"
+        }
+    }
+}

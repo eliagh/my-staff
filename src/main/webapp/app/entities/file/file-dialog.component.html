@@ -1,0 +1,83 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myFileLabel" jhiTranslate="mystaffApp.file.home.createOrEditLabel">Create or edit a File</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!file.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="file.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="mystaffApp.file.name" for="field_name">Name</label>
+            <input type="text" class="form-control" name="name" id="field_name"
+                [(ngModel)]="file.name" minlength="2" maxlength="30" />
+            <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.name?.errors?.minlength" jhiTranslate="entity.validation.minlength" translateValues="{ min: 2 }">
+                   This field is required to be at least 2 characters.
+                </small>
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.name?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 30 }">
+                   This field cannot be longer than 30 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="mystaffApp.file.url" for="field_url">Url</label>
+            <input type="text" class="form-control" name="url" id="field_url"
+                [(ngModel)]="file.url"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="mystaffApp.file.fileType" for="field_fileType">File Type</label>
+            <select class="form-control" name="fileType" [(ngModel)]="file.fileType" id="field_fileType" >
+                <option value="AVATAR">{{'mystaffApp.FileType.AVATAR' | translate}}</option>
+                <option value="PRODUCT_PICTURE">{{'mystaffApp.FileType.PRODUCT_PICTURE' | translate}}</option>
+                <option value="REPORT">{{'mystaffApp.FileType.REPORT' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="mystaffApp.file.file" for="field_file">File</label>
+            <div>
+                <img [src]="'data:' + file.fileContentType + ';base64,' + file.file" style="max-height: 100px;" *ngIf="file.file" alt="file image"/>
+                <div *ngIf="file.file" class="form-text text-danger clearfix">
+                    <span class="pull-left">{{file.fileContentType}}, {{byteSize(file.file)}}</span>
+                    <button type="button" (click)="clearInputImage('file', 'fileContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
+                        <span class="fa fa-times"></span>
+                    </button>
+                </div>
+                <input type="file" id="file_file" (change)="setFileData($event, file, 'file', true)" accept="image/*" jhiTranslate="entity.action.addimage"/>
+            </div>
+            <input type="hidden" class="form-control" name="file" id="field_file"
+                [(ngModel)]="file.file"  />
+            <input type="hidden" class="form-control" name="fileContentType" id="field_fileContentType"
+                [(ngModel)]="file.fileContentType" />
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="mystaffApp.file.owner" for="field_owner">Owner</label>
+            <select class="form-control" id="field_owner" name="owner" [(ngModel)]="file.owner"  required>
+                <option *ngIf="!editForm.value.owner" [ngValue]="null" selected></option>
+                <option [ngValue]="companyOption.id === file.owner?.id ? file.owner : companyOption" *ngFor="let companyOption of companies; trackBy: trackCompanyById">{{companyOption.name}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.owner?.dirty && editForm.controls.owner?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.owner?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

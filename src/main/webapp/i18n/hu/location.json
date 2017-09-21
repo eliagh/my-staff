@@ -1,0 +1,30 @@
+{
+    "mystaffApp": {
+        "location" : {
+            "home": {
+                "title": "Locations",
+                "createLabel": "Egy új Location létrehozása",
+                "createOrEditLabel": "Hozzon létre, vagy módosítson Locationt",
+                "search": "Location keresése"
+            },
+            "created": "Egy új Location lett létrehozva {{ param }} azonosítóval",
+            "updated": "A Location módosítva lett {{ param }} azonosítóval",
+            "deleted": "A Location törölve lett {{ param }} azonosítóval",
+            "delete": {
+                "question": "Biztos benne, hogy törölni szeretné az Locationt {{ id }} azonosítóval?"
+            },
+            "detail": {
+                "title": "Location"
+            },
+            "name": "Name",
+            "address1": "Address 1",
+            "address2": "Address 2",
+            "address3": "Address 3",
+            "number": "Number",
+            "postcode": "Postcode",
+            "city": "City",
+            "stateProvince": "State Province",
+            "company": "Company"
+        }
+    }
+}

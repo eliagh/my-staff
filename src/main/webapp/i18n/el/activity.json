@@ -1,0 +1,33 @@
+{
+    "mystaffApp": {
+        "activity" : {
+            "home": {
+                "title": "Activities",
+                "createLabel": "Δημιουργήστε ένα νέο Activity",
+                "createOrEditLabel": "Δημιουργήστε η επεξεργαστείτε ένα Activity",
+                "search": "Αναζήτηση για Activity"
+            },
+            "created": "Ένα νέο Activity έχει δημιουργηθεί με αναγνωριστικό {{ param }}",
+            "updated": "Ένα Activity έχει ενημερωθεί με αναγνωριστικό {{ param }}",
+            "deleted": "Ένα Activity έχει διαγραφτεί με αναγνωριστικό {{ param }}",
+            "delete": {
+                "question": "Είστε βέβαιοι όταν θέλετε να διαγράψετε το ακόλουθο Activity {{ id }};"
+            },
+            "detail": {
+                "title": "Activity"
+            },
+            "name": "Name",
+            "logo": "Logo",
+            "description": "Description",
+            "price": "Price",
+            "durationMinutes": "Duration Minutes",
+            "preDurationMinutes": "Pre Duration Minutes",
+            "postDurationMinutes": "Post Duration Minutes",
+            "isNrivate": "Is Nrivate",
+            "colorCode": "Color Code",
+            "cancellationTime": "Cancellation Time",
+            "location": "Location",
+            "category": "Category"
+        }
+    }
+}

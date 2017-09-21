@@ -1,0 +1,25 @@
+{
+    "mystaffApp": {
+        "inventory" : {
+            "home": {
+                "title": "Inventories",
+                "createLabel": "नया Inventory बनाएँ",
+                "createOrEditLabel": "Inventory बनाएँ या संपादित करें",
+                "search": "Inventory खोजें"
+            },
+            "created": "एक नया Inventory [identifier: {{ param }}] तैयार है",
+            "updated": "एक Inventory [identifier: {{ param }}] का अद्यतन हुआ है",
+            "deleted": "Inventory [identifier: {{ param }}] हटा दिया है",
+            "delete": {
+                "question": "Inventory [id: {{ id }}] हटाने की पुष्टि करें"
+            },
+            "detail": {
+                "title": "Inventory"
+            },
+            "quantity": "Quantity",
+            "inventoryDate": "Inventory Date",
+            "location": "Location",
+            "item": "Item"
+        }
+    }
+}

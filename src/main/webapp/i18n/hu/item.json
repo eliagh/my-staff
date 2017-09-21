@@ -1,0 +1,29 @@
+{
+    "mystaffApp": {
+        "item" : {
+            "home": {
+                "title": "Items",
+                "createLabel": "Egy új Item létrehozása",
+                "createOrEditLabel": "Hozzon létre, vagy módosítson Itemt",
+                "search": "Item keresése"
+            },
+            "created": "Egy új Item lett létrehozva {{ param }} azonosítóval",
+            "updated": "A Item módosítva lett {{ param }} azonosítóval",
+            "deleted": "A Item törölve lett {{ param }} azonosítóval",
+            "delete": {
+                "question": "Biztos benne, hogy törölni szeretné az Itemt {{ id }} azonosítóval?"
+            },
+            "detail": {
+                "title": "Item"
+            },
+            "name": "Name",
+            "pictureUrl": "Picture Url",
+            "pricePerUnit": "Price Per Unit",
+            "unit": "Unit",
+            "code": "Code",
+            "description": "Description",
+            "showInShop": "Show In Shop",
+            "company": "Company"
+        }
+    }
+}

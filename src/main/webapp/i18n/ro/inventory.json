@@ -1,0 +1,25 @@
+{
+    "mystaffApp": {
+        "inventory" : {
+            "home": {
+                "title": "Inventories",
+                "createLabel": "Creeare o nouă entitate Inventory",
+                "createOrEditLabel": "Creeare sau editare Inventory",
+                "search": "Căutare după Inventory"
+            },
+            "created": "A fost creată o nouă entitate Inventory cu identificatorul {{ param }}",
+            "updated": "Inventory cu identificatorul {{ param }} a fost actualizată",
+            "deleted": "Inventory cu identificatorul {{ param }} a fost ștearsă",
+            "delete": {
+                "question": "Sunteți sigur că doriți să ștergeți Inventory {{ id }}?"
+            },
+            "detail": {
+                "title": "Inventory"
+            },
+            "quantity": "Quantity",
+            "inventoryDate": "Inventory Date",
+            "location": "Location",
+            "item": "Item"
+        }
+    }
+}

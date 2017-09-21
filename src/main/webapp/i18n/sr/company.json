@@ -1,0 +1,25 @@
+{
+    "mystaffApp": {
+        "company" : {
+            "home": {
+                "title": "Companies",
+                "createLabel": "Kreiraj novi Company",
+                "createOrEditLabel": "Kreirajte ili izmenite Company",
+                "search": "Potražite Company"
+            },
+            "created": "Kreiran je novi Company pod nazivom {{ param }}",
+            "updated": "Company pod nazivom {{ param }} je ažuriran",
+            "deleted": "Company pod nazivom {{ param }} je obrisan",
+            "delete": {
+                "question": "Da li ste sigurni da želite da obrišete Company pod nazivom {{ id }}?"
+            },
+            "detail": {
+                "title": "Company"
+            },
+            "name": "Name",
+            "logo": "Logo",
+            "sector": "Sector",
+            "thema": "Thema"
+        }
+    }
+}

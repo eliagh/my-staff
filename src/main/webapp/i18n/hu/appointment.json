@@ -1,0 +1,31 @@
+{
+    "mystaffApp": {
+        "appointment" : {
+            "home": {
+                "title": "Appointments",
+                "createLabel": "Egy új Appointment létrehozása",
+                "createOrEditLabel": "Hozzon létre, vagy módosítson Appointmentt",
+                "search": "Appointment keresése"
+            },
+            "created": "Egy új Appointment lett létrehozva {{ param }} azonosítóval",
+            "updated": "A Appointment módosítva lett {{ param }} azonosítóval",
+            "deleted": "A Appointment törölve lett {{ param }} azonosítóval",
+            "delete": {
+                "question": "Biztos benne, hogy törölni szeretné az Appointmentt {{ id }} azonosítóval?"
+            },
+            "detail": {
+                "title": "Appointment"
+            },
+            "when": "When",
+            "label": "Label",
+            "isRecurring": "Is Recurring",
+            "isFlexible": "Is Flexible",
+            "notes": "Notes",
+            "reminder": "Reminder",
+            "customer": "Customer",
+            "activityBooked": "Activity Booked",
+            "location": "Location",
+            "provider": "Provider"
+        }
+    }
+}

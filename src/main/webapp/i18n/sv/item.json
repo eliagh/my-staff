@@ -1,0 +1,29 @@
+{
+    "mystaffApp": {
+        "item" : {
+            "home": {
+                "title": "Items",
+                "createLabel": "Skapa en ny Item",
+                "createOrEditLabel": "Skapa eller ändra en Item",
+                "search": "Sök efter Item"
+            },
+            "created": "En ny Item är skapad med id {{ param }}",
+            "updated": "En Item är uppdaterad med id  {{ param }}",
+            "deleted": "En Item är borttagen med id  {{ param }}",
+            "delete": {
+                "question": "Är du säker på att du vill ta bort Item {{ id }}?"
+            },
+            "detail": {
+                "title": "Item"
+            },
+            "name": "Name",
+            "pictureUrl": "Picture Url",
+            "pricePerUnit": "Price Per Unit",
+            "unit": "Unit",
+            "code": "Code",
+            "description": "Description",
+            "showInShop": "Show In Shop",
+            "company": "Company"
+        }
+    }
+}

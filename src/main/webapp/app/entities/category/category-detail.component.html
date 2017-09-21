@@ -1,0 +1,35 @@
+
+<div *ngIf="category">
+    <h2><span jhiTranslate="mystaffApp.category.detail.title">Category</span> {{category.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="mystaffApp.category.name">Name</span></dt>
+        <dd>
+            <span>{{category.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.category.description">Description</span></dt>
+        <dd>
+            <span>{{category.description}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.category.company">Company</span></dt>
+        <dd>
+            <div *ngIf="category.company">
+                <a [routerLink]="['/company', category.company?.id]">{{category.company?.name}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'category/'+ category.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

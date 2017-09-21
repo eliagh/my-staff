@@ -1,0 +1,29 @@
+{
+    "mystaffApp": {
+        "item" : {
+            "home": {
+                "title": "Items",
+                "createLabel": "Kreiraj novi Item",
+                "createOrEditLabel": "Kreirajte ili izmenite Item",
+                "search": "Potražite Item"
+            },
+            "created": "Kreiran je novi Item pod nazivom {{ param }}",
+            "updated": "Item pod nazivom {{ param }} je ažuriran",
+            "deleted": "Item pod nazivom {{ param }} je obrisan",
+            "delete": {
+                "question": "Da li ste sigurni da želite da obrišete Item pod nazivom {{ id }}?"
+            },
+            "detail": {
+                "title": "Item"
+            },
+            "name": "Name",
+            "pictureUrl": "Picture Url",
+            "pricePerUnit": "Price Per Unit",
+            "unit": "Unit",
+            "code": "Code",
+            "description": "Description",
+            "showInShop": "Show In Shop",
+            "company": "Company"
+        }
+    }
+}

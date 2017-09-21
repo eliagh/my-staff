@@ -1,0 +1,38 @@
+{
+    "mystaffApp": {
+        "customer" : {
+            "home": {
+                "title": "Customers",
+                "createLabel": "Egy új Customer létrehozása",
+                "createOrEditLabel": "Hozzon létre, vagy módosítson Customert",
+                "search": "Customer keresése"
+            },
+            "created": "Egy új Customer lett létrehozva {{ param }} azonosítóval",
+            "updated": "A Customer módosítva lett {{ param }} azonosítóval",
+            "deleted": "A Customer törölve lett {{ param }} azonosítóval",
+            "delete": {
+                "question": "Biztos benne, hogy törölni szeretné az Customert {{ id }} azonosítóval?"
+            },
+            "detail": {
+                "title": "Customer"
+            },
+            "firstName": "First Name",
+            "midleName": "Midle Name",
+            "lastName": "Last Name",
+            "login": "Login",
+            "passwordHash": "Password Hash",
+            "phone": "Phone",
+            "email": "Email",
+            "imageUrl": "Image Url",
+            "activated": "Activated",
+            "langKey": "Lang Key",
+            "activationKey": "Activation Key",
+            "resetKey": "Reset Key",
+            "createdDate": "Created Date",
+            "resetDate": "Reset Date",
+            "lastModifiedBy": "Last Modified By",
+            "lastModifiedDate": "Last Modified Date",
+            "company": "Company"
+        }
+    }
+}

@@ -1,0 +1,30 @@
+{
+    "mystaffApp": {
+        "location" : {
+            "home": {
+                "title": "Locations",
+                "createLabel": "नया Location बनाएँ",
+                "createOrEditLabel": "Location बनाएँ या संपादित करें",
+                "search": "Location खोजें"
+            },
+            "created": "एक नया Location [identifier: {{ param }}] तैयार है",
+            "updated": "एक Location [identifier: {{ param }}] का अद्यतन हुआ है",
+            "deleted": "Location [identifier: {{ param }}] हटा दिया है",
+            "delete": {
+                "question": "Location [id: {{ id }}] हटाने की पुष्टि करें"
+            },
+            "detail": {
+                "title": "Location"
+            },
+            "name": "Name",
+            "address1": "Address 1",
+            "address2": "Address 2",
+            "address3": "Address 3",
+            "number": "Number",
+            "postcode": "Postcode",
+            "city": "City",
+            "stateProvince": "State Province",
+            "company": "Company"
+        }
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "mystaffApp": {
+        "activity" : {
+            "home": {
+                "title": "Activities",
+                "createLabel": "Creeare o nouă entitate Activity",
+                "createOrEditLabel": "Creeare sau editare Activity",
+                "search": "Căutare după Activity"
+            },
+            "created": "A fost creată o nouă entitate Activity cu identificatorul {{ param }}",
+            "updated": "Activity cu identificatorul {{ param }} a fost actualizată",
+            "deleted": "Activity cu identificatorul {{ param }} a fost ștearsă",
+            "delete": {
+                "question": "Sunteți sigur că doriți să ștergeți Activity {{ id }}?"
+            },
+            "detail": {
+                "title": "Activity"
+            },
+            "name": "Name",
+            "logo": "Logo",
+            "description": "Description",
+            "price": "Price",
+            "durationMinutes": "Duration Minutes",
+            "preDurationMinutes": "Pre Duration Minutes",
+            "postDurationMinutes": "Post Duration Minutes",
+            "isNrivate": "Is Nrivate",
+            "colorCode": "Color Code",
+            "cancellationTime": "Cancellation Time",
+            "location": "Location",
+            "category": "Category"
+        }
+    }
+}

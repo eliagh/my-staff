@@ -1,0 +1,26 @@
+{
+    "mystaffApp": {
+        "file" : {
+            "home": {
+                "title": "Files",
+                "createLabel": "Skapa en ny File",
+                "createOrEditLabel": "Skapa eller ändra en File",
+                "search": "Sök efter File"
+            },
+            "created": "En ny File är skapad med id {{ param }}",
+            "updated": "En File är uppdaterad med id  {{ param }}",
+            "deleted": "En File är borttagen med id  {{ param }}",
+            "delete": {
+                "question": "Är du säker på att du vill ta bort File {{ id }}?"
+            },
+            "detail": {
+                "title": "File"
+            },
+            "name": "Name",
+            "url": "Url",
+            "fileType": "File Type",
+            "file": "File",
+            "owner": "Owner"
+        }
+    }
+}

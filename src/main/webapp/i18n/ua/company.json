@@ -1,0 +1,25 @@
+{
+    "mystaffApp": {
+        "company" : {
+            "home": {
+                "title": "Companies",
+                "createLabel": "Створити новий Company",
+                "createOrEditLabel": "Створити чи редагувати Company",
+                "search": "Знайти Company"
+            },
+            "created": "Новий Company створений з ідентифікатором {{ param }}",
+            "updated": "Company оновлений з ідентифікатором {{ param }}",
+            "deleted": "Company видалений з ідентифікатором {{ param }}",
+            "delete": {
+                "question": "Ви впевнені, що хочете видалити Company {{ id }}?"
+            },
+            "detail": {
+                "title": "Company"
+            },
+            "name": "Name",
+            "logo": "Logo",
+            "sector": "Sector",
+            "thema": "Thema"
+        }
+    }
+}

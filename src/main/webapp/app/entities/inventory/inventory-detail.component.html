@@ -1,0 +1,41 @@
+
+<div *ngIf="inventory">
+    <h2><span jhiTranslate="mystaffApp.inventory.detail.title">Inventory</span> {{inventory.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="mystaffApp.inventory.quantity">Quantity</span></dt>
+        <dd>
+            <span>{{inventory.quantity}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.inventory.inventoryDate">Inventory Date</span></dt>
+        <dd>
+            <span>{{inventory.inventoryDate | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.inventory.location">Location</span></dt>
+        <dd>
+            <div *ngIf="inventory.location">
+                <a [routerLink]="['/location', inventory.location?.id]">{{inventory.location?.name}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.inventory.item">Item</span></dt>
+        <dd>
+            <div *ngIf="inventory.item">
+                <a [routerLink]="['/item', inventory.item?.id]">{{inventory.item?.name}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'inventory/'+ inventory.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

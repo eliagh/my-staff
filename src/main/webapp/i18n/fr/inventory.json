@@ -1,0 +1,25 @@
+{
+    "mystaffApp": {
+        "inventory" : {
+            "home": {
+                "title": "Inventories",
+                "createLabel": "Créer un nouveau Inventory",
+                "createOrEditLabel": "Créer ou éditer un Inventory",
+                "search": "Recherche pour Inventory"
+            },
+            "created": "Un nouveau Inventory a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Inventory avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Inventory avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Inventory {{ id }} ?"
+            },
+            "detail": {
+                "title": "Inventory"
+            },
+            "quantity": "Quantity",
+            "inventoryDate": "Inventory Date",
+            "location": "Location",
+            "item": "Item"
+        }
+    }
+}

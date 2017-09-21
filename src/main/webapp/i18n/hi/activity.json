@@ -1,0 +1,33 @@
+{
+    "mystaffApp": {
+        "activity" : {
+            "home": {
+                "title": "Activities",
+                "createLabel": "नया Activity बनाएँ",
+                "createOrEditLabel": "Activity बनाएँ या संपादित करें",
+                "search": "Activity खोजें"
+            },
+            "created": "एक नया Activity [identifier: {{ param }}] तैयार है",
+            "updated": "एक Activity [identifier: {{ param }}] का अद्यतन हुआ है",
+            "deleted": "Activity [identifier: {{ param }}] हटा दिया है",
+            "delete": {
+                "question": "Activity [id: {{ id }}] हटाने की पुष्टि करें"
+            },
+            "detail": {
+                "title": "Activity"
+            },
+            "name": "Name",
+            "logo": "Logo",
+            "description": "Description",
+            "price": "Price",
+            "durationMinutes": "Duration Minutes",
+            "preDurationMinutes": "Pre Duration Minutes",
+            "postDurationMinutes": "Post Duration Minutes",
+            "isNrivate": "Is Nrivate",
+            "colorCode": "Color Code",
+            "cancellationTime": "Cancellation Time",
+            "location": "Location",
+            "category": "Category"
+        }
+    }
+}

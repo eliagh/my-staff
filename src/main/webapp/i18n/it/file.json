@@ -1,0 +1,26 @@
+{
+    "mystaffApp": {
+        "file" : {
+            "home": {
+                "title": "Files",
+                "createLabel": "Genera un nuovo File",
+                "createOrEditLabel": "Genera o modifica un File",
+                "search": "Cerca File"
+            },
+            "created": "&Egrave; stato generato un nuovo File con identificatore {{ param }}",
+            "updated": "&Egrave; stato aggiornato File identificato da {{ param }}",
+            "deleted": "&Egrave; stato eliminato File con identificatore {{ param }}",
+            "delete": {
+                "question": "Sei sicuro di volere eliminare File {{ id }}?"
+            },
+            "detail": {
+                "title": "File"
+            },
+            "name": "Name",
+            "url": "Url",
+            "fileType": "File Type",
+            "file": "File",
+            "owner": "Owner"
+        }
+    }
+}

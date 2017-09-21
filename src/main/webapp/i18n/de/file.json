@@ -1,0 +1,26 @@
+{
+    "mystaffApp": {
+        "file" : {
+            "home": {
+                "title": "Files",
+                "createLabel": "File erstellen",
+                "createOrEditLabel": "File erstellen oder bearbeiten",
+                "search": "Suche nach File"
+            },
+            "created": "File erstellt mit ID {{ param }}",
+            "updated": "File aktualisiert mit ID {{ param }}",
+            "deleted": "File gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll File {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "File"
+            },
+            "name": "Name",
+            "url": "Url",
+            "fileType": "File Type",
+            "file": "File",
+            "owner": "Owner"
+        }
+    }
+}

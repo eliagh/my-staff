@@ -1,0 +1,26 @@
+{
+    "mystaffApp": {
+        "file" : {
+            "home": {
+                "title": "Files",
+                "createLabel": "Δημιουργήστε ένα νέο File",
+                "createOrEditLabel": "Δημιουργήστε η επεξεργαστείτε ένα File",
+                "search": "Αναζήτηση για File"
+            },
+            "created": "Ένα νέο File έχει δημιουργηθεί με αναγνωριστικό {{ param }}",
+            "updated": "Ένα File έχει ενημερωθεί με αναγνωριστικό {{ param }}",
+            "deleted": "Ένα File έχει διαγραφτεί με αναγνωριστικό {{ param }}",
+            "delete": {
+                "question": "Είστε βέβαιοι όταν θέλετε να διαγράψετε το ακόλουθο File {{ id }};"
+            },
+            "detail": {
+                "title": "File"
+            },
+            "name": "Name",
+            "url": "Url",
+            "fileType": "File Type",
+            "file": "File",
+            "owner": "Owner"
+        }
+    }
+}

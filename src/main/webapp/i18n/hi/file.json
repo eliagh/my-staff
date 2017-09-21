@@ -1,0 +1,26 @@
+{
+    "mystaffApp": {
+        "file" : {
+            "home": {
+                "title": "Files",
+                "createLabel": "नया File बनाएँ",
+                "createOrEditLabel": "File बनाएँ या संपादित करें",
+                "search": "File खोजें"
+            },
+            "created": "एक नया File [identifier: {{ param }}] तैयार है",
+            "updated": "एक File [identifier: {{ param }}] का अद्यतन हुआ है",
+            "deleted": "File [identifier: {{ param }}] हटा दिया है",
+            "delete": {
+                "question": "File [id: {{ id }}] हटाने की पुष्टि करें"
+            },
+            "detail": {
+                "title": "File"
+            },
+            "name": "Name",
+            "url": "Url",
+            "fileType": "File Type",
+            "file": "File",
+            "owner": "Owner"
+        }
+    }
+}

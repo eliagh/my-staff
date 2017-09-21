@@ -1,0 +1,25 @@
+{
+    "mystaffApp": {
+        "company" : {
+            "home": {
+                "title": "Companies",
+                "createLabel": "Pridať Company",
+                "createOrEditLabel": "Pridať alebo upraviť Company",
+                "search": "Vyhľadať Company"
+            },
+            "created": "Bol vytvorený potomok entity Company s identifikátorom {{ param }}",
+            "updated": "Potomok entity Company s identifikátorom {{ param }} bol upravený.",
+            "deleted": "Potomok entity Company s identifikátorom {{ param }} bol vymazaný.",
+            "delete": {
+                "question": "Ste si istý, že chcete vymazať Company {{ id }}?"
+            },
+            "detail": {
+                "title": "Company"
+            },
+            "name": "Name",
+            "logo": "Logo",
+            "sector": "Sector",
+            "thema": "Thema"
+        }
+    }
+}

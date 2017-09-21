@@ -1,0 +1,38 @@
+{
+    "mystaffApp": {
+        "customer" : {
+            "home": {
+                "title": "Customers",
+                "createLabel": "Создать новый Customer",
+                "createOrEditLabel": "Создать или отредактировать Customer",
+                "search": "Найти Customer"
+            },
+            "created": "Новый Customer создан с идентификатором {{ param }}",
+            "updated": "Customer обновлен с идентификатором {{ param }}",
+            "deleted": "Customer удален с идентификатором {{ param }}",
+            "delete": {
+                "question": "Вы уверены что хотите удалить Customer {{ id }}?"
+            },
+            "detail": {
+                "title": "Customer"
+            },
+            "firstName": "First Name",
+            "midleName": "Midle Name",
+            "lastName": "Last Name",
+            "login": "Login",
+            "passwordHash": "Password Hash",
+            "phone": "Phone",
+            "email": "Email",
+            "imageUrl": "Image Url",
+            "activated": "Activated",
+            "langKey": "Lang Key",
+            "activationKey": "Activation Key",
+            "resetKey": "Reset Key",
+            "createdDate": "Created Date",
+            "resetDate": "Reset Date",
+            "lastModifiedBy": "Last Modified By",
+            "lastModifiedDate": "Last Modified Date",
+            "company": "Company"
+        }
+    }
+}

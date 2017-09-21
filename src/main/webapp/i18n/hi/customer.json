@@ -1,0 +1,38 @@
+{
+    "mystaffApp": {
+        "customer" : {
+            "home": {
+                "title": "Customers",
+                "createLabel": "नया Customer बनाएँ",
+                "createOrEditLabel": "Customer बनाएँ या संपादित करें",
+                "search": "Customer खोजें"
+            },
+            "created": "एक नया Customer [identifier: {{ param }}] तैयार है",
+            "updated": "एक Customer [identifier: {{ param }}] का अद्यतन हुआ है",
+            "deleted": "Customer [identifier: {{ param }}] हटा दिया है",
+            "delete": {
+                "question": "Customer [id: {{ id }}] हटाने की पुष्टि करें"
+            },
+            "detail": {
+                "title": "Customer"
+            },
+            "firstName": "First Name",
+            "midleName": "Midle Name",
+            "lastName": "Last Name",
+            "login": "Login",
+            "passwordHash": "Password Hash",
+            "phone": "Phone",
+            "email": "Email",
+            "imageUrl": "Image Url",
+            "activated": "Activated",
+            "langKey": "Lang Key",
+            "activationKey": "Activation Key",
+            "resetKey": "Reset Key",
+            "createdDate": "Created Date",
+            "resetDate": "Reset Date",
+            "lastModifiedBy": "Last Modified By",
+            "lastModifiedDate": "Last Modified Date",
+            "company": "Company"
+        }
+    }
+}

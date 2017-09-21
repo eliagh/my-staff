@@ -1,0 +1,24 @@
+{
+    "mystaffApp": {
+        "category" : {
+            "home": {
+                "title": "Categories",
+                "createLabel": "Lisa uus Category",
+                "createOrEditLabel": "Lisa või muuda Category",
+                "search": "Otsi Category"
+            },
+            "created": "Uus Category on loodud identifikaatoriga {{ param }}",
+            "updated": "Category identifikaatoriga {{ param }} on muudetud",
+            "deleted": "Category identifikaatoriga {{ param }} on kustutatud",
+            "delete": {
+                "question": "Kas olete kindel, et soovite kustutada Category {{ id }}?"
+            },
+            "detail": {
+                "title": "Category"
+            },
+            "name": "Name",
+            "description": "Description",
+            "company": "Company"
+        }
+    }
+}

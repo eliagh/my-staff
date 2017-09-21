@@ -1,0 +1,48 @@
+
+<div *ngIf="file">
+    <h2><span jhiTranslate="mystaffApp.file.detail.title">File</span> {{file.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="mystaffApp.file.name">Name</span></dt>
+        <dd>
+            <span>{{file.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.file.url">Url</span></dt>
+        <dd>
+            <span>{{file.url}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.file.fileType">File Type</span></dt>
+        <dd>
+            <span jhiTranslate="{{'mystaffApp.FileType.' + file.fileType}}">{{file.fileType}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.file.file">File</span></dt>
+        <dd>
+            <div *ngIf="file.file">
+                <a (click)="openFile(file.fileContentType, file.file)">
+                    <img [src]="'data:' + file.fileContentType + ';base64,' + file.file" style="max-width: 100%;" alt="file image"/>
+                </a>
+                {{file.fileContentType}}, {{byteSize(file.file)}}
+            </div>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.file.owner">Owner</span></dt>
+        <dd>
+            <div *ngIf="file.owner">
+                <a [routerLink]="['/company', file.owner?.id]">{{file.owner?.name}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'file/'+ file.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

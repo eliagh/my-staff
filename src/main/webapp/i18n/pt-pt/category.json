@@ -1,0 +1,24 @@
+{
+    "mystaffApp": {
+        "category" : {
+            "home": {
+                "title": "Categories",
+                "createLabel": "Criar um(a) novo(a) Category",
+                "createOrEditLabel": "Criar ou editar um(a) Category",
+                "search": "Search for Category"
+            },
+            "created": "A new Category is created with identifier {{ param }}",
+            "updated": "A Category is updated with identifier {{ param }}",
+            "deleted": "A Category is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Tem a certeza que pretende eliminar o(a) Category {{ id }}?"
+            },
+            "detail": {
+                "title": "Category"
+            },
+            "name": "Name",
+            "description": "Description",
+            "company": "Company"
+        }
+    }
+}

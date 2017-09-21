@@ -1,0 +1,30 @@
+{
+    "mystaffApp": {
+        "location" : {
+            "home": {
+                "title": "Locations",
+                "createLabel": "Lisa uus Location",
+                "createOrEditLabel": "Lisa või muuda Location",
+                "search": "Otsi Location"
+            },
+            "created": "Uus Location on loodud identifikaatoriga {{ param }}",
+            "updated": "Location identifikaatoriga {{ param }} on muudetud",
+            "deleted": "Location identifikaatoriga {{ param }} on kustutatud",
+            "delete": {
+                "question": "Kas olete kindel, et soovite kustutada Location {{ id }}?"
+            },
+            "detail": {
+                "title": "Location"
+            },
+            "name": "Name",
+            "address1": "Address 1",
+            "address2": "Address 2",
+            "address3": "Address 3",
+            "number": "Number",
+            "postcode": "Postcode",
+            "city": "City",
+            "stateProvince": "State Province",
+            "company": "Company"
+        }
+    }
+}

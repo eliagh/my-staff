@@ -1,0 +1,25 @@
+{
+    "mystaffApp": {
+        "inventory" : {
+            "home": {
+                "title": "Inventories",
+                "createLabel": "Kreiraj novi Inventory",
+                "createOrEditLabel": "Kreirajte ili izmenite Inventory",
+                "search": "Potražite Inventory"
+            },
+            "created": "Kreiran je novi Inventory pod nazivom {{ param }}",
+            "updated": "Inventory pod nazivom {{ param }} je ažuriran",
+            "deleted": "Inventory pod nazivom {{ param }} je obrisan",
+            "delete": {
+                "question": "Da li ste sigurni da želite da obrišete Inventory pod nazivom {{ id }}?"
+            },
+            "detail": {
+                "title": "Inventory"
+            },
+            "quantity": "Quantity",
+            "inventoryDate": "Inventory Date",
+            "location": "Location",
+            "item": "Item"
+        }
+    }
+}

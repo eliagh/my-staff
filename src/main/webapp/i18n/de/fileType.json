@@ -1,0 +1,10 @@
+{
+    "mystaffApp": {
+        "FileType" : {
+            "null": "",
+            "AVATAR": "AVATAR",
+            "PRODUCT_PICTURE": "PRODUCT_PICTURE",
+            "REPORT": "REPORT"
+        }
+    }
+}

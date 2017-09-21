@@ -1,0 +1,25 @@
+{
+    "mystaffApp": {
+        "company" : {
+            "home": {
+                "title": "Companies",
+                "createLabel": "Δημιουργήστε ένα νέο Company",
+                "createOrEditLabel": "Δημιουργήστε η επεξεργαστείτε ένα Company",
+                "search": "Αναζήτηση για Company"
+            },
+            "created": "Ένα νέο Company έχει δημιουργηθεί με αναγνωριστικό {{ param }}",
+            "updated": "Ένα Company έχει ενημερωθεί με αναγνωριστικό {{ param }}",
+            "deleted": "Ένα Company έχει διαγραφτεί με αναγνωριστικό {{ param }}",
+            "delete": {
+                "question": "Είστε βέβαιοι όταν θέλετε να διαγράψετε το ακόλουθο Company {{ id }};"
+            },
+            "detail": {
+                "title": "Company"
+            },
+            "name": "Name",
+            "logo": "Logo",
+            "sector": "Sector",
+            "thema": "Thema"
+        }
+    }
+}

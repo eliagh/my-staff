@@ -1,0 +1,78 @@
+
+<div *ngIf="activity">
+    <h2><span jhiTranslate="mystaffApp.activity.detail.title">Activity</span> {{activity.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="mystaffApp.activity.name">Name</span></dt>
+        <dd>
+            <span>{{activity.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.activity.logo">Logo</span></dt>
+        <dd>
+            <div *ngIf="activity.logo">
+                <a (click)="openFile(activity.logoContentType, activity.logo)">
+                    <img [src]="'data:' + activity.logoContentType + ';base64,' + activity.logo" style="max-width: 100%;" alt="activity image"/>
+                </a>
+                {{activity.logoContentType}}, {{byteSize(activity.logo)}}
+            </div>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.activity.description">Description</span></dt>
+        <dd>
+            <span>{{activity.description}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.activity.price">Price</span></dt>
+        <dd>
+            <span>{{activity.price}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.activity.durationMinutes">Duration Minutes</span></dt>
+        <dd>
+            <span>{{activity.durationMinutes}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.activity.preDurationMinutes">Pre Duration Minutes</span></dt>
+        <dd>
+            <span>{{activity.preDurationMinutes}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.activity.postDurationMinutes">Post Duration Minutes</span></dt>
+        <dd>
+            <span>{{activity.postDurationMinutes}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.activity.isNrivate">Is Nrivate</span></dt>
+        <dd>
+            <span>{{activity.isNrivate}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.activity.colorCode">Color Code</span></dt>
+        <dd>
+            <span>{{activity.colorCode}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.activity.cancellationTime">Cancellation Time</span></dt>
+        <dd>
+            <span>{{activity.cancellationTime}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.activity.location">Location</span></dt>
+        <dd>
+            <span *ngFor="let location of activity.locations; let last = last">
+                <a [routerLink]="['/location', location?.id ]">{{location.name}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.activity.category">Category</span></dt>
+        <dd>
+            <span *ngFor="let category of activity.categories; let last = last">
+                <a [routerLink]="['/category', category?.id ]">{{category.name}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'activity/'+ activity.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

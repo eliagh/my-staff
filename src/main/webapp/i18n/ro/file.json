@@ -1,0 +1,26 @@
+{
+    "mystaffApp": {
+        "file" : {
+            "home": {
+                "title": "Files",
+                "createLabel": "Creeare o nouă entitate File",
+                "createOrEditLabel": "Creeare sau editare File",
+                "search": "Căutare după File"
+            },
+            "created": "A fost creată o nouă entitate File cu identificatorul {{ param }}",
+            "updated": "File cu identificatorul {{ param }} a fost actualizată",
+            "deleted": "File cu identificatorul {{ param }} a fost ștearsă",
+            "delete": {
+                "question": "Sunteți sigur că doriți să ștergeți File {{ id }}?"
+            },
+            "detail": {
+                "title": "File"
+            },
+            "name": "Name",
+            "url": "Url",
+            "fileType": "File Type",
+            "file": "File",
+            "owner": "Owner"
+        }
+    }
+}

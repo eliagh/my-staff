@@ -1,0 +1,67 @@
+
+<div *ngIf="appointment">
+    <h2><span jhiTranslate="mystaffApp.appointment.detail.title">Appointment</span> {{appointment.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="mystaffApp.appointment.when">When</span></dt>
+        <dd>
+            <span>{{appointment.when | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.appointment.label">Label</span></dt>
+        <dd>
+            <span>{{appointment.label}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.appointment.isRecurring">Is Recurring</span></dt>
+        <dd>
+            <span>{{appointment.isRecurring}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.appointment.isFlexible">Is Flexible</span></dt>
+        <dd>
+            <span>{{appointment.isFlexible}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.appointment.notes">Notes</span></dt>
+        <dd>
+            <span>{{appointment.notes}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.appointment.reminder">Reminder</span></dt>
+        <dd>
+            <span>{{appointment.reminder}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.appointment.customer">Customer</span></dt>
+        <dd>
+            <div *ngIf="appointment.customer">
+                <a [routerLink]="['/customer', appointment.customer?.id]">{{appointment.customer?.firstName}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.appointment.activityBooked">Activity Booked</span></dt>
+        <dd>
+            <div *ngIf="appointment.activityBooked">
+                <a [routerLink]="['/activity', appointment.activityBooked?.id]">{{appointment.activityBooked?.name}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.appointment.location">Location</span></dt>
+        <dd>
+            <div *ngIf="appointment.location">
+                <a [routerLink]="['/location', appointment.location?.id]">{{appointment.location?.name}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.appointment.provider">Provider</span></dt>
+        <dd>
+            {{appointment.provider?.login}}
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'appointment/'+ appointment.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

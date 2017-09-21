@@ -1,0 +1,25 @@
+{
+    "mystaffApp": {
+        "inventory" : {
+            "home": {
+                "title": "Inventories",
+                "createLabel": "Δημιουργήστε ένα νέο Inventory",
+                "createOrEditLabel": "Δημιουργήστε η επεξεργαστείτε ένα Inventory",
+                "search": "Αναζήτηση για Inventory"
+            },
+            "created": "Ένα νέο Inventory έχει δημιουργηθεί με αναγνωριστικό {{ param }}",
+            "updated": "Ένα Inventory έχει ενημερωθεί με αναγνωριστικό {{ param }}",
+            "deleted": "Ένα Inventory έχει διαγραφτεί με αναγνωριστικό {{ param }}",
+            "delete": {
+                "question": "Είστε βέβαιοι όταν θέλετε να διαγράψετε το ακόλουθο Inventory {{ id }};"
+            },
+            "detail": {
+                "title": "Inventory"
+            },
+            "quantity": "Quantity",
+            "inventoryDate": "Inventory Date",
+            "location": "Location",
+            "item": "Item"
+        }
+    }
+}

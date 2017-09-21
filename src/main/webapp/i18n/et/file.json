@@ -1,0 +1,26 @@
+{
+    "mystaffApp": {
+        "file" : {
+            "home": {
+                "title": "Files",
+                "createLabel": "Lisa uus File",
+                "createOrEditLabel": "Lisa või muuda File",
+                "search": "Otsi File"
+            },
+            "created": "Uus File on loodud identifikaatoriga {{ param }}",
+            "updated": "File identifikaatoriga {{ param }} on muudetud",
+            "deleted": "File identifikaatoriga {{ param }} on kustutatud",
+            "delete": {
+                "question": "Kas olete kindel, et soovite kustutada File {{ id }}?"
+            },
+            "detail": {
+                "title": "File"
+            },
+            "name": "Name",
+            "url": "Url",
+            "fileType": "File Type",
+            "file": "File",
+            "owner": "Owner"
+        }
+    }
+}

@@ -45,6 +45,18 @@ public class CacheConfiguration {
             cm.createCache(com.mycompany.mystaff.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(com.mycompany.mystaff.domain.User.class.getName() + ".authorities", jcacheConfiguration);
             cm.createCache(com.mycompany.mystaff.domain.SocialUserConnection.class.getName(), jcacheConfiguration);
+            cm.createCache(com.mycompany.mystaff.domain.Company.class.getName(), jcacheConfiguration);
+            cm.createCache(com.mycompany.mystaff.domain.Location.class.getName(), jcacheConfiguration);
+            cm.createCache(com.mycompany.mystaff.domain.Item.class.getName(), jcacheConfiguration);
+            cm.createCache(com.mycompany.mystaff.domain.Inventory.class.getName(), jcacheConfiguration);
+            cm.createCache(com.mycompany.mystaff.domain.Category.class.getName(), jcacheConfiguration);
+            cm.createCache(com.mycompany.mystaff.domain.Activity.class.getName(), jcacheConfiguration);
+            cm.createCache(com.mycompany.mystaff.domain.Activity.class.getName() + ".locations", jcacheConfiguration);
+            cm.createCache(com.mycompany.mystaff.domain.Activity.class.getName() + ".categories", jcacheConfiguration);
+            cm.createCache(com.mycompany.mystaff.domain.Appointment.class.getName(), jcacheConfiguration);
+            cm.createCache(com.mycompany.mystaff.domain.File.class.getName(), jcacheConfiguration);
+            cm.createCache(com.mycompany.mystaff.domain.Customer.class.getName(), jcacheConfiguration);
+            cm.createCache(com.mycompany.mystaff.domain.Customer.class.getName() + ".companies", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

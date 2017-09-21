@@ -1,0 +1,30 @@
+{
+    "mystaffApp": {
+        "location" : {
+            "home": {
+                "title": "Locations",
+                "createLabel": "Crear novo Location",
+                "createOrEditLabel": "Crear ou editar Location",
+                "search": "Search for Location"
+            },
+            "created": "Un novo Location foi creado co identificador {{ param }}",
+            "updated": "Un Location foi actualizado co identificador {{ param }}",
+            "deleted": "Un Location foi eliminado co identificador {{ param }}",
+            "delete": {
+                "question": "Seguro que desexa eliminar Location {{ id }}?"
+            },
+            "detail": {
+                "title": "Location"
+            },
+            "name": "Name",
+            "address1": "Address 1",
+            "address2": "Address 2",
+            "address3": "Address 3",
+            "number": "Number",
+            "postcode": "Postcode",
+            "city": "City",
+            "stateProvince": "State Province",
+            "company": "Company"
+        }
+    }
+}

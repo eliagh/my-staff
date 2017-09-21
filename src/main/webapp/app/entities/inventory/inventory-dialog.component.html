@@ -1,0 +1,82 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myInventoryLabel" jhiTranslate="mystaffApp.inventory.home.createOrEditLabel">Create or edit a Inventory</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!inventory.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="inventory.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="mystaffApp.inventory.quantity" for="field_quantity">Quantity</label>
+            <input type="number" class="form-control" name="quantity" id="field_quantity"
+                [(ngModel)]="inventory.quantity" min="0" />
+            <div [hidden]="!(editForm.controls.quantity?.dirty && editForm.controls.quantity?.invalid)">
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.quantity?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
+                    This field should be at least 0.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.quantity?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="mystaffApp.inventory.inventoryDate" for="field_inventoryDate">Inventory Date</label>
+            <div class="input-group">
+                <input id="field_inventoryDate" type="text" class="form-control" name="inventoryDate" ngbDatepicker  #inventoryDateDp="ngbDatepicker" [(ngModel)]="inventory.inventoryDate"
+                required/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-secondary" (click)="inventoryDateDp.toggle()"><i class="fa fa-calendar"></i></button>
+                </span>
+            </div>
+            <div [hidden]="!(editForm.controls.inventoryDate?.dirty && editForm.controls.inventoryDate?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.inventoryDate?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="mystaffApp.inventory.location" for="field_location">Location</label>
+            <select class="form-control" id="field_location" name="location" [(ngModel)]="inventory.location" required>
+                <option *ngIf="!editForm.value.location" [ngValue]="null" selected></option>
+                <option [ngValue]="locationOption.id === inventory.location?.id ? inventory.location : locationOption" *ngFor="let locationOption of locations; trackBy: trackLocationById">{{locationOption.name}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.location?.dirty && editForm.controls.location?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.location?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="mystaffApp.inventory.item" for="field_item">Item</label>
+            <select class="form-control" id="field_item" name="item" [(ngModel)]="inventory.item" required>
+                <option *ngIf="!editForm.value.item" [ngValue]="null" selected></option>
+                <option [ngValue]="itemOption.id === inventory.item?.id ? inventory.item : itemOption" *ngFor="let itemOption of items; trackBy: trackItemById">{{itemOption.name}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.item?.dirty && editForm.controls.item?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.item?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

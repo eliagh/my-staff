@@ -1,0 +1,33 @@
+{
+    "mystaffApp": {
+        "activity" : {
+            "home": {
+                "title": "Activities",
+                "createLabel": "Egy új Activity létrehozása",
+                "createOrEditLabel": "Hozzon létre, vagy módosítson Activityt",
+                "search": "Activity keresése"
+            },
+            "created": "Egy új Activity lett létrehozva {{ param }} azonosítóval",
+            "updated": "A Activity módosítva lett {{ param }} azonosítóval",
+            "deleted": "A Activity törölve lett {{ param }} azonosítóval",
+            "delete": {
+                "question": "Biztos benne, hogy törölni szeretné az Activityt {{ id }} azonosítóval?"
+            },
+            "detail": {
+                "title": "Activity"
+            },
+            "name": "Name",
+            "logo": "Logo",
+            "description": "Description",
+            "price": "Price",
+            "durationMinutes": "Duration Minutes",
+            "preDurationMinutes": "Pre Duration Minutes",
+            "postDurationMinutes": "Post Duration Minutes",
+            "isNrivate": "Is Nrivate",
+            "colorCode": "Color Code",
+            "cancellationTime": "Cancellation Time",
+            "location": "Location",
+            "category": "Category"
+        }
+    }
+}

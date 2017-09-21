@@ -1,0 +1,80 @@
+<div>
+    <h2>
+        <span jhiTranslate="mystaffApp.company.home.title">Companies</span>
+        <button class="btn btn-primary float-right jh-create-entity create-company" [routerLink]="['/', { outlets: { popup: ['company-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span class="hidden-sm-down"  jhiTranslate="mystaffApp.company.home.createLabel">
+            Create new Company
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'mystaffApp.company.home.search' | translate }}">
+                    <button class="input-group-addon btn btn-info" (click)="search(currentSearch)">
+                        <span class="fa fa-search"></span>
+                    </button>
+                    <button class="input-group-addon btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <span class="fa fa-trash-o"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="companies">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="mystaffApp.company.name">Name</span></th>
+            <th><span jhiTranslate="mystaffApp.company.logo">Logo</span></th>
+            <th><span jhiTranslate="mystaffApp.company.sector">Sector</span></th>
+            <th><span jhiTranslate="mystaffApp.company.thema">Thema</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let company of companies ;trackBy: trackId">
+                <td><a [routerLink]="['../company', company.id ]">{{company.id}}</a></td>
+                <td>{{company.name}}</td>
+                <td>
+                    <a *ngIf="company.logo" (click)="openFile(company.logoContentType, company.logo)">
+                        <img [src]="'data:' + company.logoContentType + ';base64,' + company.logo" style="max-height: 30px;" alt="company image"/>
+                    </a>
+                    <span *ngIf="company.logo">{{company.logoContentType}}, {{byteSize(company.logo)}}</span>
+                </td>
+                <td>{{company.sector}}</td>
+                <td>{{company.thema}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../company', company.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'company/'+ company.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'company/'+ company.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

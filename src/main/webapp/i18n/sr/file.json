@@ -1,0 +1,26 @@
+{
+    "mystaffApp": {
+        "file" : {
+            "home": {
+                "title": "Files",
+                "createLabel": "Kreiraj novi File",
+                "createOrEditLabel": "Kreirajte ili izmenite File",
+                "search": "Potražite File"
+            },
+            "created": "Kreiran je novi File pod nazivom {{ param }}",
+            "updated": "File pod nazivom {{ param }} je ažuriran",
+            "deleted": "File pod nazivom {{ param }} je obrisan",
+            "delete": {
+                "question": "Da li ste sigurni da želite da obrišete File pod nazivom {{ id }}?"
+            },
+            "detail": {
+                "title": "File"
+            },
+            "name": "Name",
+            "url": "Url",
+            "fileType": "File Type",
+            "file": "File",
+            "owner": "Owner"
+        }
+    }
+}

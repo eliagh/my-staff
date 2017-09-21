@@ -1,0 +1,25 @@
+{
+    "mystaffApp": {
+        "inventory" : {
+            "home": {
+                "title": "Inventories",
+                "createLabel": "Inventory erstellen",
+                "createOrEditLabel": "Inventory erstellen oder bearbeiten",
+                "search": "Suche nach Inventory"
+            },
+            "created": "Inventory erstellt mit ID {{ param }}",
+            "updated": "Inventory aktualisiert mit ID {{ param }}",
+            "deleted": "Inventory gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Inventory {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Inventory"
+            },
+            "quantity": "Quantity",
+            "inventoryDate": "Inventory Date",
+            "location": "Location",
+            "item": "Item"
+        }
+    }
+}

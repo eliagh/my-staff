@@ -1,0 +1,30 @@
+{
+    "mystaffApp": {
+        "location" : {
+            "home": {
+                "title": "Locations",
+                "createLabel": "Kreiraj novi Location",
+                "createOrEditLabel": "Kreirajte ili izmenite Location",
+                "search": "Potražite Location"
+            },
+            "created": "Kreiran je novi Location pod nazivom {{ param }}",
+            "updated": "Location pod nazivom {{ param }} je ažuriran",
+            "deleted": "Location pod nazivom {{ param }} je obrisan",
+            "delete": {
+                "question": "Da li ste sigurni da želite da obrišete Location pod nazivom {{ id }}?"
+            },
+            "detail": {
+                "title": "Location"
+            },
+            "name": "Name",
+            "address1": "Address 1",
+            "address2": "Address 2",
+            "address3": "Address 3",
+            "number": "Number",
+            "postcode": "Postcode",
+            "city": "City",
+            "stateProvince": "State Province",
+            "company": "Company"
+        }
+    }
+}

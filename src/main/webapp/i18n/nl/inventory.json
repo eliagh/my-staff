@@ -1,0 +1,25 @@
+{
+    "mystaffApp": {
+        "inventory" : {
+            "home": {
+                "title": "Inventories",
+                "createLabel": "Maak een nieuwe Inventory",
+                "createOrEditLabel": "Maak of wijzig een Inventory",
+                "search": "Search for Inventory"
+            },
+            "created": "A new Inventory is created with identifier {{ param }}",
+            "updated": "A Inventory is updated with identifier {{ param }}",
+            "deleted": "A Inventory is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Bent u zeker dat u Inventory {{ id }} wilt verwijderen?"
+            },
+            "detail": {
+                "title": "Inventory"
+            },
+            "quantity": "Quantity",
+            "inventoryDate": "Inventory Date",
+            "location": "Location",
+            "item": "Item"
+        }
+    }
+}

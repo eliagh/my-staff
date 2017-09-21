@@ -1,0 +1,25 @@
+{
+    "mystaffApp": {
+        "company" : {
+            "home": {
+                "title": "Companies",
+                "createLabel": "Lisa uus Company",
+                "createOrEditLabel": "Lisa või muuda Company",
+                "search": "Otsi Company"
+            },
+            "created": "Uus Company on loodud identifikaatoriga {{ param }}",
+            "updated": "Company identifikaatoriga {{ param }} on muudetud",
+            "deleted": "Company identifikaatoriga {{ param }} on kustutatud",
+            "delete": {
+                "question": "Kas olete kindel, et soovite kustutada Company {{ id }}?"
+            },
+            "detail": {
+                "title": "Company"
+            },
+            "name": "Name",
+            "logo": "Logo",
+            "sector": "Sector",
+            "thema": "Thema"
+        }
+    }
+}

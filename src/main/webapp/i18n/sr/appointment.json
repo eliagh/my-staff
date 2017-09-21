@@ -1,0 +1,31 @@
+{
+    "mystaffApp": {
+        "appointment" : {
+            "home": {
+                "title": "Appointments",
+                "createLabel": "Kreiraj novi Appointment",
+                "createOrEditLabel": "Kreirajte ili izmenite Appointment",
+                "search": "Potražite Appointment"
+            },
+            "created": "Kreiran je novi Appointment pod nazivom {{ param }}",
+            "updated": "Appointment pod nazivom {{ param }} je ažuriran",
+            "deleted": "Appointment pod nazivom {{ param }} je obrisan",
+            "delete": {
+                "question": "Da li ste sigurni da želite da obrišete Appointment pod nazivom {{ id }}?"
+            },
+            "detail": {
+                "title": "Appointment"
+            },
+            "when": "When",
+            "label": "Label",
+            "isRecurring": "Is Recurring",
+            "isFlexible": "Is Flexible",
+            "notes": "Notes",
+            "reminder": "Reminder",
+            "customer": "Customer",
+            "activityBooked": "Activity Booked",
+            "location": "Location",
+            "provider": "Provider"
+        }
+    }
+}

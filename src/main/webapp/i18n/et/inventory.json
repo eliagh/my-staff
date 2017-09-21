@@ -1,0 +1,25 @@
+{
+    "mystaffApp": {
+        "inventory" : {
+            "home": {
+                "title": "Inventories",
+                "createLabel": "Lisa uus Inventory",
+                "createOrEditLabel": "Lisa või muuda Inventory",
+                "search": "Otsi Inventory"
+            },
+            "created": "Uus Inventory on loodud identifikaatoriga {{ param }}",
+            "updated": "Inventory identifikaatoriga {{ param }} on muudetud",
+            "deleted": "Inventory identifikaatoriga {{ param }} on kustutatud",
+            "delete": {
+                "question": "Kas olete kindel, et soovite kustutada Inventory {{ id }}?"
+            },
+            "detail": {
+                "title": "Inventory"
+            },
+            "quantity": "Quantity",
+            "inventoryDate": "Inventory Date",
+            "location": "Location",
+            "item": "Item"
+        }
+    }
+}

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="now" value="now()" dbms="h2"/>
+
+    <property name="now" value="now()" dbms="mysql"/>
+    <property name="autoIncrement" value="true"/>
+
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
+
+    <!--
+        Added the entity Customer.
+    -->
+    <changeSet id="20170921174221-1" author="jhipster">
+        <createTable tableName="customer">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="midle_name" type="varchar(50)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="last_name" type="varchar(50)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="login" type="varchar(60)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="password_hash" type="varchar(60)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="phone" type="varchar(50)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="email" type="varchar(100)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="image_url" type="varchar(100)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="activated" type="bit">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="lang_key" type="varchar(5)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="activation_key" type="varchar(5)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="reset_key" type="varchar(5)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="created_date" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="reset_date" type="varchar(50)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="last_modified_by" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="last_modified_date" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
+        </createTable>
+        <dropDefaultValue tableName="customer" columnName="created_date" columnDataType="datetime"/>
+        <dropDefaultValue tableName="customer" columnName="last_modified_by" columnDataType="datetime"/>
+        <dropDefaultValue tableName="customer" columnName="last_modified_date" columnDataType="datetime"/>
+        
+        <createTable tableName="customer_company">
+            <column name="companies_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="customers_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="customers_id, companies_id" tableName="customer_company"/>
+        
+    </changeSet>
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
+</databaseChangeLog>

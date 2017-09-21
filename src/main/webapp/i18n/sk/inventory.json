@@ -1,0 +1,25 @@
+{
+    "mystaffApp": {
+        "inventory" : {
+            "home": {
+                "title": "Inventories",
+                "createLabel": "Pridať Inventory",
+                "createOrEditLabel": "Pridať alebo upraviť Inventory",
+                "search": "Vyhľadať Inventory"
+            },
+            "created": "Bol vytvorený potomok entity Inventory s identifikátorom {{ param }}",
+            "updated": "Potomok entity Inventory s identifikátorom {{ param }} bol upravený.",
+            "deleted": "Potomok entity Inventory s identifikátorom {{ param }} bol vymazaný.",
+            "delete": {
+                "question": "Ste si istý, že chcete vymazať Inventory {{ id }}?"
+            },
+            "detail": {
+                "title": "Inventory"
+            },
+            "quantity": "Quantity",
+            "inventoryDate": "Inventory Date",
+            "location": "Location",
+            "item": "Item"
+        }
+    }
+}

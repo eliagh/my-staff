@@ -1,0 +1,92 @@
+<div>
+    <h2>
+        <span jhiTranslate="mystaffApp.activity.home.title">Activities</span>
+        <button class="btn btn-primary float-right jh-create-entity create-activity" [routerLink]="['/', { outlets: { popup: ['activity-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span class="hidden-sm-down"  jhiTranslate="mystaffApp.activity.home.createLabel">
+            Create new Activity
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'mystaffApp.activity.home.search' | translate }}">
+                    <button class="input-group-addon btn btn-info" (click)="search(currentSearch)">
+                        <span class="fa fa-search"></span>
+                    </button>
+                    <button class="input-group-addon btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <span class="fa fa-trash-o"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="activities">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="name"><span jhiTranslate="mystaffApp.activity.name">Name</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="logo"><span jhiTranslate="mystaffApp.activity.logo">Logo</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="description"><span jhiTranslate="mystaffApp.activity.description">Description</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="price"><span jhiTranslate="mystaffApp.activity.price">Price</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="durationMinutes"><span jhiTranslate="mystaffApp.activity.durationMinutes">Duration Minutes</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="preDurationMinutes"><span jhiTranslate="mystaffApp.activity.preDurationMinutes">Pre Duration Minutes</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="postDurationMinutes"><span jhiTranslate="mystaffApp.activity.postDurationMinutes">Post Duration Minutes</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="isNrivate"><span jhiTranslate="mystaffApp.activity.isNrivate">Is Nrivate</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="colorCode"><span jhiTranslate="mystaffApp.activity.colorCode">Color Code</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="cancellationTime"><span jhiTranslate="mystaffApp.activity.cancellationTime">Cancellation Time</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let activity of activities ;trackBy: trackId">
+                <td><a [routerLink]="['../activity', activity.id ]">{{activity.id}}</a></td>
+                <td>{{activity.name}}</td>
+                <td>
+                    <a *ngIf="activity.logo" (click)="openFile(activity.logoContentType, activity.logo)">
+                        <img [src]="'data:' + activity.logoContentType + ';base64,' + activity.logo" style="max-height: 30px;" alt="activity image"/>
+                    </a>
+                    <span *ngIf="activity.logo">{{activity.logoContentType}}, {{byteSize(activity.logo)}}</span>
+                </td>
+                <td>{{activity.description}}</td>
+                <td>{{activity.price}}</td>
+                <td>{{activity.durationMinutes}}</td>
+                <td>{{activity.preDurationMinutes}}</td>
+                <td>{{activity.postDurationMinutes}}</td>
+                <td>{{activity.isNrivate}}</td>
+                <td>{{activity.colorCode}}</td>
+                <td>{{activity.cancellationTime}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../activity', activity.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'activity/'+ activity.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'activity/'+ activity.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

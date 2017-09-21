@@ -1,0 +1,29 @@
+{
+    "mystaffApp": {
+        "item" : {
+            "home": {
+                "title": "Items",
+                "createLabel": "Pridať Item",
+                "createOrEditLabel": "Pridať alebo upraviť Item",
+                "search": "Vyhľadať Item"
+            },
+            "created": "Bol vytvorený potomok entity Item s identifikátorom {{ param }}",
+            "updated": "Potomok entity Item s identifikátorom {{ param }} bol upravený.",
+            "deleted": "Potomok entity Item s identifikátorom {{ param }} bol vymazaný.",
+            "delete": {
+                "question": "Ste si istý, že chcete vymazať Item {{ id }}?"
+            },
+            "detail": {
+                "title": "Item"
+            },
+            "name": "Name",
+            "pictureUrl": "Picture Url",
+            "pricePerUnit": "Price Per Unit",
+            "unit": "Unit",
+            "code": "Code",
+            "description": "Description",
+            "showInShop": "Show In Shop",
+            "company": "Company"
+        }
+    }
+}

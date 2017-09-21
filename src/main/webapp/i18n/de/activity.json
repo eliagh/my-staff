@@ -1,0 +1,33 @@
+{
+    "mystaffApp": {
+        "activity" : {
+            "home": {
+                "title": "Activities",
+                "createLabel": "Activity erstellen",
+                "createOrEditLabel": "Activity erstellen oder bearbeiten",
+                "search": "Suche nach Activity"
+            },
+            "created": "Activity erstellt mit ID {{ param }}",
+            "updated": "Activity aktualisiert mit ID {{ param }}",
+            "deleted": "Activity gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Activity {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Activity"
+            },
+            "name": "Name",
+            "logo": "Logo",
+            "description": "Description",
+            "price": "Price",
+            "durationMinutes": "Duration Minutes",
+            "preDurationMinutes": "Pre Duration Minutes",
+            "postDurationMinutes": "Post Duration Minutes",
+            "isNrivate": "Is Nrivate",
+            "colorCode": "Color Code",
+            "cancellationTime": "Cancellation Time",
+            "location": "Location",
+            "category": "Category"
+        }
+    }
+}

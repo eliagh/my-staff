@@ -1,0 +1,25 @@
+{
+    "mystaffApp": {
+        "inventory" : {
+            "home": {
+                "title": "Inventories",
+                "createLabel": "Skapa en ny Inventory",
+                "createOrEditLabel": "Skapa eller ändra en Inventory",
+                "search": "Sök efter Inventory"
+            },
+            "created": "En ny Inventory är skapad med id {{ param }}",
+            "updated": "En Inventory är uppdaterad med id  {{ param }}",
+            "deleted": "En Inventory är borttagen med id  {{ param }}",
+            "delete": {
+                "question": "Är du säker på att du vill ta bort Inventory {{ id }}?"
+            },
+            "detail": {
+                "title": "Inventory"
+            },
+            "quantity": "Quantity",
+            "inventoryDate": "Inventory Date",
+            "location": "Location",
+            "item": "Item"
+        }
+    }
+}

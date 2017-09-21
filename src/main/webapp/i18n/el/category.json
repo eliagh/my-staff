@@ -1,0 +1,24 @@
+{
+    "mystaffApp": {
+        "category" : {
+            "home": {
+                "title": "Categories",
+                "createLabel": "Δημιουργήστε ένα νέο Category",
+                "createOrEditLabel": "Δημιουργήστε η επεξεργαστείτε ένα Category",
+                "search": "Αναζήτηση για Category"
+            },
+            "created": "Ένα νέο Category έχει δημιουργηθεί με αναγνωριστικό {{ param }}",
+            "updated": "Ένα Category έχει ενημερωθεί με αναγνωριστικό {{ param }}",
+            "deleted": "Ένα Category έχει διαγραφτεί με αναγνωριστικό {{ param }}",
+            "delete": {
+                "question": "Είστε βέβαιοι όταν θέλετε να διαγράψετε το ακόλουθο Category {{ id }};"
+            },
+            "detail": {
+                "title": "Category"
+            },
+            "name": "Name",
+            "description": "Description",
+            "company": "Company"
+        }
+    }
+}

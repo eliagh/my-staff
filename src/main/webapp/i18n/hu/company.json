@@ -1,0 +1,25 @@
+{
+    "mystaffApp": {
+        "company" : {
+            "home": {
+                "title": "Companies",
+                "createLabel": "Egy új Company létrehozása",
+                "createOrEditLabel": "Hozzon létre, vagy módosítson Companyt",
+                "search": "Company keresése"
+            },
+            "created": "Egy új Company lett létrehozva {{ param }} azonosítóval",
+            "updated": "A Company módosítva lett {{ param }} azonosítóval",
+            "deleted": "A Company törölve lett {{ param }} azonosítóval",
+            "delete": {
+                "question": "Biztos benne, hogy törölni szeretné az Companyt {{ id }} azonosítóval?"
+            },
+            "detail": {
+                "title": "Company"
+            },
+            "name": "Name",
+            "logo": "Logo",
+            "sector": "Sector",
+            "thema": "Thema"
+        }
+    }
+}

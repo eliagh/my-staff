@@ -1,0 +1,29 @@
+{
+    "mystaffApp": {
+        "item" : {
+            "home": {
+                "title": "Items",
+                "createLabel": "Lisa uus Item",
+                "createOrEditLabel": "Lisa või muuda Item",
+                "search": "Otsi Item"
+            },
+            "created": "Uus Item on loodud identifikaatoriga {{ param }}",
+            "updated": "Item identifikaatoriga {{ param }} on muudetud",
+            "deleted": "Item identifikaatoriga {{ param }} on kustutatud",
+            "delete": {
+                "question": "Kas olete kindel, et soovite kustutada Item {{ id }}?"
+            },
+            "detail": {
+                "title": "Item"
+            },
+            "name": "Name",
+            "pictureUrl": "Picture Url",
+            "pricePerUnit": "Price Per Unit",
+            "unit": "Unit",
+            "code": "Code",
+            "description": "Description",
+            "showInShop": "Show In Shop",
+            "company": "Company"
+        }
+    }
+}

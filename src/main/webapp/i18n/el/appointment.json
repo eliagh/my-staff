@@ -1,0 +1,31 @@
+{
+    "mystaffApp": {
+        "appointment" : {
+            "home": {
+                "title": "Appointments",
+                "createLabel": "Δημιουργήστε ένα νέο Appointment",
+                "createOrEditLabel": "Δημιουργήστε η επεξεργαστείτε ένα Appointment",
+                "search": "Αναζήτηση για Appointment"
+            },
+            "created": "Ένα νέο Appointment έχει δημιουργηθεί με αναγνωριστικό {{ param }}",
+            "updated": "Ένα Appointment έχει ενημερωθεί με αναγνωριστικό {{ param }}",
+            "deleted": "Ένα Appointment έχει διαγραφτεί με αναγνωριστικό {{ param }}",
+            "delete": {
+                "question": "Είστε βέβαιοι όταν θέλετε να διαγράψετε το ακόλουθο Appointment {{ id }};"
+            },
+            "detail": {
+                "title": "Appointment"
+            },
+            "when": "When",
+            "label": "Label",
+            "isRecurring": "Is Recurring",
+            "isFlexible": "Is Flexible",
+            "notes": "Notes",
+            "reminder": "Reminder",
+            "customer": "Customer",
+            "activityBooked": "Activity Booked",
+            "location": "Location",
+            "provider": "Provider"
+        }
+    }
+}

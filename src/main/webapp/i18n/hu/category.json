@@ -1,0 +1,24 @@
+{
+    "mystaffApp": {
+        "category" : {
+            "home": {
+                "title": "Categories",
+                "createLabel": "Egy új Category létrehozása",
+                "createOrEditLabel": "Hozzon létre, vagy módosítson Categoryt",
+                "search": "Category keresése"
+            },
+            "created": "Egy új Category lett létrehozva {{ param }} azonosítóval",
+            "updated": "A Category módosítva lett {{ param }} azonosítóval",
+            "deleted": "A Category törölve lett {{ param }} azonosítóval",
+            "delete": {
+                "question": "Biztos benne, hogy törölni szeretné az Categoryt {{ id }} azonosítóval?"
+            },
+            "detail": {
+                "title": "Category"
+            },
+            "name": "Name",
+            "description": "Description",
+            "company": "Company"
+        }
+    }
+}

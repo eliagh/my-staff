@@ -1,0 +1,29 @@
+{
+    "mystaffApp": {
+        "item" : {
+            "home": {
+                "title": "Items",
+                "createLabel": "Створити новий Item",
+                "createOrEditLabel": "Створити чи редагувати Item",
+                "search": "Знайти Item"
+            },
+            "created": "Новий Item створений з ідентифікатором {{ param }}",
+            "updated": "Item оновлений з ідентифікатором {{ param }}",
+            "deleted": "Item видалений з ідентифікатором {{ param }}",
+            "delete": {
+                "question": "Ви впевнені, що хочете видалити Item {{ id }}?"
+            },
+            "detail": {
+                "title": "Item"
+            },
+            "name": "Name",
+            "pictureUrl": "Picture Url",
+            "pricePerUnit": "Price Per Unit",
+            "unit": "Unit",
+            "code": "Code",
+            "description": "Description",
+            "showInShop": "Show In Shop",
+            "company": "Company"
+        }
+    }
+}

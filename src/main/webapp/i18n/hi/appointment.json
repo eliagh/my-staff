@@ -1,0 +1,31 @@
+{
+    "mystaffApp": {
+        "appointment" : {
+            "home": {
+                "title": "Appointments",
+                "createLabel": "नया Appointment बनाएँ",
+                "createOrEditLabel": "Appointment बनाएँ या संपादित करें",
+                "search": "Appointment खोजें"
+            },
+            "created": "एक नया Appointment [identifier: {{ param }}] तैयार है",
+            "updated": "एक Appointment [identifier: {{ param }}] का अद्यतन हुआ है",
+            "deleted": "Appointment [identifier: {{ param }}] हटा दिया है",
+            "delete": {
+                "question": "Appointment [id: {{ id }}] हटाने की पुष्टि करें"
+            },
+            "detail": {
+                "title": "Appointment"
+            },
+            "when": "When",
+            "label": "Label",
+            "isRecurring": "Is Recurring",
+            "isFlexible": "Is Flexible",
+            "notes": "Notes",
+            "reminder": "Reminder",
+            "customer": "Customer",
+            "activityBooked": "Activity Booked",
+            "location": "Location",
+            "provider": "Provider"
+        }
+    }
+}

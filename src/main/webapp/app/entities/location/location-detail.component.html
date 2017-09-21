@@ -1,0 +1,59 @@
+
+<div *ngIf="location">
+    <h2><span jhiTranslate="mystaffApp.location.detail.title">Location</span> {{location.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="mystaffApp.location.name">Name</span></dt>
+        <dd>
+            <span>{{location.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.location.address1">Address 1</span></dt>
+        <dd>
+            <span>{{location.address1}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.location.address2">Address 2</span></dt>
+        <dd>
+            <span>{{location.address2}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.location.address3">Address 3</span></dt>
+        <dd>
+            <span>{{location.address3}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.location.number">Number</span></dt>
+        <dd>
+            <span>{{location.number}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.location.postcode">Postcode</span></dt>
+        <dd>
+            <span>{{location.postcode}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.location.city">City</span></dt>
+        <dd>
+            <span>{{location.city}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.location.stateProvince">State Province</span></dt>
+        <dd>
+            <span>{{location.stateProvince}}</span>
+        </dd>
+        <dt><span jhiTranslate="mystaffApp.location.company">Company</span></dt>
+        <dd>
+            <div *ngIf="location.company">
+                <a [routerLink]="['/company', location.company?.id]">{{location.company?.name}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'location/'+ location.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,25 @@
+{
+    "mystaffApp": {
+        "company" : {
+            "home": {
+                "title": "Companies",
+                "createLabel": "Skapa en ny Company",
+                "createOrEditLabel": "Skapa eller ändra en Company",
+                "search": "Sök efter Company"
+            },
+            "created": "En ny Company är skapad med id {{ param }}",
+            "updated": "En Company är uppdaterad med id  {{ param }}",
+            "deleted": "En Company är borttagen med id  {{ param }}",
+            "delete": {
+                "question": "Är du säker på att du vill ta bort Company {{ id }}?"
+            },
+            "detail": {
+                "title": "Company"
+            },
+            "name": "Name",
+            "logo": "Logo",
+            "sector": "Sector",
+            "thema": "Thema"
+        }
+    }
+}

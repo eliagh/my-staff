@@ -1,0 +1,29 @@
+{
+    "mystaffApp": {
+        "item" : {
+            "home": {
+                "title": "Items",
+                "createLabel": "Criar novo Item",
+                "createOrEditLabel": "Criar ou editar Item",
+                "search": "Pesquisar por Item"
+            },
+            "created": "Um novo Item foi criado com o identificador {{ param }}",
+            "updated": "Um Item foi atualizado com o identificador {{ param }}",
+            "deleted": "Um Item foi deletado com o identificador {{ param }}",
+            "delete": {
+                "question": "Tem certeza de que deseja excluir Item {{ id }}?"
+            },
+            "detail": {
+                "title": "Item"
+            },
+            "name": "Name",
+            "pictureUrl": "Picture Url",
+            "pricePerUnit": "Price Per Unit",
+            "unit": "Unit",
+            "code": "Code",
+            "description": "Description",
+            "showInShop": "Show In Shop",
+            "company": "Company"
+        }
+    }
+}

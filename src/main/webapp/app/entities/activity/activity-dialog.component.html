@@ -1,0 +1,145 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myActivityLabel" jhiTranslate="mystaffApp.activity.home.createOrEditLabel">Create or edit a Activity</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!activity.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="activity.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="mystaffApp.activity.name" for="field_name">Name</label>
+            <input type="text" class="form-control" name="name" id="field_name"
+                [(ngModel)]="activity.name" required minlength="2" maxlength="50" />
+            <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.name?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.name?.errors?.minlength" jhiTranslate="entity.validation.minlength" translateValues="{ min: 2 }">
+                   This field is required to be at least 2 characters.
+                </small>
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.name?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 50 }">
+                   This field cannot be longer than 50 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="mystaffApp.activity.logo" for="field_logo">Logo</label>
+            <div>
+                <img [src]="'data:' + activity.logoContentType + ';base64,' + activity.logo" style="max-height: 100px;" *ngIf="activity.logo" alt="activity image"/>
+                <div *ngIf="activity.logo" class="form-text text-danger clearfix">
+                    <span class="pull-left">{{activity.logoContentType}}, {{byteSize(activity.logo)}}</span>
+                    <button type="button" (click)="clearInputImage('logo', 'logoContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
+                        <span class="fa fa-times"></span>
+                    </button>
+                </div>
+                <input type="file" id="file_logo" (change)="setFileData($event, activity, 'logo', true)" accept="image/*" jhiTranslate="entity.action.addimage"/>
+            </div>
+            <input type="hidden" class="form-control" name="logo" id="field_logo"
+                [(ngModel)]="activity.logo"  />
+            <input type="hidden" class="form-control" name="logoContentType" id="field_logoContentType"
+                [(ngModel)]="activity.logoContentType" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="mystaffApp.activity.description" for="field_description">Description</label>
+            <textarea class="form-control" name="description" id="field_description"
+                [(ngModel)]="activity.description"  ></textarea>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="mystaffApp.activity.price" for="field_price">Price</label>
+            <input type="number" class="form-control" name="price" id="field_price"
+                [(ngModel)]="activity.price" min="0" />
+            <div [hidden]="!(editForm.controls.price?.dirty && editForm.controls.price?.invalid)">
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.price?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
+                    This field should be at least 0.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.price?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="mystaffApp.activity.durationMinutes" for="field_durationMinutes">Duration Minutes</label>
+            <input type="number" class="form-control" name="durationMinutes" id="field_durationMinutes"
+                [(ngModel)]="activity.durationMinutes" required />
+            <div [hidden]="!(editForm.controls.durationMinutes?.dirty && editForm.controls.durationMinutes?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.durationMinutes?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.durationMinutes?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="mystaffApp.activity.preDurationMinutes" for="field_preDurationMinutes">Pre Duration Minutes</label>
+            <input type="number" class="form-control" name="preDurationMinutes" id="field_preDurationMinutes"
+                [(ngModel)]="activity.preDurationMinutes"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="mystaffApp.activity.postDurationMinutes" for="field_postDurationMinutes">Post Duration Minutes</label>
+            <input type="number" class="form-control" name="postDurationMinutes" id="field_postDurationMinutes"
+                [(ngModel)]="activity.postDurationMinutes"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="mystaffApp.activity.isNrivate" for="field_isNrivate">Is Nrivate</label>
+            <input type="checkbox" class="form-control" name="isNrivate" id="field_isNrivate"
+                [(ngModel)]="activity.isNrivate"  />
+            <div [hidden]="!(editForm.controls.isNrivate?.dirty && editForm.controls.isNrivate?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.isNrivate?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="mystaffApp.activity.colorCode" for="field_colorCode">Color Code</label>
+            <input type="text" class="form-control" name="colorCode" id="field_colorCode"
+                [(ngModel)]="activity.colorCode" required />
+            <div [hidden]="!(editForm.controls.colorCode?.dirty && editForm.controls.colorCode?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.colorCode?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="mystaffApp.activity.cancellationTime" for="field_cancellationTime">Cancellation Time</label>
+            <input type="number" class="form-control" name="cancellationTime" id="field_cancellationTime"
+                [(ngModel)]="activity.cancellationTime"  />
+        </div>
+
+        <div class="form-group">
+            <label jhiTranslate="mystaffApp.activity.location" for="field_location">Location</label>
+            <select class="form-control" id="field_location" multiple name="location" [(ngModel)]="activity.locations">
+                <option [ngValue]="getSelected(activity.locations, locationOption)" *ngFor="let locationOption of locations; trackBy: trackLocationById">{{locationOption.name}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="mystaffApp.activity.category" for="field_category">Category</label>
+            <select class="form-control" id="field_category" multiple name="category" [(ngModel)]="activity.categories">
+                <option [ngValue]="getSelected(activity.categories, categoryOption)" *ngFor="let categoryOption of categories; trackBy: trackCategoryById">{{categoryOption.name}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

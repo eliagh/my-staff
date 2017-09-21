@@ -1,0 +1,31 @@
+{
+    "mystaffApp": {
+        "appointment" : {
+            "home": {
+                "title": "Appointments",
+                "createLabel": "Pridať Appointment",
+                "createOrEditLabel": "Pridať alebo upraviť Appointment",
+                "search": "Vyhľadať Appointment"
+            },
+            "created": "Bol vytvorený potomok entity Appointment s identifikátorom {{ param }}",
+            "updated": "Potomok entity Appointment s identifikátorom {{ param }} bol upravený.",
+            "deleted": "Potomok entity Appointment s identifikátorom {{ param }} bol vymazaný.",
+            "delete": {
+                "question": "Ste si istý, že chcete vymazať Appointment {{ id }}?"
+            },
+            "detail": {
+                "title": "Appointment"
+            },
+            "when": "When",
+            "label": "Label",
+            "isRecurring": "Is Recurring",
+            "isFlexible": "Is Flexible",
+            "notes": "Notes",
+            "reminder": "Reminder",
+            "customer": "Customer",
+            "activityBooked": "Activity Booked",
+            "location": "Location",
+            "provider": "Provider"
+        }
+    }
+}

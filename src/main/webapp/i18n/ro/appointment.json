@@ -1,0 +1,31 @@
+{
+    "mystaffApp": {
+        "appointment" : {
+            "home": {
+                "title": "Appointments",
+                "createLabel": "Creeare o nouă entitate Appointment",
+                "createOrEditLabel": "Creeare sau editare Appointment",
+                "search": "Căutare după Appointment"
+            },
+            "created": "A fost creată o nouă entitate Appointment cu identificatorul {{ param }}",
+            "updated": "Appointment cu identificatorul {{ param }} a fost actualizată",
+            "deleted": "Appointment cu identificatorul {{ param }} a fost ștearsă",
+            "delete": {
+                "question": "Sunteți sigur că doriți să ștergeți Appointment {{ id }}?"
+            },
+            "detail": {
+                "title": "Appointment"
+            },
+            "when": "When",
+            "label": "Label",
+            "isRecurring": "Is Recurring",
+            "isFlexible": "Is Flexible",
+            "notes": "Notes",
+            "reminder": "Reminder",
+            "customer": "Customer",
+            "activityBooked": "Activity Booked",
+            "location": "Location",
+            "provider": "Provider"
+        }
+    }
+}

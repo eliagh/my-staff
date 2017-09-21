@@ -1,0 +1,30 @@
+{
+    "mystaffApp": {
+        "location" : {
+            "home": {
+                "title": "Locations",
+                "createLabel": "Δημιουργήστε ένα νέο Location",
+                "createOrEditLabel": "Δημιουργήστε η επεξεργαστείτε ένα Location",
+                "search": "Αναζήτηση για Location"
+            },
+            "created": "Ένα νέο Location έχει δημιουργηθεί με αναγνωριστικό {{ param }}",
+            "updated": "Ένα Location έχει ενημερωθεί με αναγνωριστικό {{ param }}",
+            "deleted": "Ένα Location έχει διαγραφτεί με αναγνωριστικό {{ param }}",
+            "delete": {
+                "question": "Είστε βέβαιοι όταν θέλετε να διαγράψετε το ακόλουθο Location {{ id }};"
+            },
+            "detail": {
+                "title": "Location"
+            },
+            "name": "Name",
+            "address1": "Address 1",
+            "address2": "Address 2",
+            "address3": "Address 3",
+            "number": "Number",
+            "postcode": "Postcode",
+            "city": "City",
+            "stateProvince": "State Province",
+            "company": "Company"
+        }
+    }
+}
