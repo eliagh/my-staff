@@ -11,6 +11,10 @@
         <addForeignKeyConstraint baseColumnNames="company_id"
                                  baseTableName="item"
                                  constraintName="fk_item_company_id"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE" 
                                  referencedColumnNames="id"
                                  referencedTableName="company"/>
 

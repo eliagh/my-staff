@@ -11,12 +11,20 @@
         <addForeignKeyConstraint baseColumnNames="location_id"
                                  baseTableName="inventory"
                                  constraintName="fk_inventory_location_id"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE" 
                                  referencedColumnNames="id"
                                  referencedTableName="location"/>
 
         <addForeignKeyConstraint baseColumnNames="item_id"
                                  baseTableName="inventory"
                                  constraintName="fk_inventory_item_id"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE" 
                                  referencedColumnNames="id"
                                  referencedTableName="item"/>
 

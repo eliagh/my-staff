@@ -11,11 +11,19 @@
         <addForeignKeyConstraint baseColumnNames="customers_id"
                                  baseTableName="customer_company"
                                  constraintName="fk_customer_company_customers_id"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE" 
                                  referencedColumnNames="id"
                                  referencedTableName="customer"/>
         <addForeignKeyConstraint baseColumnNames="companies_id"
                                  baseTableName="customer_company"
                                  constraintName="fk_customer_company_companies_id"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE" 
                                  referencedColumnNames="id"
                                  referencedTableName="company"/>
         

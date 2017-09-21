@@ -11,6 +11,10 @@
         <addForeignKeyConstraint baseColumnNames="owner_id"
                                  baseTableName="file"
                                  constraintName="fk_file_owner_id"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE" 
                                  referencedColumnNames="id"
                                  referencedTableName="company"/>
 
