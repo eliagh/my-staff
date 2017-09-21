@@ -127,6 +127,7 @@ public class UserService {
     user.setLastName(userDTO.getLastName());
     user.setEmail(userDTO.getEmail());
     user.setImageUrl(userDTO.getImageUrl());
+    user.setCompanyId(userDTO.getCompanyId());
     if (userDTO.getLangKey() == null) {
       user.setLangKey("en"); // default language
     } else {
@@ -185,6 +186,7 @@ public class UserService {
       user.setImageUrl(userDTO.getImageUrl());
       user.setActivated(userDTO.isActivated());
       user.setLangKey(userDTO.getLangKey());
+      user.setCompanyId(userDTO.getCompanyId());
       Set<Authority> managedAuthorities = user.getAuthorities();
       managedAuthorities.clear();
       userDTO.getAuthorities().stream().map(authorityRepository::findOne).forEach(managedAuthorities::add);

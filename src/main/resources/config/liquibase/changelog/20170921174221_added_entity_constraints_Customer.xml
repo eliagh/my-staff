@@ -14,7 +14,7 @@
                                  deferrable="false"
                                  initiallyDeferred="false"
                                  onDelete="CASCADE"
-                                 onUpdate="CASCADE" 
+                                 onUpdate="CASCADE"
                                  referencedColumnNames="id"
                                  referencedTableName="customer"/>
         <addForeignKeyConstraint baseColumnNames="companies_id"
@@ -23,7 +23,7 @@
                                  deferrable="false"
                                  initiallyDeferred="false"
                                  onDelete="CASCADE"
-                                 onUpdate="CASCADE" 
+                                 onUpdate="CASCADE"
                                  referencedColumnNames="id"
                                  referencedTableName="company"/>
         

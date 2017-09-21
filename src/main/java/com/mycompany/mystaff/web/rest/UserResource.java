@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -34,9 +35,12 @@ import com.mycompany.mystaff.domain.User;
 import com.mycompany.mystaff.repository.UserRepository;
 import com.mycompany.mystaff.repository.search.UserSearchRepository;
 import com.mycompany.mystaff.security.AuthoritiesConstants;
+import com.mycompany.mystaff.security.jwt.JWTConfigurer;
+import com.mycompany.mystaff.security.jwt.TokenProvider;
 import com.mycompany.mystaff.service.MailService;
 import com.mycompany.mystaff.service.UserService;
 import com.mycompany.mystaff.service.dto.UserDTO;
+import com.mycompany.mystaff.service.util.ResolveTokenUtil;
 import com.mycompany.mystaff.web.rest.util.HeaderUtil;
 import com.mycompany.mystaff.web.rest.util.PaginationUtil;
 import com.mycompany.mystaff.web.rest.vm.ManagedUserVM;
@@ -76,6 +80,8 @@ public class UserResource {
 
   private static final String ENTITY_NAME = "userManagement";
 
+  private final HttpServletRequest request;
+
   private final UserRepository userRepository;
 
   private final MailService mailService;
@@ -84,12 +90,16 @@ public class UserResource {
 
   private final UserSearchRepository userSearchRepository;
 
-  public UserResource(UserRepository userRepository, MailService mailService, UserService userService, UserSearchRepository userSearchRepository) {
+  private final TokenProvider tokenProvider;
 
+  public UserResource(UserRepository userRepository, MailService mailService, UserService userService, UserSearchRepository userSearchRepository, HttpServletRequest request,
+      TokenProvider tokenProvider) {
     this.userRepository = userRepository;
     this.mailService = mailService;
     this.userService = userService;
     this.userSearchRepository = userSearchRepository;
+    this.request = request;
+    this.tokenProvider = tokenProvider;
   }
 
   /**
@@ -108,6 +118,8 @@ public class UserResource {
   @Secured(AuthoritiesConstants.ADMIN)
   public ResponseEntity<User> createUser(@Valid @RequestBody ManagedUserVM managedUserVM) throws URISyntaxException {
     log.debug("REST request to save User : {}", managedUserVM);
+
+    final Long companyId = this.tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
 
     if (managedUserVM.getId() != null) {
       return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new user cannot already have an ID")).body(null);

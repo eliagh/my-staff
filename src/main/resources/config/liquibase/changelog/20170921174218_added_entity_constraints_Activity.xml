@@ -14,7 +14,7 @@
                                  deferrable="false"
                                  initiallyDeferred="false"
                                  onDelete="CASCADE"
-                                 onUpdate="CASCADE" 
+                                 onUpdate="CASCADE"
                                  referencedColumnNames="id"
                                  referencedTableName="activity"/>
         <addForeignKeyConstraint baseColumnNames="locations_id"
@@ -23,7 +23,7 @@
                                  deferrable="false"
                                  initiallyDeferred="false"
                                  onDelete="CASCADE"
-                                 onUpdate="CASCADE" 
+                                 onUpdate="CASCADE"
                                  referencedColumnNames="id"
                                  referencedTableName="location"/>
         
@@ -33,7 +33,7 @@
                                  deferrable="false"
                                  initiallyDeferred="false"
                                  onDelete="CASCADE"
-                                 onUpdate="CASCADE" 
+                                 onUpdate="CASCADE"
                                  referencedColumnNames="id"
                                  referencedTableName="activity"/>
         <addForeignKeyConstraint baseColumnNames="categories_id"
@@ -42,7 +42,7 @@
                                  deferrable="false"
                                  initiallyDeferred="false"
                                  onDelete="CASCADE"
-                                 onUpdate="CASCADE" 
+                                 onUpdate="CASCADE"
                                  referencedColumnNames="id"
                                  referencedTableName="category"/>
         

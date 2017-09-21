@@ -95,6 +95,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
   @Column(name = "reset_date")
   private Instant resetDate = null;
 
+  @NotNull
+  @Column(name = "company_id")
+  private Long companyId;
+
   @JsonIgnore
   @ManyToMany
   @JoinTable(
@@ -210,6 +214,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
     this.authorities = authorities;
   }
 
+  public Long getCompanyId() {
+    return companyId;
+  }
+
+  public void setCompanyId(Long companyId) {
+    this.companyId = companyId;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -231,7 +243,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
   @Override
   public String toString() {
     return "User{" + "login='" + login + '\'' + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", email='" + email + '\'' + ", imageUrl='" + imageUrl
-        + '\'' + ", activated='" + activated + '\'' + ", langKey='" + langKey + '\'' + ", activationKey='" + activationKey + '\'' + "}";
+        + '\'' + ", activated='" + activated + '\'' + ", langKey='" + langKey + '\'' + ", activationKey='" + activationKey + '\'' + ", companyId='" + companyId + '\'' + "}";
   }
 
 }

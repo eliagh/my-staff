@@ -1,6 +1,7 @@
 package com.mycompany.mystaff.web.rest;
 
 import java.util.Collections;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mycompany.mystaff.domain.User;
+import com.mycompany.mystaff.repository.UserRepository;
 import com.mycompany.mystaff.security.jwt.JWTConfigurer;
 import com.mycompany.mystaff.security.jwt.TokenProvider;
 import com.mycompany.mystaff.web.rest.vm.LoginVM;
@@ -38,9 +41,12 @@ public class UserJWTController {
 
   private final AuthenticationManager authenticationManager;
 
-  public UserJWTController(TokenProvider tokenProvider, AuthenticationManager authenticationManager) {
+  private final UserRepository userRepository;
+
+  public UserJWTController(TokenProvider tokenProvider, AuthenticationManager authenticationManager, UserRepository userRepository) {
     this.tokenProvider = tokenProvider;
     this.authenticationManager = authenticationManager;
+    this.userRepository = userRepository;
   }
 
   @PostMapping("/authenticate")
@@ -50,9 +56,12 @@ public class UserJWTController {
 
     try {
       Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
+      org.springframework.security.core.userdetails.User loginUser = (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
+      Optional<User> user = userRepository.findOneByLogin(loginUser.getUsername());
+
       SecurityContextHolder.getContext().setAuthentication(authentication);
       boolean rememberMe = (loginVM.isRememberMe() == null) ? false : loginVM.isRememberMe();
-      String jwt = tokenProvider.createToken(authentication, rememberMe);
+      String jwt = tokenProvider.createToken(authentication, rememberMe, user.get().getCompanyId());
       response.addHeader(JWTConfigurer.AUTHORIZATION_HEADER, "Bearer " + jwt);
       return ResponseEntity.ok(new JWTToken(jwt));
     } catch (AuthenticationException ae) {

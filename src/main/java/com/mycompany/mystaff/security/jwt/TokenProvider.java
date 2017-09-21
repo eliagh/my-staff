@@ -32,6 +32,8 @@ public class TokenProvider {
 
   private static final String AUTHORITIES_KEY = "auth";
 
+  private static final String COMPANY_ID = "companyId";
+
   private String secretKey;
 
   private long tokenValidityInMilliseconds;
@@ -52,7 +54,7 @@ public class TokenProvider {
     this.tokenValidityInMillisecondsForRememberMe = 1000 * jHipsterProperties.getSecurity().getAuthentication().getJwt().getTokenValidityInSecondsForRememberMe();
   }
 
-  public String createToken(Authentication authentication, Boolean rememberMe) {
+  public String createToken(Authentication authentication, Boolean rememberMe, Long companyId) {
     String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
 
     long now = (new Date()).getTime();
@@ -63,7 +65,8 @@ public class TokenProvider {
       validity = new Date(now + this.tokenValidityInMilliseconds);
     }
 
-    return Jwts.builder().setSubject(authentication.getName()).claim(AUTHORITIES_KEY, authorities).signWith(SignatureAlgorithm.HS512, secretKey).setExpiration(validity).compact();
+    return Jwts.builder().setSubject(authentication.getName()).claim(AUTHORITIES_KEY, authorities).claim(COMPANY_ID, companyId).signWith(SignatureAlgorithm.HS512, secretKey)
+        .setExpiration(validity).compact();
   }
 
   public Authentication getAuthentication(String token) {
@@ -75,6 +78,12 @@ public class TokenProvider {
     User principal = new User(claims.getSubject(), "", authorities);
 
     return new UsernamePasswordAuthenticationToken(principal, token, authorities);
+  }
+
+  public Long getCompanyId(String token) {
+    Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+
+    return Long.valueOf(claims.get(COMPANY_ID).toString());
   }
 
   public boolean validateToken(String authToken) {
