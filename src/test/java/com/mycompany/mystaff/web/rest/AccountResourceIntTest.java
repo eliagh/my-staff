@@ -140,7 +140,8 @@ public class AccountResourceIntTest {
   @Test
   @Transactional
   public void testRegisterValid() throws Exception {
-    ManagedUserVM validUser = new ManagedUserVM(null,                   // id
+        ManagedUserVM validUser = new ManagedUserVM(
+                null,                   // id
         "joe",                  // login
         "password",             // password
         "Joe",                  // firstName
@@ -153,7 +154,9 @@ public class AccountResourceIntTest {
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)));
+                new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)),
+                0L                      // companyId
+        );
 
     restMvc.perform(post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(validUser))).andExpect(status().isCreated());
 
@@ -164,7 +167,8 @@ public class AccountResourceIntTest {
   @Test
   @Transactional
   public void testRegisterInvalidLogin() throws Exception {
-    ManagedUserVM invalidUser = new ManagedUserVM(null,                   // id
+        ManagedUserVM invalidUser = new ManagedUserVM(
+                null,                   // id
         "funky-log!n",          // login <-- invalid
         "password",             // password
         "Funky",                // firstName
@@ -177,7 +181,9 @@ public class AccountResourceIntTest {
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)));
+                new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)),
+                0L                      // companyId
+        );
 
     restUserMockMvc.perform(post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(invalidUser)))
         .andExpect(status().isBadRequest());
@@ -189,7 +195,8 @@ public class AccountResourceIntTest {
   @Test
   @Transactional
   public void testRegisterInvalidEmail() throws Exception {
-    ManagedUserVM invalidUser = new ManagedUserVM(null,               // id
+        ManagedUserVM invalidUser = new ManagedUserVM(
+                null,               // id
         "bob",              // login
         "password",         // password
         "Bob",              // firstName
@@ -202,7 +209,9 @@ public class AccountResourceIntTest {
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)));
+                new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)),
+                0L                      // companyId
+        );
 
     restUserMockMvc.perform(post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(invalidUser)))
         .andExpect(status().isBadRequest());
@@ -214,7 +223,8 @@ public class AccountResourceIntTest {
   @Test
   @Transactional
   public void testRegisterInvalidPassword() throws Exception {
-    ManagedUserVM invalidUser = new ManagedUserVM(null,               // id
+        ManagedUserVM invalidUser = new ManagedUserVM(
+                null,               // id
         "bob",              // login
         "123",              // password with only 3 digits
         "Bob",              // firstName
@@ -227,7 +237,9 @@ public class AccountResourceIntTest {
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)));
+                new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)),
+                0L                      // companyId
+        );
 
     restUserMockMvc.perform(post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(invalidUser)))
         .andExpect(status().isBadRequest());
@@ -239,7 +251,8 @@ public class AccountResourceIntTest {
   @Test
   @Transactional
   public void testRegisterNullPassword() throws Exception {
-    ManagedUserVM invalidUser = new ManagedUserVM(null,               // id
+        ManagedUserVM invalidUser = new ManagedUserVM(
+                null,               // id
         "bob",              // login
         null,               // invalid null password
         "Bob",              // firstName
@@ -252,7 +265,9 @@ public class AccountResourceIntTest {
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)));
+                new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)),
+                0L                      // companyId
+        );
 
     restUserMockMvc.perform(post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(invalidUser)))
         .andExpect(status().isBadRequest());
@@ -265,7 +280,8 @@ public class AccountResourceIntTest {
   @Transactional
   public void testRegisterDuplicateLogin() throws Exception {
     // Good
-    ManagedUserVM validUser = new ManagedUserVM(null,                   // id
+        ManagedUserVM validUser = new ManagedUserVM(
+                null,                   // id
         "alice",                // login
         "password",             // password
         "Alice",                // firstName
@@ -278,12 +294,14 @@ public class AccountResourceIntTest {
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)));
+                new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)),
+                0L                      // companyId
+        );
 
     // Duplicate login, different email
     ManagedUserVM duplicatedUser = new ManagedUserVM(validUser.getId(), validUser.getLogin(), validUser.getPassword(), validUser.getFirstName(), validUser.getLastName(),
         "alicejr@example.com", true, validUser.getImageUrl(), validUser.getLangKey(), validUser.getCreatedBy(), validUser.getCreatedDate(), validUser.getLastModifiedBy(),
-        validUser.getLastModifiedDate(), validUser.getAuthorities());
+                validUser.getLastModifiedDate(), validUser.getAuthorities(), 0L);
 
     // Good user
     restMvc.perform(post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(validUser))).andExpect(status().isCreated());
@@ -300,7 +318,8 @@ public class AccountResourceIntTest {
   @Transactional
   public void testRegisterDuplicateEmail() throws Exception {
     // Good
-    ManagedUserVM validUser = new ManagedUserVM(null,                   // id
+        ManagedUserVM validUser = new ManagedUserVM(
+                null,                   // id
         "john",                 // login
         "password",             // password
         "John",                 // firstName
@@ -313,12 +332,14 @@ public class AccountResourceIntTest {
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)));
+                new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)),
+                0L                      // companyId
+        );
 
     // Duplicate email, different login
     ManagedUserVM duplicatedUser = new ManagedUserVM(validUser.getId(), "johnjr", validUser.getPassword(), validUser.getLogin(), validUser.getLastName(), validUser.getEmail(),
         true, validUser.getImageUrl(), validUser.getLangKey(), validUser.getCreatedBy(), validUser.getCreatedDate(), validUser.getLastModifiedBy(), validUser.getLastModifiedDate(),
-        validUser.getAuthorities());
+                validUser.getAuthorities(), 0L);
 
     // Good user
     restMvc.perform(post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(validUser))).andExpect(status().isCreated());
@@ -334,7 +355,8 @@ public class AccountResourceIntTest {
   @Test
   @Transactional
   public void testRegisterAdminIsIgnored() throws Exception {
-    ManagedUserVM validUser = new ManagedUserVM(null,                   // id
+        ManagedUserVM validUser = new ManagedUserVM(
+                null,                   // id
         "badguy",               // login
         "password",             // password
         "Bad",                  // firstName
@@ -347,7 +369,9 @@ public class AccountResourceIntTest {
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)));
+                new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)),
+                0L                      // companyId
+        );
 
     restMvc.perform(post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(validUser))).andExpect(status().isCreated());
 
@@ -393,7 +417,8 @@ public class AccountResourceIntTest {
 
     userRepository.saveAndFlush(user);
 
-    UserDTO userDTO = new UserDTO(null,                   // id
+        UserDTO userDTO = new UserDTO(
+                null,                   // id
         "not-used",          // login
         "firstname",                // firstName
         "lastname",                  // lastName
@@ -405,7 +430,9 @@ public class AccountResourceIntTest {
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)));
+                new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)),
+                0L                      // companyId
+        );
 
     restMvc.perform(post("/api/account").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(userDTO))).andExpect(status().isOk());
 
@@ -432,7 +459,8 @@ public class AccountResourceIntTest {
 
     userRepository.saveAndFlush(user);
 
-    UserDTO userDTO = new UserDTO(null,                   // id
+        UserDTO userDTO = new UserDTO(
+                null,                   // id
         "not-used",          // login
         "firstname",                // firstName
         "lastname",                  // lastName
@@ -444,7 +472,9 @@ public class AccountResourceIntTest {
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)));
+                new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)),
+                0L                      // companyId
+        );
 
     restMvc.perform(post("/api/account").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(userDTO))).andExpect(status().isBadRequest());
 
@@ -471,7 +501,8 @@ public class AccountResourceIntTest {
 
     userRepository.saveAndFlush(anotherUser);
 
-    UserDTO userDTO = new UserDTO(null,                   // id
+        UserDTO userDTO = new UserDTO(
+                null,                   // id
         "not-used",          // login
         "firstname",                // firstName
         "lastname",                  // lastName
@@ -483,7 +514,9 @@ public class AccountResourceIntTest {
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)));
+                new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)),
+                0L                      // companyId
+        );
 
     restMvc.perform(post("/api/account").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(userDTO))).andExpect(status().isBadRequest());
 
@@ -503,7 +536,8 @@ public class AccountResourceIntTest {
 
     userRepository.saveAndFlush(user);
 
-    UserDTO userDTO = new UserDTO(null,                   // id
+        UserDTO userDTO = new UserDTO(
+                null,                   // id
         "not-used",          // login
         "firstname",                // firstName
         "lastname",                  // lastName
@@ -515,7 +549,9 @@ public class AccountResourceIntTest {
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)));
+                new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)),
+                0L                      // companyId
+        );
 
     restMvc.perform(post("/api/account").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(userDTO))).andExpect(status().isOk());
 
