@@ -119,8 +119,6 @@ public class UserResource {
   public ResponseEntity<User> createUser(@Valid @RequestBody ManagedUserVM managedUserVM) throws URISyntaxException {
     log.debug("REST request to save User : {}", managedUserVM);
 
-    final Long companyId = this.tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
-
     if (managedUserVM.getId() != null) {
       return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new user cannot already have an ID")).body(null);
       // Lowercase the user login before comparing with database
@@ -129,6 +127,9 @@ public class UserResource {
     } else if (userRepository.findOneByEmail(managedUserVM.getEmail()).isPresent()) {
       return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "emailexists", "Email already in use")).body(null);
     } else {
+            final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+            managedUserVM.setCompanyId(companyId);
+
       User newUser = userService.createUser(managedUserVM);
       mailService.sendCreationEmail(newUser);
       return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin())).headers(HeaderUtil.createAlert("userManagement.created", newUser.getLogin())).body(newUser);
@@ -148,7 +149,14 @@ public class UserResource {
   @Secured(AuthoritiesConstants.ADMIN)
   public ResponseEntity<UserDTO> updateUser(@Valid @RequestBody ManagedUserVM managedUserVM) {
     log.debug("REST request to update User : {}", managedUserVM);
+
+        final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+
     Optional<User> existingUser = userRepository.findOneByEmail(managedUserVM.getEmail());
+        if (!companyId.equals(existingUser.get().getCompanyId())) {
+            // TODO: return proper response
+        }
+
     if (existingUser.isPresent() && (!existingUser.get().getId().equals(managedUserVM.getId()))) {
       return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "emailexists", "Email already in use")).body(null);
     }

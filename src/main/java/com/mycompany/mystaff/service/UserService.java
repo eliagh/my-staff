@@ -62,6 +62,7 @@ public class UserService {
 
   public Optional<User> activateRegistration(String key) {
     log.debug("Activating user for activation key {}", key);
+
     return userRepository.findOneByActivationKey(key).map(user -> {
       // activate given user for the registration key.
       user.setActivated(true);
@@ -95,7 +96,6 @@ public class UserService {
   }
 
   public User createUser(String login, String password, String firstName, String lastName, String email, String imageUrl, String langKey) {
-
     User newUser = new User();
     Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
     Set<Authority> authorities = new HashSet<>();
