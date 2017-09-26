@@ -34,7 +34,7 @@ spring:
         serialization.indent_output: true
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://localhost:3306/mystaff?useUnicode=true&characterEncoding=utf8&useSSL=false
+        url: jdbc:mysql://localhost:3306/mystaff?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&useSSL=false
         username: ${DEV_DB_USERNAME}
         password: ${DEV_DB_PASSWORD}
         hikari:
