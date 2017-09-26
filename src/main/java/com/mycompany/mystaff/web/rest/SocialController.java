@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.mycompany.mystaff.domain.Company;
+import com.mycompany.mystaff.service.CompanyService;
 import com.mycompany.mystaff.service.SocialService;
 
 @RestController
@@ -22,18 +24,25 @@ public class SocialController {
 
   private final SocialService socialService;
 
+    private final CompanyService companyService;
+
   private final ProviderSignInUtils providerSignInUtils;
 
-  public SocialController(SocialService socialService, ProviderSignInUtils providerSignInUtils) {
+    public SocialController(SocialService socialService, ProviderSignInUtils providerSignInUtils, CompanyService companyService) {
     this.socialService = socialService;
     this.providerSignInUtils = providerSignInUtils;
+        this.companyService = companyService;
   }
 
   @GetMapping("/signup")
   public RedirectView signUp(WebRequest webRequest, @CookieValue(name = "NG_TRANSLATE_LANG_KEY", required = false, defaultValue = "\"en\"") String langKey) {
     try {
       Connection<?> connection = providerSignInUtils.getConnectionFromSession(webRequest);
-      socialService.createSocialUser(connection, langKey.replace("\"", ""));
+            Company company = new Company();
+            company.setName("My Company");
+            company.setThema("Default");
+            company = companyService.save(company);
+            socialService.createSocialUser(connection, langKey.replace("\"", ""), company.getId());
       return new RedirectView(URIBuilder.fromUri("/#/social-register/" + connection.getKey().getProviderId()).queryParam("success", "true").build().toString(), true);
     } catch (Exception e) {
       log.error("Exception creating social user: ", e);

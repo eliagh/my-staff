@@ -42,8 +42,7 @@ public class CompanyService {
   public Company save(Company company) {
     log.debug("Request to save Company : {}", company);
     Company result = companyRepository.save(company);
-    companySearchRepository.save(result);
-    return result;
+        return companySearchRepository.save(result);
   }
 
   /**
