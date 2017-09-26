@@ -44,7 +44,6 @@ public class Company implements Serializable {
   @Column(name = "logo_content_type")
   private String logoContentType;
 
-  @NotNull
   @Column(name = "sector", nullable = false)
   private String sector;
 
