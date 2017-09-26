@@ -95,7 +95,7 @@ public class UserService {
     });
   }
 
-  public User createUser(String login, String password, String firstName, String lastName, String email, String imageUrl, String langKey) {
+    public User createUser(String login, String password, String firstName, String lastName, String email, String imageUrl, String langKey, Long companyId) {
     User newUser = new User();
     Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
     Set<Authority> authorities = new HashSet<>();
@@ -108,6 +108,7 @@ public class UserService {
     newUser.setEmail(email);
     newUser.setImageUrl(imageUrl);
     newUser.setLangKey(langKey);
+        newUser.setCompanyId(companyId);
     // new user is not active
     newUser.setActivated(false);
     // new user gets registration key
@@ -186,7 +187,6 @@ public class UserService {
       user.setImageUrl(userDTO.getImageUrl());
       user.setActivated(userDTO.isActivated());
       user.setLangKey(userDTO.getLangKey());
-      user.setCompanyId(userDTO.getCompanyId());
       Set<Authority> managedAuthorities = user.getAuthorities();
       managedAuthorities.clear();
       userDTO.getAuthorities().stream().map(authorityRepository::findOne).forEach(managedAuthorities::add);
@@ -217,23 +217,23 @@ public class UserService {
   }
 
   @Transactional(readOnly = true)
-  public Page<UserDTO> getAllManagedUsers(Pageable pageable) {
-    return userRepository.findAllByLoginNot(pageable, Constants.ANONYMOUS_USER).map(UserDTO::new);
+    public Page<UserDTO> getAllManagedUsers(Pageable pageable, Long companyId) {
+        return userRepository.findAllByLoginNotAndCompanyId(pageable, Constants.ANONYMOUS_USER, companyId).map(UserDTO::new);
   }
 
   @Transactional(readOnly = true)
-  public Optional<User> getUserWithAuthoritiesByLogin(String login) {
-    return userRepository.findOneWithAuthoritiesByLogin(login);
+    public Optional<User> getUserWithAuthoritiesByLogin(String login) {
+        return userRepository.findOneWithAuthoritiesByLogin(login);
   }
 
   @Transactional(readOnly = true)
-  public User getUserWithAuthorities(Long id) {
-    return userRepository.findOneWithAuthoritiesById(id);
+    public User getUserWithAuthorities(Long id, Long companyId) {
+        return userRepository.findOneWithAuthoritiesByIdAndCompanyId(id, companyId);
   }
 
   @Transactional(readOnly = true)
-  public User getUserWithAuthorities() {
-    return userRepository.findOneWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).orElse(null);
+    public User getUserWithAuthorities() {
+        return userRepository.findOneWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).orElse(null);
   }
 
   /**

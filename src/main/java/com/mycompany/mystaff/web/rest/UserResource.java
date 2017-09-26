@@ -154,7 +154,7 @@ public class UserResource {
 
     Optional<User> existingUser = userRepository.findOneByEmail(managedUserVM.getEmail());
         if (!companyId.equals(existingUser.get().getCompanyId())) {
-            // TODO: return proper response
+            return ResponseEntity.notFound().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "emailexists", "User not found")).build();
         }
 
     if (existingUser.isPresent() && (!existingUser.get().getId().equals(managedUserVM.getId()))) {
@@ -178,7 +178,9 @@ public class UserResource {
   @GetMapping("/users")
   @Timed
   public ResponseEntity<List<UserDTO>> getAllUsers(@ApiParam Pageable pageable) {
-    final Page<UserDTO> page = userService.getAllManagedUsers(pageable);
+        final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+
+        final Page<UserDTO> page = userService.getAllManagedUsers(pageable, companyId);
     HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users");
     return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
   }
@@ -204,7 +206,7 @@ public class UserResource {
   @Timed
   public ResponseEntity<UserDTO> getUser(@PathVariable String login) {
     log.debug("REST request to get User : {}", login);
-    return ResponseUtil.wrapOrNotFound(userService.getUserWithAuthoritiesByLogin(login).map(UserDTO::new));
+        return ResponseUtil.wrapOrNotFound(userService.getUserWithAuthoritiesByLogin(login).map(UserDTO::new));
   }
 
   /**
