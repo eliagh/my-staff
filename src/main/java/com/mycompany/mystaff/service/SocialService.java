@@ -58,7 +58,7 @@ public class SocialService {
     });
   }
 
-  public void createSocialUser(Connection<?> connection, String langKey) {
+    public void createSocialUser(Connection<?> connection, String langKey, Long companyId) {
     if (connection == null) {
       log.error("Cannot create social user because connection is null");
       throw new IllegalArgumentException("Connection cannot be null");
@@ -66,12 +66,12 @@ public class SocialService {
     UserProfile userProfile = connection.fetchUserProfile();
     String providerId = connection.getKey().getProviderId();
     String imageUrl = connection.getImageUrl();
-    User user = createUserIfNotExist(userProfile, langKey, providerId, imageUrl);
+        User user = createUserIfNotExist(userProfile, langKey, providerId, imageUrl, companyId);
     createSocialConnection(user.getLogin(), connection);
     mailService.sendSocialRegistrationValidationEmail(user, providerId);
   }
 
-  private User createUserIfNotExist(UserProfile userProfile, String langKey, String providerId, String imageUrl) {
+    private User createUserIfNotExist(UserProfile userProfile, String langKey, String providerId, String imageUrl, Long companyId) {
     String email = userProfile.getEmail();
     String userName = userProfile.getUsername();
     if (!StringUtils.isBlank(userName)) {
@@ -108,6 +108,7 @@ public class SocialService {
     newUser.setAuthorities(authorities);
     newUser.setLangKey(langKey);
     newUser.setImageUrl(imageUrl);
+        newUser.setCompanyId(companyId);
 
     userSearchRepository.save(newUser);
     return userRepository.save(newUser);
