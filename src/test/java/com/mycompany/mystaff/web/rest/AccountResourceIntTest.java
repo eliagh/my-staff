@@ -39,6 +39,7 @@ import com.mycompany.mystaff.domain.User;
 import com.mycompany.mystaff.repository.AuthorityRepository;
 import com.mycompany.mystaff.repository.UserRepository;
 import com.mycompany.mystaff.security.AuthoritiesConstants;
+import com.mycompany.mystaff.service.CompanyService;
 import com.mycompany.mystaff.service.MailService;
 import com.mycompany.mystaff.service.UserService;
 import com.mycompany.mystaff.service.dto.UserDTO;
@@ -76,6 +77,9 @@ public class AccountResourceIntTest {
   @Mock
   private MailService mockMailService;
 
+  @Mock
+  private CompanyService mockCompanyService;
+
   private MockMvc restUserMockMvc;
 
   private MockMvc restMvc;
@@ -85,9 +89,9 @@ public class AccountResourceIntTest {
     MockitoAnnotations.initMocks(this);
     doNothing().when(mockMailService).sendActivationEmail(anyObject());
 
-    AccountResource accountResource = new AccountResource(userRepository, userService, mockMailService);
+    AccountResource accountResource = new AccountResource(userRepository, userService, mockMailService, mockCompanyService);
 
-    AccountResource accountUserMockResource = new AccountResource(userRepository, mockUserService, mockMailService);
+    AccountResource accountUserMockResource = new AccountResource(userRepository, mockUserService, mockMailService, mockCompanyService);
 
     this.restMvc = MockMvcBuilders.standaloneSetup(accountResource).setMessageConverters(httpMessageConverters).build();
     this.restUserMockMvc = MockMvcBuilders.standaloneSetup(accountUserMockResource).build();

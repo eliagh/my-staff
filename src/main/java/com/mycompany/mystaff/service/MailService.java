@@ -43,7 +43,6 @@ public class MailService {
   private final SpringTemplateEngine templateEngine;
 
   public MailService(JHipsterProperties jHipsterProperties, JavaMailSender javaMailSender, MessageSource messageSource, SpringTemplateEngine templateEngine) {
-
     this.jHipsterProperties = jHipsterProperties;
     this.javaMailSender = javaMailSender;
     this.messageSource = messageSource;
@@ -82,7 +81,6 @@ public class MailService {
     String content = templateEngine.process(templateName, context);
     String subject = messageSource.getMessage(titleKey, null, locale);
     sendEmail(user.getEmail(), subject, content, false, true);
-
   }
 
   @Async

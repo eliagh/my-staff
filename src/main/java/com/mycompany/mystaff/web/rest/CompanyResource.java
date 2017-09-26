@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
@@ -122,19 +121,6 @@ public class CompanyResource {
     log.debug("REST request to delete Company : {}", id);
     companyService.delete(id);
     return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-  }
-
-  /**
-   * SEARCH /_search/companies?query=:query : search for the company corresponding to the query.
-   *
-   * @param query the query of the company search
-   * @return the result of the search
-   */
-  @GetMapping("/_search/companies")
-  @Timed
-  public List<Company> searchCompanies(@RequestParam String query) {
-    log.debug("REST request to search Companies for query {}", query);
-    return companyService.search(query);
   }
 
 }

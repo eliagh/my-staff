@@ -47,15 +47,15 @@ public class AccountResource {
 
   private final MailService mailService;
 
-    private final CompanyService companyService;
+  private final CompanyService companyService;
 
   private static final String CHECK_ERROR_MESSAGE = "Incorrect password";
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService, CompanyService companyService) {
+  public AccountResource(UserRepository userRepository, UserService userService, MailService mailService, CompanyService companyService) {
     this.userRepository = userRepository;
     this.userService = userService;
     this.mailService = mailService;
-        this.companyService = companyService;
+    this.companyService = companyService;
   }
 
   /**
@@ -76,12 +76,9 @@ public class AccountResource {
     return userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase()).map(user -> new ResponseEntity<>("login already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
         .orElseGet(() -> userRepository.findOneByEmail(managedUserVM.getEmail())
             .map(user -> new ResponseEntity<>("email address already in use", textPlainHeaders, HttpStatus.BAD_REQUEST)).orElseGet(() -> {
-                            Company company = new Company();
-                            company.setName("My Company");
-                            company.setThema("Default");
-                            company = companyService.save(company);
+              Company company = companyService.create(managedUserVM.getLangKey());
               User user = userService.createUser(managedUserVM.getLogin(), managedUserVM.getPassword(), managedUserVM.getFirstName(), managedUserVM.getLastName(),
-                                    managedUserVM.getEmail().toLowerCase(), managedUserVM.getImageUrl(), managedUserVM.getLangKey(), company.getId());
+                  managedUserVM.getEmail().toLowerCase(), managedUserVM.getImageUrl(), managedUserVM.getLangKey(), company.getId());
 
               mailService.sendActivationEmail(user);
               return new ResponseEntity<>(HttpStatus.CREATED);

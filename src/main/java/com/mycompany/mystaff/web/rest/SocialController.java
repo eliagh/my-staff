@@ -24,25 +24,24 @@ public class SocialController {
 
   private final SocialService socialService;
 
-    private final CompanyService companyService;
+  private final CompanyService companyService;
 
   private final ProviderSignInUtils providerSignInUtils;
 
-    public SocialController(SocialService socialService, ProviderSignInUtils providerSignInUtils, CompanyService companyService) {
+  public SocialController(SocialService socialService, ProviderSignInUtils providerSignInUtils, CompanyService companyService) {
     this.socialService = socialService;
     this.providerSignInUtils = providerSignInUtils;
-        this.companyService = companyService;
+    this.companyService = companyService;
   }
 
   @GetMapping("/signup")
   public RedirectView signUp(WebRequest webRequest, @CookieValue(name = "NG_TRANSLATE_LANG_KEY", required = false, defaultValue = "\"en\"") String langKey) {
     try {
+      String userLangKey = langKey.replace("\"", "");
       Connection<?> connection = providerSignInUtils.getConnectionFromSession(webRequest);
-            Company company = new Company();
-            company.setName("My Company");
-            company.setThema("Default");
-            company = companyService.save(company);
-            socialService.createSocialUser(connection, langKey.replace("\"", ""), company.getId());
+
+      Company company = companyService.create(userLangKey);
+      socialService.createSocialUser(connection, userLangKey, company.getId());
       return new RedirectView(URIBuilder.fromUri("/#/social-register/" + connection.getKey().getProviderId()).queryParam("success", "true").build().toString(), true);
     } catch (Exception e) {
       log.error("Exception creating social user: ", e);
