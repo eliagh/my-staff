@@ -75,9 +75,7 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-
         <addPrimaryKey columnNames="user_id, authority_name" tableName="jhi_user_authority"/>
-
         <addForeignKeyConstraint baseColumnNames="authority_name"
                                  baseTableName="jhi_user_authority"
                                  constraintName="fk_authority_name"
@@ -87,7 +85,6 @@
                                  onUpdate="CASCADE"
                                  referencedColumnNames="name"
                                  referencedTableName="jhi_authority"/>
-
         <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="jhi_user_authority"
                                  constraintName="fk_user_id"
@@ -97,7 +94,7 @@
                                  onUpdate="CASCADE"
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
-
+<!--
         <loadData encoding="UTF-8"
                   file="config/liquibase/users.csv"
                   separator=";"
@@ -107,17 +104,17 @@
         </loadData>
 
         <dropDefaultValue tableName="jhi_user" columnName="created_date" columnDataType="datetime"/>
-
+-->
         <loadData encoding="UTF-8"
                   file="config/liquibase/authorities.csv"
                   separator=";"
                   tableName="jhi_authority"/>
-
+<!--
         <loadData encoding="UTF-8"
                   file="config/liquibase/users_authorities.csv"
                   separator=";"
                   tableName="jhi_user_authority"/>
-
+-->
         <createTable tableName="jhi_persistent_audit_event">
             <column name="event_id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
@@ -190,6 +187,7 @@
         <addUniqueConstraint tableName="jhi_social_user_connection" columnNames="user_id, provider_id, provider_user_id"/>
 
         <addUniqueConstraint tableName="jhi_social_user_connection" columnNames="user_id, provider_id, rank"/>
+
     </changeSet>
 
 </databaseChangeLog>
