@@ -77,7 +77,7 @@ public class SocialServiceIntTest {
   public void testDeleteUserSocialConnection() throws Exception {
     // Setup
     Connection<?> connection = createConnection("@LOGIN", "mail@mail.com", "FIRST_NAME", "LAST_NAME", "IMAGE_URL", "PROVIDER");
-    socialService.createSocialUser(connection, "fr");
+    socialService.createSocialUser(connection, "fr", 1L);
     MultiValueMap<String, Connection<?>> connectionsByProviderId = new LinkedMultiValueMap<>();
     connectionsByProviderId.put("PROVIDER", null);
     when(mockConnectionRepository.findAllConnections()).thenReturn(connectionsByProviderId);
@@ -92,7 +92,7 @@ public class SocialServiceIntTest {
   @Test(expected = IllegalArgumentException.class)
   public void testCreateSocialUserShouldThrowExceptionIfConnectionIsNull() {
     // Exercise
-    socialService.createSocialUser(null, "fr");
+    socialService.createSocialUser(null, "fr", 1L);
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -101,7 +101,7 @@ public class SocialServiceIntTest {
     Connection<?> connection = createConnection("", "", "FIRST_NAME", "LAST_NAME", "IMAGE_URL", "PROVIDER");
 
     // Exercise
-    socialService.createSocialUser(connection, "fr");
+    socialService.createSocialUser(connection, "fr", 1L);
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -113,7 +113,7 @@ public class SocialServiceIntTest {
     // Exercise
     try {
       // Exercise
-      socialService.createSocialUser(connection, "fr");
+      socialService.createSocialUser(connection, "fr", 1L);
     } finally {
       // Teardown
       userRepository.delete(user);
@@ -126,7 +126,7 @@ public class SocialServiceIntTest {
     Connection<?> connection = createConnection("@LOGIN", "mail@mail.com", "FIRST_NAME", "LAST_NAME", "IMAGE_URL", "PROVIDER");
 
     // Exercise
-    socialService.createSocialUser(connection, "fr");
+    socialService.createSocialUser(connection, "fr", 1L);
 
     // Verify
     final Optional<User> user = userRepository.findOneByEmail("mail@mail.com");
@@ -142,7 +142,7 @@ public class SocialServiceIntTest {
     Connection<?> connection = createConnection("@LOGIN", "mail@mail.com", "FIRST_NAME", "LAST_NAME", "IMAGE_URL", "PROVIDER");
 
     // Exercise
-    socialService.createSocialUser(connection, "fr");
+    socialService.createSocialUser(connection, "fr", 1L);
 
     // Verify
     User user = userRepository.findOneByEmail("mail@mail.com").get();
@@ -160,7 +160,7 @@ public class SocialServiceIntTest {
     Connection<?> connection = createConnection("@LOGIN", "mail@mail.com", "FIRST_NAME", "LAST_NAME", "IMAGE_URL", "PROVIDER");
 
     // Exercise
-    socialService.createSocialUser(connection, "fr");
+    socialService.createSocialUser(connection, "fr", 1L);
 
     // Verify
     User user = userRepository.findOneByEmail("mail@mail.com").get();
@@ -179,7 +179,7 @@ public class SocialServiceIntTest {
     Connection<?> connection = createConnection("@LOGIN", "mail@mail.com", "FIRST_NAME", "LAST_NAME", "IMAGE_URL", "PROVIDER");
 
     // Exercise
-    socialService.createSocialUser(connection, "fr");
+    socialService.createSocialUser(connection, "fr", 1L);
 
     // Verify
     final User user = userRepository.findOneByEmail("mail@mail.com").get();
@@ -195,7 +195,7 @@ public class SocialServiceIntTest {
     Connection<?> connection = createConnection("@LOGIN", "mail@mail.com", "FIRST_NAME", "LAST_NAME", "IMAGE_URL", "PROVIDER_OTHER_THAN_TWITTER");
 
     // Exercise
-    socialService.createSocialUser(connection, "fr");
+    socialService.createSocialUser(connection, "fr", 1L);
 
     // Verify
     User user = userRepository.findOneByEmail("mail@mail.com").get();
@@ -211,7 +211,7 @@ public class SocialServiceIntTest {
     Connection<?> connection = createConnection("@LOGIN", "mail@mail.com", "FIRST_NAME", "LAST_NAME", "IMAGE_URL", "twitter");
 
     // Exercise
-    socialService.createSocialUser(connection, "fr");
+    socialService.createSocialUser(connection, "fr", 1L);
 
     // Verify
     User user = userRepository.findOneByEmail("mail@mail.com").get();
@@ -227,7 +227,7 @@ public class SocialServiceIntTest {
     Connection<?> connection = createConnection("@LOGIN", "mail@mail.com", "FIRST_NAME", "LAST_NAME", "IMAGE_URL", "PROVIDER");
 
     // Exercise
-    socialService.createSocialUser(connection, "fr");
+    socialService.createSocialUser(connection, "fr", 1L);
 
     // Verify
     verify(mockConnectionRepository, times(1)).addConnection(connection);
@@ -245,7 +245,7 @@ public class SocialServiceIntTest {
     Connection<?> connection = createConnection("@LOGIN", "mail@mail.com", "FIRST_NAME", "LAST_NAME", "IMAGE_URL", "PROVIDER");
 
     // Exercise
-    socialService.createSocialUser(connection, "fr");
+    socialService.createSocialUser(connection, "fr", 1L);
 
     // Verify
     assertThat(userRepository.count()).isEqualTo(initialUserCount);
@@ -262,7 +262,7 @@ public class SocialServiceIntTest {
     Connection<?> connection = createConnection("@LOGIN", "mail@mail.com", "FIRST_NAME", "LAST_NAME", "IMAGE_URL", "PROVIDER");
 
     // Exercise
-    socialService.createSocialUser(connection, "fr");
+    socialService.createSocialUser(connection, "fr", 1L);
 
     // Verify
     User userToVerify = userRepository.findOneByEmail("mail@mail.com").get();
@@ -280,7 +280,7 @@ public class SocialServiceIntTest {
     Connection<?> connection = createConnection("@LOGIN", "mail@mail.com", "FIRST_NAME", "LAST_NAME", "IMAGE_URL", "PROVIDER");
 
     // Exercise
-    socialService.createSocialUser(connection, "fr");
+    socialService.createSocialUser(connection, "fr", 1L);
 
     // Verify
     verify(mockMailService, times(1)).sendSocialRegistrationValidationEmail(anyObject(), anyString());

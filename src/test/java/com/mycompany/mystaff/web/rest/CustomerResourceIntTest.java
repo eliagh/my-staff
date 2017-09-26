@@ -92,8 +92,8 @@ public class CustomerResourceIntTest {
   private static final String DEFAULT_RESET_DATE = "AAAAAAAAAA";
   private static final String UPDATED_RESET_DATE = "BBBBBBBBBB";
 
-  private static final ZonedDateTime DEFAULT_LAST_MODIFIED_BY = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-  private static final ZonedDateTime UPDATED_LAST_MODIFIED_BY = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
+  private static final String DEFAULT_LAST_MODIFIED_BY = "AAAAAAAAAA";
+  private static final String UPDATED_LAST_MODIFIED_BY = "BBBBBBBBBB";
 
   private static final ZonedDateTime DEFAULT_LAST_MODIFIED_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
   private static final ZonedDateTime UPDATED_LAST_MODIFIED_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
@@ -306,7 +306,7 @@ public class CustomerResourceIntTest {
         .andExpect(jsonPath("$.[*].resetKey").value(hasItem(DEFAULT_RESET_KEY.toString())))
         .andExpect(jsonPath("$.[*].createdDate").value(hasItem(sameInstant(DEFAULT_CREATED_DATE))))
         .andExpect(jsonPath("$.[*].resetDate").value(hasItem(DEFAULT_RESET_DATE.toString())))
-        .andExpect(jsonPath("$.[*].lastModifiedBy").value(hasItem(sameInstant(DEFAULT_LAST_MODIFIED_BY))))
+        .andExpect(jsonPath("$.[*].lastModifiedBy").value(hasItem(DEFAULT_LAST_MODIFIED_BY)))
         .andExpect(jsonPath("$.[*].lastModifiedDate").value(hasItem(sameInstant(DEFAULT_LAST_MODIFIED_DATE))));
   }
 
@@ -325,7 +325,7 @@ public class CustomerResourceIntTest {
         .andExpect(jsonPath("$.imageUrl").value(DEFAULT_IMAGE_URL.toString())).andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED.booleanValue()))
         .andExpect(jsonPath("$.langKey").value(DEFAULT_LANG_KEY.toString())).andExpect(jsonPath("$.activationKey").value(DEFAULT_ACTIVATION_KEY.toString()))
         .andExpect(jsonPath("$.resetKey").value(DEFAULT_RESET_KEY.toString())).andExpect(jsonPath("$.createdDate").value(sameInstant(DEFAULT_CREATED_DATE)))
-        .andExpect(jsonPath("$.resetDate").value(DEFAULT_RESET_DATE.toString())).andExpect(jsonPath("$.lastModifiedBy").value(sameInstant(DEFAULT_LAST_MODIFIED_BY)))
+        .andExpect(jsonPath("$.resetDate").value(DEFAULT_RESET_DATE.toString())).andExpect(jsonPath("$.lastModifiedBy").value(DEFAULT_LAST_MODIFIED_BY))
         .andExpect(jsonPath("$.lastModifiedDate").value(sameInstant(DEFAULT_LAST_MODIFIED_DATE)));
   }
 
@@ -434,7 +434,7 @@ public class CustomerResourceIntTest {
         .andExpect(jsonPath("$.[*].resetKey").value(hasItem(DEFAULT_RESET_KEY.toString())))
         .andExpect(jsonPath("$.[*].createdDate").value(hasItem(sameInstant(DEFAULT_CREATED_DATE))))
         .andExpect(jsonPath("$.[*].resetDate").value(hasItem(DEFAULT_RESET_DATE.toString())))
-        .andExpect(jsonPath("$.[*].lastModifiedBy").value(hasItem(sameInstant(DEFAULT_LAST_MODIFIED_BY))))
+        .andExpect(jsonPath("$.[*].lastModifiedBy").value(hasItem(DEFAULT_LAST_MODIFIED_BY)))
         .andExpect(jsonPath("$.[*].lastModifiedDate").value(hasItem(sameInstant(DEFAULT_LAST_MODIFIED_DATE))));
   }
 

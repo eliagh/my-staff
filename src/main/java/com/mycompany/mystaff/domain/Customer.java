@@ -96,7 +96,7 @@ public class Customer implements Serializable {
 
   @NotNull
   @Column(name = "last_modified_by", nullable = false)
-  private ZonedDateTime lastModifiedBy;
+  private String lastModifiedBy;
 
   @NotNull
   @Column(name = "last_modified_date", nullable = false)
@@ -302,16 +302,16 @@ public class Customer implements Serializable {
     this.resetDate = resetDate;
   }
 
-  public ZonedDateTime getLastModifiedBy() {
+  public String getLastModifiedBy() {
     return lastModifiedBy;
   }
 
-  public Customer lastModifiedBy(ZonedDateTime lastModifiedBy) {
+  public Customer lastModifiedBy(String lastModifiedBy) {
     this.lastModifiedBy = lastModifiedBy;
     return this;
   }
 
-  public void setLastModifiedBy(ZonedDateTime lastModifiedBy) {
+  public void setLastModifiedBy(String lastModifiedBy) {
     this.lastModifiedBy = lastModifiedBy;
   }
 
