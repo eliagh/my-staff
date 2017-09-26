@@ -78,20 +78,19 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="last_modified_by" type="timestamp">
+            <column name="last_modified_by" type="varchar(50)">
                 <constraints nullable="false" />
             </column>
 
             <column name="last_modified_date" type="timestamp">
-                <constraints nullable="false" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        <dropDefaultValue tableName="customer" columnName="created_date" columnDataType="datetime"/>
+<!--        <dropDefaultValue tableName="customer" columnName="created_date" columnDataType="datetime"/>
         <dropDefaultValue tableName="customer" columnName="last_modified_by" columnDataType="datetime"/>
         <dropDefaultValue tableName="customer" columnName="last_modified_date" columnDataType="datetime"/>
-        
+-->
         <createTable tableName="customer_company">
             <column name="companies_id" type="bigint">
                 <constraints nullable="false"/>
