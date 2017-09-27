@@ -64,6 +64,7 @@ public class Location implements Serializable {
   private Company company;
 
   // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
+
   public Long getId() {
     return id;
   }
@@ -188,8 +189,8 @@ public class Location implements Serializable {
   public void setCompany(Company company) {
     this.company = company;
   }
-  // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not
-  // remove
+
+    // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not remove
 
   @Override
   public boolean equals(Object o) {

@@ -9,4 +9,6 @@ import com.mycompany.mystaff.domain.Location;
  */
 public interface LocationSearchRepository extends ElasticsearchRepository<Location, Long> {
 
+    void deleteByIdAndCompanyId(Long id, Long companyId);
+
 }

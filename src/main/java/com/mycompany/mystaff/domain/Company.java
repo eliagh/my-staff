@@ -51,7 +51,15 @@ public class Company implements Serializable {
   @Column(name = "thema", nullable = false)
   private String thema;
 
+    public Company() {
+    }
+
+    public Company(Long id) {
+        this.id = id;
+    }
+
   // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
+
   public Long getId() {
     return id;
   }
@@ -124,8 +132,8 @@ public class Company implements Serializable {
   public void setThema(String thema) {
     this.thema = thema;
   }
-  // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not
-  // remove
+
+    // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not remove
 
   @Override
   public boolean equals(Object o) {
