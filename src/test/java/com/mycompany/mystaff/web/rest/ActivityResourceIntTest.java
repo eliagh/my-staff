@@ -68,8 +68,8 @@ public class ActivityResourceIntTest {
   private static final Integer DEFAULT_POST_DURATION_MINUTES = 1;
   private static final Integer UPDATED_POST_DURATION_MINUTES = 2;
 
-  private static final Boolean DEFAULT_IS_NRIVATE = false;
-  private static final Boolean UPDATED_IS_NRIVATE = true;
+  private static final Boolean DEFAULT_IS_PRIVATE = false;
+  private static final Boolean UPDATED_IS_PRIVATE = true;
 
   private static final String DEFAULT_COLOR_CODE = "AAAAAAAAAA";
   private static final String UPDATED_COLOR_CODE = "BBBBBBBBBB";
@@ -118,7 +118,7 @@ public class ActivityResourceIntTest {
    */
   public static Activity createEntity(EntityManager em) {
     Activity activity = new Activity().name(DEFAULT_NAME).logo(DEFAULT_LOGO).logoContentType(DEFAULT_LOGO_CONTENT_TYPE).description(DEFAULT_DESCRIPTION).price(DEFAULT_PRICE)
-        .durationMinutes(DEFAULT_DURATION_MINUTES).preDurationMinutes(DEFAULT_PRE_DURATION_MINUTES).postDurationMinutes(DEFAULT_POST_DURATION_MINUTES).isNrivate(DEFAULT_IS_NRIVATE)
+        .durationMinutes(DEFAULT_DURATION_MINUTES).preDurationMinutes(DEFAULT_PRE_DURATION_MINUTES).postDurationMinutes(DEFAULT_POST_DURATION_MINUTES).isPrivate(DEFAULT_IS_PRIVATE)
         .colorCode(DEFAULT_COLOR_CODE).cancellationTime(DEFAULT_CANCELLATION_TIME);
     return activity;
   }
@@ -150,7 +150,7 @@ public class ActivityResourceIntTest {
     assertThat(testActivity.getDurationMinutes()).isEqualTo(DEFAULT_DURATION_MINUTES);
     assertThat(testActivity.getPreDurationMinutes()).isEqualTo(DEFAULT_PRE_DURATION_MINUTES);
     assertThat(testActivity.getPostDurationMinutes()).isEqualTo(DEFAULT_POST_DURATION_MINUTES);
-    assertThat(testActivity.isIsNrivate()).isEqualTo(DEFAULT_IS_NRIVATE);
+    assertThat(testActivity.isIsPrivate()).isEqualTo(DEFAULT_IS_PRIVATE);
     assertThat(testActivity.getColorCode()).isEqualTo(DEFAULT_COLOR_CODE);
     assertThat(testActivity.getCancellationTime()).isEqualTo(DEFAULT_CANCELLATION_TIME);
 
@@ -210,10 +210,10 @@ public class ActivityResourceIntTest {
 
   @Test
   @Transactional
-  public void checkIsNrivateIsRequired() throws Exception {
+  public void checkIsPrivateIsRequired() throws Exception {
     int databaseSizeBeforeTest = activityRepository.findAll().size();
     // set the field null
-    activity.setIsNrivate(null);
+    activity.setIsPrivate(null);
 
     // Create the Activity, which fails.
 
@@ -255,7 +255,7 @@ public class ActivityResourceIntTest {
         .andExpect(jsonPath("$.[*].durationMinutes").value(hasItem(DEFAULT_DURATION_MINUTES)))
         .andExpect(jsonPath("$.[*].preDurationMinutes").value(hasItem(DEFAULT_PRE_DURATION_MINUTES)))
         .andExpect(jsonPath("$.[*].postDurationMinutes").value(hasItem(DEFAULT_POST_DURATION_MINUTES)))
-        .andExpect(jsonPath("$.[*].isNrivate").value(hasItem(DEFAULT_IS_NRIVATE.booleanValue())))
+        .andExpect(jsonPath("$.[*].isPrivate").value(hasItem(DEFAULT_IS_PRIVATE.booleanValue())))
         .andExpect(jsonPath("$.[*].colorCode").value(hasItem(DEFAULT_COLOR_CODE.toString())))
         .andExpect(jsonPath("$.[*].cancellationTime").value(hasItem(DEFAULT_CANCELLATION_TIME.intValue())));
   }
@@ -272,7 +272,7 @@ public class ActivityResourceIntTest {
         .andExpect(jsonPath("$.logoContentType").value(DEFAULT_LOGO_CONTENT_TYPE)).andExpect(jsonPath("$.logo").value(Base64Utils.encodeToString(DEFAULT_LOGO)))
         .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString())).andExpect(jsonPath("$.price").value(DEFAULT_PRICE.doubleValue()))
         .andExpect(jsonPath("$.durationMinutes").value(DEFAULT_DURATION_MINUTES)).andExpect(jsonPath("$.preDurationMinutes").value(DEFAULT_PRE_DURATION_MINUTES))
-        .andExpect(jsonPath("$.postDurationMinutes").value(DEFAULT_POST_DURATION_MINUTES)).andExpect(jsonPath("$.isNrivate").value(DEFAULT_IS_NRIVATE.booleanValue()))
+        .andExpect(jsonPath("$.postDurationMinutes").value(DEFAULT_POST_DURATION_MINUTES)).andExpect(jsonPath("$.isPrivate").value(DEFAULT_IS_PRIVATE.booleanValue()))
         .andExpect(jsonPath("$.colorCode").value(DEFAULT_COLOR_CODE.toString())).andExpect(jsonPath("$.cancellationTime").value(DEFAULT_CANCELLATION_TIME.intValue()));
   }
 
@@ -294,7 +294,7 @@ public class ActivityResourceIntTest {
     // Update the activity
     Activity updatedActivity = activityRepository.findOne(activity.getId());
     updatedActivity.name(UPDATED_NAME).logo(UPDATED_LOGO).logoContentType(UPDATED_LOGO_CONTENT_TYPE).description(UPDATED_DESCRIPTION).price(UPDATED_PRICE)
-        .durationMinutes(UPDATED_DURATION_MINUTES).preDurationMinutes(UPDATED_PRE_DURATION_MINUTES).postDurationMinutes(UPDATED_POST_DURATION_MINUTES).isNrivate(UPDATED_IS_NRIVATE)
+        .durationMinutes(UPDATED_DURATION_MINUTES).preDurationMinutes(UPDATED_PRE_DURATION_MINUTES).postDurationMinutes(UPDATED_POST_DURATION_MINUTES).isPrivate(UPDATED_IS_PRIVATE)
         .colorCode(UPDATED_COLOR_CODE).cancellationTime(UPDATED_CANCELLATION_TIME);
 
     restActivityMockMvc.perform(put("/api/activities").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(updatedActivity)))
@@ -312,7 +312,7 @@ public class ActivityResourceIntTest {
     assertThat(testActivity.getDurationMinutes()).isEqualTo(UPDATED_DURATION_MINUTES);
     assertThat(testActivity.getPreDurationMinutes()).isEqualTo(UPDATED_PRE_DURATION_MINUTES);
     assertThat(testActivity.getPostDurationMinutes()).isEqualTo(UPDATED_POST_DURATION_MINUTES);
-    assertThat(testActivity.isIsNrivate()).isEqualTo(UPDATED_IS_NRIVATE);
+    assertThat(testActivity.isIsPrivate()).isEqualTo(UPDATED_IS_PRIVATE);
     assertThat(testActivity.getColorCode()).isEqualTo(UPDATED_COLOR_CODE);
     assertThat(testActivity.getCancellationTime()).isEqualTo(UPDATED_CANCELLATION_TIME);
 
@@ -372,7 +372,7 @@ public class ActivityResourceIntTest {
         .andExpect(jsonPath("$.[*].durationMinutes").value(hasItem(DEFAULT_DURATION_MINUTES)))
         .andExpect(jsonPath("$.[*].preDurationMinutes").value(hasItem(DEFAULT_PRE_DURATION_MINUTES)))
         .andExpect(jsonPath("$.[*].postDurationMinutes").value(hasItem(DEFAULT_POST_DURATION_MINUTES)))
-        .andExpect(jsonPath("$.[*].isNrivate").value(hasItem(DEFAULT_IS_NRIVATE.booleanValue())))
+        .andExpect(jsonPath("$.[*].isPrivate").value(hasItem(DEFAULT_IS_PRIVATE.booleanValue())))
         .andExpect(jsonPath("$.[*].colorCode").value(hasItem(DEFAULT_COLOR_CODE.toString())))
         .andExpect(jsonPath("$.[*].cancellationTime").value(hasItem(DEFAULT_CANCELLATION_TIME.intValue())));
   }
