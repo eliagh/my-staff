@@ -25,42 +25,33 @@
             <column name="name" type="varchar(50)">
                 <constraints nullable="false" />
             </column>
-
             <column name="logo" type="longblob">
                 <constraints nullable="true" />
             </column>
             <column name="logo_content_type" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-
             <column name="description" type="clob">
                 <constraints nullable="true" />
             </column>
-
             <column name="price" type="double">
                 <constraints nullable="true" />
             </column>
-
             <column name="duration_minutes" type="integer">
                 <constraints nullable="false" />
             </column>
-
             <column name="pre_duration_minutes" type="integer">
                 <constraints nullable="true" />
             </column>
-
             <column name="post_duration_minutes" type="integer">
                 <constraints nullable="true" />
             </column>
-
             <column name="is_nrivate" type="bit">
                 <constraints nullable="false" />
             </column>
-
             <column name="color_code" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-
             <column name="cancellation_time" type="bigint">
                 <constraints nullable="true" />
             </column>

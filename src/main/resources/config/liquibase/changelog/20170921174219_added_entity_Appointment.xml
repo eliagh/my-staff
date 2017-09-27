@@ -25,33 +25,31 @@
             <column name="jhi_when" type="timestamp">
                 <constraints nullable="false" />
             </column>
-
             <column name="jhi_label" type="varchar(20)">
                 <constraints nullable="true" />
             </column>
-
             <column name="is_recurring" type="bit">
                 <constraints nullable="false" />
             </column>
-
             <column name="is_flexible" type="bit">
                 <constraints nullable="false" />
             </column>
-
             <column name="notes" type="clob">
                 <constraints nullable="true" />
             </column>
-
             <column name="reminder" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="customer_id" type="bigint">
                 <constraints unique="true" nullable="false" />
-            </column>            <column name="activity_booked_id" type="bigint">
+            </column>
+            <column name="activity_booked_id" type="bigint">
                 <constraints unique="true" nullable="false" />
-            </column>            <column name="location_id" type="bigint">
+            </column>
+            <column name="location_id" type="bigint">
                 <constraints unique="true" nullable="false" />
-            </column>            <column name="provider_id" type="bigint">
+            </column>
+            <column name="provider_id" type="bigint">
                 <constraints unique="true" nullable="false" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
