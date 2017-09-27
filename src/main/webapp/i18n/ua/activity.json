@@ -23,7 +23,7 @@
             "durationMinutes": "Duration Minutes",
             "preDurationMinutes": "Pre Duration Minutes",
             "postDurationMinutes": "Post Duration Minutes",
-            "isNrivate": "Is Nrivate",
+            "isPrivate": "Is Private",
             "colorCode": "Color Code",
             "cancellationTime": "Cancellation Time",
             "location": "Location",

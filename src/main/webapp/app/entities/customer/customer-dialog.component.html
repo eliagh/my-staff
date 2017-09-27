@@ -195,33 +195,23 @@
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="mystaffApp.customer.resetDate" for="field_resetDate">Reset Date</label>
-            <input type="text" class="form-control" name="resetDate" id="field_resetDate"
-                [(ngModel)]="customer.resetDate" minlength="2" maxlength="50" />
-            <div [hidden]="!(editForm.controls.resetDate?.dirty && editForm.controls.resetDate?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.resetDate?.errors?.minlength" jhiTranslate="entity.validation.minlength" translateValues="{ min: 2 }">
-                   This field is required to be at least 2 characters.
-                </small>
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.resetDate?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 50 }">
-                   This field cannot be longer than 50 characters.
-                </small>
+            <div class="d-flex">
+                <input id="field_resetDate" type="datetime-local" class="form-control" name="resetDate" [(ngModel)]="customer.resetDate"
+                  />
             </div>
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="mystaffApp.customer.lastModifiedBy" for="field_lastModifiedBy">Last Modified By</label>
-            <div class="d-flex">
-                <input id="field_lastModifiedBy" type="datetime-local" class="form-control" name="lastModifiedBy" [(ngModel)]="customer.lastModifiedBy"
-                required  />
-            </div>
+            <input type="text" class="form-control" name="lastModifiedBy" id="field_lastModifiedBy"
+                [(ngModel)]="customer.lastModifiedBy" minlength="2" maxlength="50" />
             <div [hidden]="!(editForm.controls.lastModifiedBy?.dirty && editForm.controls.lastModifiedBy?.invalid)">
                 <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.lastModifiedBy?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
+                   [hidden]="!editForm.controls.lastModifiedBy?.errors?.minlength" jhiTranslate="entity.validation.minlength" translateValues="{ min: 2 }">
+                   This field is required to be at least 2 characters.
                 </small>
                 <small class="form-text text-danger"
-                    [hidden]="!editForm.controls.lastModifiedBy?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
-                    This field should be a date and time.
+                   [hidden]="!editForm.controls.lastModifiedBy?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 50 }">
+                   This field cannot be longer than 50 characters.
                 </small>
             </div>
         </div>
@@ -229,17 +219,7 @@
             <label class="form-control-label" jhiTranslate="mystaffApp.customer.lastModifiedDate" for="field_lastModifiedDate">Last Modified Date</label>
             <div class="d-flex">
                 <input id="field_lastModifiedDate" type="datetime-local" class="form-control" name="lastModifiedDate" [(ngModel)]="customer.lastModifiedDate"
-                required  />
-            </div>
-            <div [hidden]="!(editForm.controls.lastModifiedDate?.dirty && editForm.controls.lastModifiedDate?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.lastModifiedDate?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
-                </small>
-                <small class="form-text text-danger"
-                    [hidden]="!editForm.controls.lastModifiedDate?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
-                    This field should be a date and time.
-                </small>
+                  />
             </div>
         </div>
 

@@ -5,6 +5,7 @@ export class FindLanguageFromKeyPipe implements PipeTransform {
     private languages: any = {
         'ar-ly': { name: 'العربية', rtl: true },
         'ca': { name: 'Català' },
+        'cs': { name: 'Český' },
         'da': { name: 'Dansk' },
         'nl': { name: 'Nederlands' },
         'en': { name: 'English' },
@@ -16,6 +17,7 @@ export class FindLanguageFromKeyPipe implements PipeTransform {
         'hi': { name: 'हिंदी' },
         'hu': { name: 'Magyar' },
         'it': { name: 'Italiano' },
+        'ja': { name: '日本語' },
         'pl': { name: 'Polski' },
         'pt-br': { name: 'Português (Brasil)' },
         'pt-pt': { name: 'Português' },

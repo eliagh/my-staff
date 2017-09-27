@@ -1,0 +1,26 @@
+{
+    "mystaffApp": {
+        "file" : {
+            "home": {
+                "title": "Files",
+                "createLabel": "File を追加",
+                "createOrEditLabel": "Fileを追加または編集",
+                "search": "Search for File"
+            },
+            "created": "A new File is created with identifier {{ param }}",
+            "updated": "A File is updated with identifier {{ param }}",
+            "deleted": "A File is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "File {{ id }}を削除してもよろしいですか？"
+            },
+            "detail": {
+                "title": "File"
+            },
+            "name": "Name",
+            "url": "Url",
+            "fileType": "File Type",
+            "file": "File",
+            "owner": "Owner"
+        }
+    }
+}

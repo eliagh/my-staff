@@ -1,0 +1,33 @@
+{
+    "mystaffApp": {
+        "activity" : {
+            "home": {
+                "title": "Activities",
+                "createLabel": "Vytvořit Activity",
+                "createOrEditLabel": "Vytvořit nebo upravit Activity",
+                "search": "Vyhledat Activity"
+            },
+            "created": "Byl vytvořen potomek entity Activity s identifikátorem {{ param }}",
+            "updated": "Potomek entity Activity s identifikátorem {{ param }} byl upravený.",
+            "deleted": "Potomek entity Activity s identifikátorem {{ param }} bol smazaný.",
+            "delete": {
+                "question": "Jste si jisti, že chcete smazat Activity {{ id }}?"
+            },
+            "detail": {
+                "title": "Activity"
+            },
+            "name": "Name",
+            "logo": "Logo",
+            "description": "Description",
+            "price": "Price",
+            "durationMinutes": "Duration Minutes",
+            "preDurationMinutes": "Pre Duration Minutes",
+            "postDurationMinutes": "Post Duration Minutes",
+            "isPrivate": "Is Private",
+            "colorCode": "Color Code",
+            "cancellationTime": "Cancellation Time",
+            "location": "Location",
+            "category": "Category"
+        }
+    }
+}

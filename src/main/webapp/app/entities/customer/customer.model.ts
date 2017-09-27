@@ -16,8 +16,8 @@ export class Customer implements BaseEntity {
         public activationKey?: string,
         public resetKey?: string,
         public createdDate?: any,
-        public resetDate?: string,
-        public lastModifiedBy?: any,
+        public resetDate?: any,
+        public lastModifiedBy?: string,
         public lastModifiedDate?: any,
         public companies?: BaseEntity[],
     ) {

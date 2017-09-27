@@ -1,0 +1,25 @@
+{
+    "mystaffApp": {
+        "inventory" : {
+            "home": {
+                "title": "Inventories",
+                "createLabel": "Inventory を追加",
+                "createOrEditLabel": "Inventoryを追加または編集",
+                "search": "Search for Inventory"
+            },
+            "created": "A new Inventory is created with identifier {{ param }}",
+            "updated": "A Inventory is updated with identifier {{ param }}",
+            "deleted": "A Inventory is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Inventory {{ id }}を削除してもよろしいですか？"
+            },
+            "detail": {
+                "title": "Inventory"
+            },
+            "quantity": "Quantity",
+            "inventoryDate": "Inventory Date",
+            "location": "Location",
+            "item": "Item"
+        }
+    }
+}

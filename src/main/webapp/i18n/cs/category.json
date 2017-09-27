@@ -1,0 +1,24 @@
+{
+    "mystaffApp": {
+        "category" : {
+            "home": {
+                "title": "Categories",
+                "createLabel": "Vytvořit Category",
+                "createOrEditLabel": "Vytvořit nebo upravit Category",
+                "search": "Vyhledat Category"
+            },
+            "created": "Byl vytvořen potomek entity Category s identifikátorem {{ param }}",
+            "updated": "Potomek entity Category s identifikátorem {{ param }} byl upravený.",
+            "deleted": "Potomek entity Category s identifikátorem {{ param }} bol smazaný.",
+            "delete": {
+                "question": "Jste si jisti, že chcete smazat Category {{ id }}?"
+            },
+            "detail": {
+                "title": "Category"
+            },
+            "name": "Name",
+            "description": "Description",
+            "company": "Company"
+        }
+    }
+}

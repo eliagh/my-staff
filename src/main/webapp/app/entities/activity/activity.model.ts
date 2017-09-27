@@ -11,12 +11,12 @@ export class Activity implements BaseEntity {
         public durationMinutes?: number,
         public preDurationMinutes?: number,
         public postDurationMinutes?: number,
-        public isNrivate?: boolean,
+        public isPrivate?: boolean,
         public colorCode?: string,
         public cancellationTime?: number,
         public locations?: BaseEntity[],
         public categories?: BaseEntity[],
     ) {
-        this.isNrivate = false;
+        this.isPrivate = false;
     }
 }

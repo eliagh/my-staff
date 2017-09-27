@@ -68,10 +68,10 @@ describe('Customer e2e test', () => {
         expect(customerDialogPage.getResetKeyInput()).toMatch('resetKey');
         customerDialogPage.setCreatedDateInput(12310020012301);
         expect(customerDialogPage.getCreatedDateInput()).toMatch('2001-12-31T02:30');
-        customerDialogPage.setResetDateInput('resetDate');
-        expect(customerDialogPage.getResetDateInput()).toMatch('resetDate');
-        customerDialogPage.setLastModifiedByInput(12310020012301);
-        expect(customerDialogPage.getLastModifiedByInput()).toMatch('2001-12-31T02:30');
+        customerDialogPage.setResetDateInput(12310020012301);
+        expect(customerDialogPage.getResetDateInput()).toMatch('2001-12-31T02:30');
+        customerDialogPage.setLastModifiedByInput('lastModifiedBy');
+        expect(customerDialogPage.getLastModifiedByInput()).toMatch('lastModifiedBy');
         customerDialogPage.setLastModifiedDateInput(12310020012301);
         expect(customerDialogPage.getLastModifiedDateInput()).toMatch('2001-12-31T02:30');
         // customerDialogPage.companySelectLastOption();

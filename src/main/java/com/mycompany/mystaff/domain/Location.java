@@ -190,7 +190,8 @@ public class Location implements Serializable {
     this.company = company;
   }
 
-    // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not remove
+  // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not
+  // remove
 
   @Override
   public boolean equals(Object o) {

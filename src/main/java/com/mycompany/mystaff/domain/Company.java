@@ -44,19 +44,19 @@ public class Company implements Serializable {
   @Column(name = "logo_content_type")
   private String logoContentType;
 
-  @Column(name = "sector", nullable = false)
+  @Column(name = "sector")
   private String sector;
 
   @NotNull
   @Column(name = "thema", nullable = false)
   private String thema;
 
-    public Company() {
-    }
+  public Company() {
+  }
 
-    public Company(Long id) {
-        this.id = id;
-    }
+  public Company(Long id) {
+    this.id = id;
+  }
 
   // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
 
@@ -133,7 +133,8 @@ public class Company implements Serializable {
     this.thema = thema;
   }
 
-    // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not remove
+  // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not
+  // remove
 
   @Override
   public boolean equals(Object o) {

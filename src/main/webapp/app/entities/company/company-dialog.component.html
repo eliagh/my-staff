@@ -51,13 +51,7 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="mystaffApp.company.sector" for="field_sector">Sector</label>
             <input type="text" class="form-control" name="sector" id="field_sector"
-                [(ngModel)]="company.sector" required />
-            <div [hidden]="!(editForm.controls.sector?.dirty && editForm.controls.sector?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.sector?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
-                </small>
-            </div>
+                [(ngModel)]="company.sector"  />
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="mystaffApp.company.thema" for="field_thema">Thema</label>

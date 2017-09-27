@@ -1,0 +1,38 @@
+{
+    "mystaffApp": {
+        "customer" : {
+            "home": {
+                "title": "Customers",
+                "createLabel": "Vytvořit Customer",
+                "createOrEditLabel": "Vytvořit nebo upravit Customer",
+                "search": "Vyhledat Customer"
+            },
+            "created": "Byl vytvořen potomek entity Customer s identifikátorem {{ param }}",
+            "updated": "Potomek entity Customer s identifikátorem {{ param }} byl upravený.",
+            "deleted": "Potomek entity Customer s identifikátorem {{ param }} bol smazaný.",
+            "delete": {
+                "question": "Jste si jisti, že chcete smazat Customer {{ id }}?"
+            },
+            "detail": {
+                "title": "Customer"
+            },
+            "firstName": "First Name",
+            "midleName": "Midle Name",
+            "lastName": "Last Name",
+            "login": "Login",
+            "passwordHash": "Password Hash",
+            "phone": "Phone",
+            "email": "Email",
+            "imageUrl": "Image Url",
+            "activated": "Activated",
+            "langKey": "Lang Key",
+            "activationKey": "Activation Key",
+            "resetKey": "Reset Key",
+            "createdDate": "Created Date",
+            "resetDate": "Reset Date",
+            "lastModifiedBy": "Last Modified By",
+            "lastModifiedDate": "Last Modified Date",
+            "company": "Company"
+        }
+    }
+}

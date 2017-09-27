@@ -94,12 +94,12 @@
                 [(ngModel)]="activity.postDurationMinutes"  />
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="mystaffApp.activity.isNrivate" for="field_isNrivate">Is Nrivate</label>
-            <input type="checkbox" class="form-control" name="isNrivate" id="field_isNrivate"
-                [(ngModel)]="activity.isNrivate"  />
-            <div [hidden]="!(editForm.controls.isNrivate?.dirty && editForm.controls.isNrivate?.invalid)">
+            <label class="form-control-label" jhiTranslate="mystaffApp.activity.isPrivate" for="field_isPrivate">Is Private</label>
+            <input type="checkbox" class="form-control" name="isPrivate" id="field_isPrivate"
+                [(ngModel)]="activity.isPrivate"  />
+            <div [hidden]="!(editForm.controls.isPrivate?.dirty && editForm.controls.isPrivate?.invalid)">
                 <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.isNrivate?.errors?.required" jhiTranslate="entity.validation.required">
+                   [hidden]="!editForm.controls.isPrivate?.errors?.required" jhiTranslate="entity.validation.required">
                    This field is required.
                 </small>
             </div>

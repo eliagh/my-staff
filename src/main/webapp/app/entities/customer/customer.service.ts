@@ -69,8 +69,8 @@ export class CustomerService {
     private convertItemFromServer(entity: any) {
         entity.createdDate = this.dateUtils
             .convertDateTimeFromServer(entity.createdDate);
-        entity.lastModifiedBy = this.dateUtils
-            .convertDateTimeFromServer(entity.lastModifiedBy);
+        entity.resetDate = this.dateUtils
+            .convertDateTimeFromServer(entity.resetDate);
         entity.lastModifiedDate = this.dateUtils
             .convertDateTimeFromServer(entity.lastModifiedDate);
     }
@@ -80,7 +80,7 @@ export class CustomerService {
 
         copy.createdDate = this.dateUtils.toDate(customer.createdDate);
 
-        copy.lastModifiedBy = this.dateUtils.toDate(customer.lastModifiedBy);
+        copy.resetDate = this.dateUtils.toDate(customer.resetDate);
 
         copy.lastModifiedDate = this.dateUtils.toDate(customer.lastModifiedDate);
         return copy;

@@ -68,7 +68,7 @@ class ActivityGatlingTest extends Simulation {
             .exec(http("Create new activity")
             .post("/api/activities")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "name":"SAMPLE_TEXT", "logo":null, "description":null, "price":null, "durationMinutes":"0", "preDurationMinutes":"0", "postDurationMinutes":"0", "isNrivate":null, "colorCode":"SAMPLE_TEXT", "cancellationTime":null}""")).asJSON
+            .body(StringBody("""{"id":null, "name":"SAMPLE_TEXT", "logo":null, "description":null, "price":null, "durationMinutes":"0", "preDurationMinutes":"0", "postDurationMinutes":"0", "isPrivate":null, "colorCode":"SAMPLE_TEXT", "cancellationTime":null}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_activity_url"))).exitHereIfFailed
             .pause(10)

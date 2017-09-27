@@ -90,16 +90,14 @@ public class Customer implements Serializable {
   @Column(name = "created_date", nullable = false)
   private ZonedDateTime createdDate;
 
-  @Size(min = 2, max = 50)
-  @Column(name = "reset_date", length = 50)
-  private String resetDate;
+  @Column(name = "reset_date")
+  private ZonedDateTime resetDate;
 
-  @NotNull
-  @Column(name = "last_modified_by", nullable = false)
+  @Size(min = 2, max = 50)
+  @Column(name = "last_modified_by", length = 50)
   private String lastModifiedBy;
 
-  @NotNull
-  @Column(name = "last_modified_date", nullable = false)
+  @Column(name = "last_modified_date")
   private ZonedDateTime lastModifiedDate;
 
   @ManyToMany
@@ -289,16 +287,16 @@ public class Customer implements Serializable {
     this.createdDate = createdDate;
   }
 
-  public String getResetDate() {
+  public ZonedDateTime getResetDate() {
     return resetDate;
   }
 
-  public Customer resetDate(String resetDate) {
+  public Customer resetDate(ZonedDateTime resetDate) {
     this.resetDate = resetDate;
     return this;
   }
 
-  public void setResetDate(String resetDate) {
+  public void setResetDate(ZonedDateTime resetDate) {
     this.resetDate = resetDate;
   }
 

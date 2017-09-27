@@ -30,8 +30,8 @@ export class CustomerPopupService {
                 this.customerService.find(id).subscribe((customer) => {
                     customer.createdDate = this.datePipe
                         .transform(customer.createdDate, 'yyyy-MM-ddTHH:mm:ss');
-                    customer.lastModifiedBy = this.datePipe
-                        .transform(customer.lastModifiedBy, 'yyyy-MM-ddTHH:mm:ss');
+                    customer.resetDate = this.datePipe
+                        .transform(customer.resetDate, 'yyyy-MM-ddTHH:mm:ss');
                     customer.lastModifiedDate = this.datePipe
                         .transform(customer.lastModifiedDate, 'yyyy-MM-ddTHH:mm:ss');
                     this.ngbModalRef = this.customerModalRef(component, customer);

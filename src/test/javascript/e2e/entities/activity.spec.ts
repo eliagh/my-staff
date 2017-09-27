@@ -48,13 +48,13 @@ describe('Activity e2e test', () => {
         expect(activityDialogPage.getPreDurationMinutesInput()).toMatch('5');
         activityDialogPage.setPostDurationMinutesInput('5');
         expect(activityDialogPage.getPostDurationMinutesInput()).toMatch('5');
-        activityDialogPage.getIsNrivateInput().isSelected().then(function (selected) {
+        activityDialogPage.getIsPrivateInput().isSelected().then(function (selected) {
             if (selected) {
-                activityDialogPage.getIsNrivateInput().click();
-                expect(activityDialogPage.getIsNrivateInput().isSelected()).toBeFalsy();
+                activityDialogPage.getIsPrivateInput().click();
+                expect(activityDialogPage.getIsPrivateInput().isSelected()).toBeFalsy();
             } else {
-                activityDialogPage.getIsNrivateInput().click();
-                expect(activityDialogPage.getIsNrivateInput().isSelected()).toBeTruthy();
+                activityDialogPage.getIsPrivateInput().click();
+                expect(activityDialogPage.getIsPrivateInput().isSelected()).toBeTruthy();
             }
         });
         activityDialogPage.setColorCodeInput('colorCode');
@@ -96,7 +96,7 @@ export class ActivityDialogPage {
     durationMinutesInput = element(by.css('input#field_durationMinutes'));
     preDurationMinutesInput = element(by.css('input#field_preDurationMinutes'));
     postDurationMinutesInput = element(by.css('input#field_postDurationMinutes'));
-    isNrivateInput = element(by.css('input#field_isNrivate'));
+    isPrivateInput = element(by.css('input#field_isPrivate'));
     colorCodeInput = element(by.css('input#field_colorCode'));
     cancellationTimeInput = element(by.css('input#field_cancellationTime'));
     locationSelect = element(by.css('select#field_location'));
@@ -162,8 +162,8 @@ export class ActivityDialogPage {
         return this.postDurationMinutesInput.getAttribute('value');
     }
 
-    getIsNrivateInput = function () {
-        return this.isNrivateInput;
+    getIsPrivateInput = function () {
+        return this.isPrivateInput;
     }
     setColorCodeInput = function (colorCode) {
         this.colorCodeInput.sendKeys(colorCode);

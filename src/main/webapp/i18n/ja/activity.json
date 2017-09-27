@@ -1,0 +1,33 @@
+{
+    "mystaffApp": {
+        "activity" : {
+            "home": {
+                "title": "Activities",
+                "createLabel": "Activity を追加",
+                "createOrEditLabel": "Activityを追加または編集",
+                "search": "Search for Activity"
+            },
+            "created": "A new Activity is created with identifier {{ param }}",
+            "updated": "A Activity is updated with identifier {{ param }}",
+            "deleted": "A Activity is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Activity {{ id }}を削除してもよろしいですか？"
+            },
+            "detail": {
+                "title": "Activity"
+            },
+            "name": "Name",
+            "logo": "Logo",
+            "description": "Description",
+            "price": "Price",
+            "durationMinutes": "Duration Minutes",
+            "preDurationMinutes": "Pre Duration Minutes",
+            "postDurationMinutes": "Post Duration Minutes",
+            "isPrivate": "Is Private",
+            "colorCode": "Color Code",
+            "cancellationTime": "Cancellation Time",
+            "location": "Location",
+            "category": "Category"
+        }
+    }
+}

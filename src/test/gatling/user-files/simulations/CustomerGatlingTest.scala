@@ -68,7 +68,7 @@ class CustomerGatlingTest extends Simulation {
             .exec(http("Create new customer")
             .post("/api/customers")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "firstName":"SAMPLE_TEXT", "midleName":"SAMPLE_TEXT", "lastName":"SAMPLE_TEXT", "login":"SAMPLE_TEXT", "passwordHash":"SAMPLE_TEXT", "phone":"SAMPLE_TEXT", "email":"SAMPLE_TEXT", "imageUrl":"SAMPLE_TEXT", "activated":null, "langKey":"SAMPLE_TEXT", "activationKey":"SAMPLE_TEXT", "resetKey":"SAMPLE_TEXT", "createdDate":"2020-01-01T00:00:00.000Z", "resetDate":"SAMPLE_TEXT", "lastModifiedBy":"2020-01-01T00:00:00.000Z", "lastModifiedDate":"2020-01-01T00:00:00.000Z"}""")).asJSON
+            .body(StringBody("""{"id":null, "firstName":"SAMPLE_TEXT", "midleName":"SAMPLE_TEXT", "lastName":"SAMPLE_TEXT", "login":"SAMPLE_TEXT", "passwordHash":"SAMPLE_TEXT", "phone":"SAMPLE_TEXT", "email":"SAMPLE_TEXT", "imageUrl":"SAMPLE_TEXT", "activated":null, "langKey":"SAMPLE_TEXT", "activationKey":"SAMPLE_TEXT", "resetKey":"SAMPLE_TEXT", "createdDate":"2020-01-01T00:00:00.000Z", "resetDate":"2020-01-01T00:00:00.000Z", "lastModifiedBy":"SAMPLE_TEXT", "lastModifiedDate":"2020-01-01T00:00:00.000Z"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_customer_url"))).exitHereIfFailed
             .pause(10)

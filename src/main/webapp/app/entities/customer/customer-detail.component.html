@@ -58,11 +58,11 @@
         </dd>
         <dt><span jhiTranslate="mystaffApp.customer.resetDate">Reset Date</span></dt>
         <dd>
-            <span>{{customer.resetDate}}</span>
+            <span>{{customer.resetDate | date:'medium'}}</span>
         </dd>
         <dt><span jhiTranslate="mystaffApp.customer.lastModifiedBy">Last Modified By</span></dt>
         <dd>
-            <span>{{customer.lastModifiedBy | date:'medium'}}</span>
+            <span>{{customer.lastModifiedBy}}</span>
         </dd>
         <dt><span jhiTranslate="mystaffApp.customer.lastModifiedDate">Last Modified Date</span></dt>
         <dd>

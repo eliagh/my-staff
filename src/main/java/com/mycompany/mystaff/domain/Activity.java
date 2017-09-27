@@ -60,8 +60,8 @@ public class Activity implements Serializable {
   private Integer postDurationMinutes;
 
   @NotNull
-  @Column(name = "is_nrivate", nullable = false)
-  private Boolean isNrivate;
+  @Column(name = "is_private", nullable = false)
+  private Boolean isPrivate;
 
   @NotNull
   @Column(name = "color_code", nullable = false)
@@ -199,17 +199,17 @@ public class Activity implements Serializable {
     this.postDurationMinutes = postDurationMinutes;
   }
 
-  public Boolean isIsNrivate() {
-    return isNrivate;
+  public Boolean isIsPrivate() {
+    return isPrivate;
   }
 
-  public Activity isNrivate(Boolean isNrivate) {
-    this.isNrivate = isNrivate;
+  public Activity isPrivate(Boolean isPrivate) {
+    this.isPrivate = isPrivate;
     return this;
   }
 
-  public void setIsNrivate(Boolean isNrivate) {
-    this.isNrivate = isNrivate;
+  public void setIsPrivate(Boolean isPrivate) {
+    this.isPrivate = isPrivate;
   }
 
   public String getColorCode() {
@@ -310,7 +310,7 @@ public class Activity implements Serializable {
   public String toString() {
     return "Activity{" + "id=" + getId() + ", name='" + getName() + "'" + ", logo='" + getLogo() + "'" + ", logoContentType='" + logoContentType + "'" + ", description='"
         + getDescription() + "'" + ", price='" + getPrice() + "'" + ", durationMinutes='" + getDurationMinutes() + "'" + ", preDurationMinutes='" + getPreDurationMinutes() + "'"
-        + ", postDurationMinutes='" + getPostDurationMinutes() + "'" + ", isNrivate='" + isIsNrivate() + "'" + ", colorCode='" + getColorCode() + "'" + ", cancellationTime='"
+        + ", postDurationMinutes='" + getPostDurationMinutes() + "'" + ", isPrivate='" + isIsPrivate() + "'" + ", colorCode='" + getColorCode() + "'" + ", cancellationTime='"
         + getCancellationTime() + "'" + "}";
   }
 

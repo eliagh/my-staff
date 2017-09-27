@@ -1,0 +1,26 @@
+{
+    "mystaffApp": {
+        "file" : {
+            "home": {
+                "title": "Files",
+                "createLabel": "Vytvořit File",
+                "createOrEditLabel": "Vytvořit nebo upravit File",
+                "search": "Vyhledat File"
+            },
+            "created": "Byl vytvořen potomek entity File s identifikátorem {{ param }}",
+            "updated": "Potomek entity File s identifikátorem {{ param }} byl upravený.",
+            "deleted": "Potomek entity File s identifikátorem {{ param }} bol smazaný.",
+            "delete": {
+                "question": "Jste si jisti, že chcete smazat File {{ id }}?"
+            },
+            "detail": {
+                "title": "File"
+            },
+            "name": "Name",
+            "url": "Url",
+            "fileType": "File Type",
+            "file": "File",
+            "owner": "Owner"
+        }
+    }
+}
