@@ -41,6 +41,7 @@ public class CategoryService {
    */
   public Category save(Category category) {
     log.debug("Request to save Category : {}", category);
+
     Category result = categoryRepository.save(category);
     categorySearchRepository.save(result);
     return result;
@@ -52,9 +53,10 @@ public class CategoryService {
    * @return the list of entities
    */
   @Transactional(readOnly = true)
-  public List<Category> findAll() {
-    log.debug("Request to get all Categories");
-    return categoryRepository.findAll();
+    public List<Category> findByCompanyId(Long companyId) {
+        log.debug("Request to get all Categories by CompanyId : {}", companyId);
+
+        return categoryRepository.findByCompanyId(companyId);
   }
 
   /**
@@ -64,9 +66,10 @@ public class CategoryService {
    * @return the entity
    */
   @Transactional(readOnly = true)
-  public Category findOne(Long id) {
-    log.debug("Request to get Category : {}", id);
-    return categoryRepository.findOne(id);
+    public Category findByIdAndCompanyID(Long id, Long companyId) {
+        log.debug("Request to get CategoryId : {}, CompanyId : {}", id, companyId);
+
+        return categoryRepository.findByIdAndCompanyID(id, companyId);
   }
 
   /**
@@ -74,10 +77,11 @@ public class CategoryService {
    *
    * @param id the id of the entity
    */
-  public void delete(Long id) {
-    log.debug("Request to delete Category : {}", id);
-    categoryRepository.delete(id);
-    categorySearchRepository.delete(id);
+    public void deleteByIdAndCompanyId(Long id, Long companyId) {
+        log.debug("Request to delete CategoryId : {}, CompanyId : {}", id, companyId);
+
+        categoryRepository.deleteByIdAndCompanyId(id, companyId);
+        categorySearchRepository.deleteByIdAndCompanyId(id, companyId);
   }
 
   /**
@@ -87,8 +91,9 @@ public class CategoryService {
    * @return the list of entities
    */
   @Transactional(readOnly = true)
-  public List<Category> search(String query) {
+    public List<Category> search(String query, Long companyId) {
     log.debug("Request to search Categories for query {}", query);
+
     return StreamSupport.stream(categorySearchRepository.search(queryStringQuery(query)).spliterator(), false).collect(Collectors.toList());
   }
 

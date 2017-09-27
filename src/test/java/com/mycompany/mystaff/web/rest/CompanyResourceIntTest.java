@@ -32,7 +32,6 @@ import org.springframework.util.Base64Utils;
 import com.mycompany.mystaff.MystaffApp;
 import com.mycompany.mystaff.domain.Company;
 import com.mycompany.mystaff.repository.CompanyRepository;
-import com.mycompany.mystaff.repository.search.CompanySearchRepository;
 import com.mycompany.mystaff.service.CompanyService;
 import com.mycompany.mystaff.web.rest.errors.ExceptionTranslator;
 
@@ -64,9 +63,6 @@ public class CompanyResourceIntTest {
 
   @Autowired
   private CompanyService companyService;
-
-  @Autowired
-  private CompanySearchRepository companySearchRepository;
 
   @Autowired
   private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -105,7 +101,6 @@ public class CompanyResourceIntTest {
 
   @Before
   public void initTest() {
-    companySearchRepository.deleteAll();
     company = createEntity(em);
   }
 
@@ -127,10 +122,6 @@ public class CompanyResourceIntTest {
     assertThat(testCompany.getLogoContentType()).isEqualTo(DEFAULT_LOGO_CONTENT_TYPE);
     assertThat(testCompany.getSector()).isEqualTo(DEFAULT_SECTOR);
     assertThat(testCompany.getThema()).isEqualTo(DEFAULT_THEMA);
-
-    // Validate the Company in Elasticsearch
-    Company companyEs = companySearchRepository.findOne(testCompany.getId());
-    assertThat(companyEs).isEqualToComparingFieldByField(testCompany);
   }
 
   @Test
@@ -256,10 +247,6 @@ public class CompanyResourceIntTest {
     assertThat(testCompany.getLogoContentType()).isEqualTo(UPDATED_LOGO_CONTENT_TYPE);
     assertThat(testCompany.getSector()).isEqualTo(UPDATED_SECTOR);
     assertThat(testCompany.getThema()).isEqualTo(UPDATED_THEMA);
-
-    // Validate the Company in Elasticsearch
-    Company companyEs = companySearchRepository.findOne(testCompany.getId());
-    assertThat(companyEs).isEqualToComparingFieldByField(testCompany);
   }
 
   @Test
@@ -288,10 +275,6 @@ public class CompanyResourceIntTest {
 
     // Get the company
     restCompanyMockMvc.perform(delete("/api/companies/{id}", company.getId()).accept(TestUtil.APPLICATION_JSON_UTF8)).andExpect(status().isOk());
-
-    // Validate Elasticsearch is empty
-    boolean companyExistsInEs = companySearchRepository.exists(company.getId());
-    assertThat(companyExistsInEs).isFalse();
 
     // Validate the database is empty
     List<Company> companyList = companyRepository.findAll();

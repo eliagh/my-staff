@@ -9,4 +9,6 @@ import com.mycompany.mystaff.domain.Category;
  */
 public interface CategorySearchRepository extends ElasticsearchRepository<Category, Long> {
 
+    void deleteByIdAndCompanyId(Long id, Long companyId);
+
 }

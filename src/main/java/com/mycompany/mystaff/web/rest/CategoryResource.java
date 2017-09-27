@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -22,7 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 import com.mycompany.mystaff.domain.Category;
+import com.mycompany.mystaff.domain.Company;
+import com.mycompany.mystaff.security.jwt.JWTConfigurer;
+import com.mycompany.mystaff.security.jwt.TokenProvider;
 import com.mycompany.mystaff.service.CategoryService;
+import com.mycompany.mystaff.service.util.ResolveTokenUtil;
 import com.mycompany.mystaff.web.rest.util.HeaderUtil;
 
 import io.github.jhipster.web.util.ResponseUtil;
@@ -38,10 +43,21 @@ public class CategoryResource {
 
   private static final String ENTITY_NAME = "category";
 
+    private final HttpServletRequest request;
+
   private final CategoryService categoryService;
 
-  public CategoryResource(CategoryService categoryService) {
+    private final TokenProvider tokenProvider;
+
+    public CategoryResource(CategoryService categoryService, HttpServletRequest request, TokenProvider tokenProvider) {
     this.categoryService = categoryService;
+        this.request = request;
+        this.tokenProvider = tokenProvider;
+    }
+
+    private Company createMyCompany() {
+        final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+        return new Company(companyId);
   }
 
   /**
@@ -56,9 +72,12 @@ public class CategoryResource {
   @Timed
   public ResponseEntity<Category> createCategory(@Valid @RequestBody Category category) throws URISyntaxException {
     log.debug("REST request to save Category : {}", category);
+
     if (category.getId() != null) {
       return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new category cannot already have an ID")).body(null);
     }
+
+        category.setCompany(createMyCompany());
     Category result = categoryService.save(category);
     return ResponseEntity.created(new URI("/api/categories/" + result.getId())).headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
   }
@@ -76,9 +95,12 @@ public class CategoryResource {
   @Timed
   public ResponseEntity<Category> updateCategory(@Valid @RequestBody Category category) throws URISyntaxException {
     log.debug("REST request to update Category : {}", category);
+
     if (category.getId() == null) {
       return createCategory(category);
     }
+
+        category.setCompany(createMyCompany());
     Category result = categoryService.save(category);
     return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, category.getId().toString())).body(result);
   }
@@ -92,7 +114,9 @@ public class CategoryResource {
   @Timed
   public List<Category> getAllCategories() {
     log.debug("REST request to get all Categories");
-    return categoryService.findAll();
+
+        final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+        return categoryService.findByCompanyId(companyId);
   }
 
   /**
@@ -106,7 +130,9 @@ public class CategoryResource {
   @Timed
   public ResponseEntity<Category> getCategory(@PathVariable Long id) {
     log.debug("REST request to get Category : {}", id);
-    Category category = categoryService.findOne(id);
+
+        final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+        Category category = categoryService.findByIdAndCompanyID(id, companyId);
     return ResponseUtil.wrapOrNotFound(Optional.ofNullable(category));
   }
 
@@ -120,7 +146,9 @@ public class CategoryResource {
   @Timed
   public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
     log.debug("REST request to delete Category : {}", id);
-    categoryService.delete(id);
+
+        final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+        categoryService.deleteByIdAndCompanyId(id, companyId);
     return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
   }
 
@@ -134,7 +162,9 @@ public class CategoryResource {
   @Timed
   public List<Category> searchCategories(@RequestParam String query) {
     log.debug("REST request to search Categories for query {}", query);
-    return categoryService.search(query);
+
+        final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+        return categoryService.search(query, companyId);
   }
 
 }

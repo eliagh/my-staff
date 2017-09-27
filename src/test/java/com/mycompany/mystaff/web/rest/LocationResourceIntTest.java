@@ -13,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,6 +34,7 @@ import com.mycompany.mystaff.domain.Company;
 import com.mycompany.mystaff.domain.Location;
 import com.mycompany.mystaff.repository.LocationRepository;
 import com.mycompany.mystaff.repository.search.LocationSearchRepository;
+import com.mycompany.mystaff.security.jwt.TokenProvider;
 import com.mycompany.mystaff.service.LocationService;
 import com.mycompany.mystaff.web.rest.errors.ExceptionTranslator;
 
@@ -90,6 +92,12 @@ public class LocationResourceIntTest {
   @Autowired
   private EntityManager em;
 
+    @Autowired
+    private TokenProvider tokenProvider;
+
+    @Autowired
+    private HttpServletRequest request;
+
   private MockMvc restLocationMockMvc;
 
   private Location location;
@@ -97,7 +105,7 @@ public class LocationResourceIntTest {
   @Before
   public void setup() {
     MockitoAnnotations.initMocks(this);
-    final LocationResource locationResource = new LocationResource(locationService);
+        final LocationResource locationResource = new LocationResource(locationService, request, tokenProvider);
     this.restLocationMockMvc = MockMvcBuilders.standaloneSetup(locationResource).setCustomArgumentResolvers(pageableArgumentResolver).setControllerAdvice(exceptionTranslator)
         .setMessageConverters(jacksonMessageConverter).build();
   }

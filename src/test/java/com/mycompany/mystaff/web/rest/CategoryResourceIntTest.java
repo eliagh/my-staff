@@ -13,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,6 +34,7 @@ import com.mycompany.mystaff.domain.Category;
 import com.mycompany.mystaff.domain.Company;
 import com.mycompany.mystaff.repository.CategoryRepository;
 import com.mycompany.mystaff.repository.search.CategorySearchRepository;
+import com.mycompany.mystaff.security.jwt.TokenProvider;
 import com.mycompany.mystaff.service.CategoryService;
 import com.mycompany.mystaff.web.rest.errors.ExceptionTranslator;
 
@@ -72,6 +74,12 @@ public class CategoryResourceIntTest {
   @Autowired
   private EntityManager em;
 
+    @Autowired
+    private TokenProvider tokenProvider;
+
+    @Autowired
+    private HttpServletRequest request;
+
   private MockMvc restCategoryMockMvc;
 
   private Category category;
@@ -79,7 +87,7 @@ public class CategoryResourceIntTest {
   @Before
   public void setup() {
     MockitoAnnotations.initMocks(this);
-    final CategoryResource categoryResource = new CategoryResource(categoryService);
+        final CategoryResource categoryResource = new CategoryResource(categoryService, request, tokenProvider);
     this.restCategoryMockMvc = MockMvcBuilders.standaloneSetup(categoryResource).setCustomArgumentResolvers(pageableArgumentResolver).setControllerAdvice(exceptionTranslator)
         .setMessageConverters(jacksonMessageConverter).build();
   }
