@@ -26,10 +26,16 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="logo" type="longblob"/>
-            <column name="logo_content_type" type="varchar(255)"/>
+            <column name="logo" type="longblob">
+                <constraints nullable="true" />
+            </column>
+            <column name="logo_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
 
-            <column name="sector" type="varchar(255)"/>
+            <column name="sector" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
 
             <column name="thema" type="varchar(255)">
                 <constraints nullable="false" />

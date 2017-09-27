@@ -74,7 +74,7 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="reset_date" type="varchar(50)">
+            <column name="reset_date" type="timestamp">
                 <constraints nullable="true" />
             </column>
 

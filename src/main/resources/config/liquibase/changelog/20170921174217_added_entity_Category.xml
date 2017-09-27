@@ -22,12 +22,15 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+
             <column name="name" type="varchar(15)">
                 <constraints nullable="false" />
             </column>
+
             <column name="description" type="clob">
                 <constraints nullable="true" />
             </column>
+
             <column name="company_id" type="bigint">
                 <constraints nullable="false" />
             </column>
