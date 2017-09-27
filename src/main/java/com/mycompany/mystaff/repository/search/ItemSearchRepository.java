@@ -9,4 +9,6 @@ import com.mycompany.mystaff.domain.Item;
  */
 public interface ItemSearchRepository extends ElasticsearchRepository<Item, Long> {
 
+    void deleteByIdAndCompanyId(Long id, Long companyId);
+
 }

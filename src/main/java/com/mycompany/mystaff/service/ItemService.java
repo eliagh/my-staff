@@ -39,6 +39,7 @@ public class ItemService {
    */
   public Item save(Item item) {
     log.debug("Request to save Item : {}", item);
+
     Item result = itemRepository.save(item);
     itemSearchRepository.save(result);
     return result;
@@ -51,9 +52,10 @@ public class ItemService {
    * @return the list of entities
    */
   @Transactional(readOnly = true)
-  public Page<Item> findAll(Pageable pageable) {
-    log.debug("Request to get all Items");
-    return itemRepository.findAll(pageable);
+    public Page<Item> findByCompanyId(Pageable pageable, Long companyId) {
+        log.debug("Request to get all Items by CompanyId : {}", companyId);
+
+        return itemRepository.findAByCompanyId(pageable, companyId);
   }
 
   /**
@@ -63,9 +65,10 @@ public class ItemService {
    * @return the entity
    */
   @Transactional(readOnly = true)
-  public Item findOne(Long id) {
-    log.debug("Request to get Item : {}", id);
-    return itemRepository.findOne(id);
+    public Item findByIdAndCompanyId(Long id, Long companyId) {
+        log.debug("Request to get Item : {}, CompanyId : {}", id, companyId);
+
+        return itemRepository.findByIdAndCompanyId(id, companyId);
   }
 
   /**
@@ -73,10 +76,11 @@ public class ItemService {
    *
    * @param id the id of the entity
    */
-  public void delete(Long id) {
-    log.debug("Request to delete Item : {}", id);
-    itemRepository.delete(id);
-    itemSearchRepository.delete(id);
+    public void deleteByIdAndCompanyId(Long id, Long companyId) {
+        log.debug("Request to delete Item : {}, CompanyId : {}", id, companyId);
+
+        itemRepository.deleteByIdAndCompanyId(id, companyId);
+        itemSearchRepository.deleteByIdAndCompanyId(id, companyId);
   }
 
   /**
@@ -87,8 +91,9 @@ public class ItemService {
    * @return the list of entities
    */
   @Transactional(readOnly = true)
-  public Page<Item> search(String query, Pageable pageable) {
+    public Page<Item> search(String query, Pageable pageable, Long companyId) {
     log.debug("Request to search for a page of Items for query {}", query);
+
     Page<Item> result = itemSearchRepository.search(queryStringQuery(query), pageable);
     return result;
   }

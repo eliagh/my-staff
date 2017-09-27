@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -25,8 +26,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
+import com.mycompany.mystaff.domain.Company;
 import com.mycompany.mystaff.domain.Item;
+import com.mycompany.mystaff.security.jwt.JWTConfigurer;
+import com.mycompany.mystaff.security.jwt.TokenProvider;
 import com.mycompany.mystaff.service.ItemService;
+import com.mycompany.mystaff.service.util.ResolveTokenUtil;
 import com.mycompany.mystaff.web.rest.util.HeaderUtil;
 import com.mycompany.mystaff.web.rest.util.PaginationUtil;
 
@@ -44,10 +49,21 @@ public class ItemResource {
 
   private static final String ENTITY_NAME = "item";
 
+    private final HttpServletRequest request;
+
   private final ItemService itemService;
 
-  public ItemResource(ItemService itemService) {
+    private final TokenProvider tokenProvider;
+
+    public ItemResource(ItemService itemService, HttpServletRequest request, TokenProvider tokenProvider) {
     this.itemService = itemService;
+        this.request = request;
+        this.tokenProvider = tokenProvider;
+    }
+
+    private Company createMyCompany() {
+        final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+        return new Company(companyId);
   }
 
   /**
@@ -62,9 +78,13 @@ public class ItemResource {
   @Timed
   public ResponseEntity<Item> createItem(@Valid @RequestBody Item item) throws URISyntaxException {
     log.debug("REST request to save Item : {}", item);
+
     if (item.getId() != null) {
       return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new item cannot already have an ID")).body(null);
     }
+
+        item.setCompany(createMyCompany());
+
     Item result = itemService.save(item);
     return ResponseEntity.created(new URI("/api/items/" + result.getId())).headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
   }
@@ -82,9 +102,13 @@ public class ItemResource {
   @Timed
   public ResponseEntity<Item> updateItem(@Valid @RequestBody Item item) throws URISyntaxException {
     log.debug("REST request to update Item : {}", item);
+
     if (item.getId() == null) {
       return createItem(item);
     }
+
+        item.setCompany(createMyCompany());
+
     Item result = itemService.save(item);
     return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, item.getId().toString())).body(result);
   }
@@ -99,7 +123,9 @@ public class ItemResource {
   @Timed
   public ResponseEntity<List<Item>> getAllItems(@ApiParam Pageable pageable) {
     log.debug("REST request to get a page of Items");
-    Page<Item> page = itemService.findAll(pageable);
+
+        final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+        Page<Item> page = itemService.findByCompanyId(pageable, companyId);
     HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/items");
     return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
   }
@@ -115,7 +141,9 @@ public class ItemResource {
   @Timed
   public ResponseEntity<Item> getItem(@PathVariable Long id) {
     log.debug("REST request to get Item : {}", id);
-    Item item = itemService.findOne(id);
+
+        final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+        Item item = itemService.findByIdAndCompanyId(id, companyId);
     return ResponseUtil.wrapOrNotFound(Optional.ofNullable(item));
   }
 
@@ -129,7 +157,9 @@ public class ItemResource {
   @Timed
   public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
     log.debug("REST request to delete Item : {}", id);
-    itemService.delete(id);
+
+        final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+        itemService.deleteByIdAndCompanyId(id, companyId);
     return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
   }
 
@@ -144,7 +174,9 @@ public class ItemResource {
   @Timed
   public ResponseEntity<List<Item>> searchItems(@RequestParam String query, @ApiParam Pageable pageable) {
     log.debug("REST request to search for a page of Items for query {}", query);
-    Page<Item> page = itemService.search(query, pageable);
+
+        final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+        Page<Item> page = itemService.search(query, pageable, companyId);
     HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/items");
     return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
   }
