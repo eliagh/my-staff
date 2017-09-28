@@ -41,7 +41,7 @@ describe('File e2e test', () => {
         expect(fileDialogPage.getUrlInput()).toMatch('url');
         fileDialogPage.fileTypeSelectLastOption();
         fileDialogPage.setFileInput(absolutePath);
-        fileDialogPage.ownerSelectLastOption();
+        fileDialogPage.companySelectLastOption();
         fileDialogPage.save();
         expect(fileDialogPage.getSaveButton().isPresent()).toBeFalsy();
     }); */
@@ -72,7 +72,7 @@ export class FileDialogPage {
     urlInput = element(by.css('input#field_url'));
     fileTypeSelect = element(by.css('select#field_fileType'));
     fileInput = element(by.css('input#file_file'));
-    ownerSelect = element(by.css('select#field_owner'));
+    companySelect = element(by.css('select#field_company'));
 
     getModalTitle() {
         return this.modalTitle.getAttribute('jhiTranslate');
@@ -113,20 +113,20 @@ export class FileDialogPage {
         return this.fileInput.getAttribute('value');
     }
 
-    ownerSelectLastOption = function () {
-        this.ownerSelect.all(by.tagName('option')).last().click();
+    companySelectLastOption = function () {
+        this.companySelect.all(by.tagName('option')).last().click();
     }
 
-    ownerSelectOption = function (option) {
-        this.ownerSelect.sendKeys(option);
+    companySelectOption = function (option) {
+        this.companySelect.sendKeys(option);
     }
 
-    getOwnerSelect = function () {
-        return this.ownerSelect;
+    getCompanySelect = function () {
+        return this.companySelect;
     }
 
-    getOwnerSelectedOption = function () {
-        return this.ownerSelect.element(by.css('option:checked')).getText();
+    getCompanySelectedOption = function () {
+        return this.companySelect.element(by.css('option:checked')).getText();
     }
 
     save() {

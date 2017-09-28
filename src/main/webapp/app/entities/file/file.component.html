@@ -34,7 +34,7 @@
             <th jhiSortBy="url"><span jhiTranslate="mystaffApp.file.url">Url</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="fileType"><span jhiTranslate="mystaffApp.file.fileType">File Type</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="file"><span jhiTranslate="mystaffApp.file.file">File</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="owner.name"><span jhiTranslate="mystaffApp.file.owner">Owner</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="company.name"><span jhiTranslate="mystaffApp.file.company">Company</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
@@ -51,8 +51,8 @@
                     <span *ngIf="file.file">{{file.fileContentType}}, {{byteSize(file.file)}}</span>
                 </td>
                 <td>
-                    <div *ngIf="file.owner">
-                        <a [routerLink]="['../company', file.owner?.id ]" >{{file.owner?.name}}</a>
+                    <div *ngIf="file.company">
+                        <a [routerLink]="['../company', file.company?.id ]" >{{file.company?.name}}</a>
                     </div>
                 </td>
                 <td class="text-right">

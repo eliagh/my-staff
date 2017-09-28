@@ -25,10 +25,10 @@
                 {{file.fileContentType}}, {{byteSize(file.file)}}
             </div>
         </dd>
-        <dt><span jhiTranslate="mystaffApp.file.owner">Owner</span></dt>
+        <dt><span jhiTranslate="mystaffApp.file.company">Company</span></dt>
         <dd>
-            <div *ngIf="file.owner">
-                <a [routerLink]="['/company', file.owner?.id]">{{file.owner?.name}}</a>
+            <div *ngIf="file.company">
+                <a [routerLink]="['/company', file.company?.id]">{{file.company?.name}}</a>
             </div>
         </dd>
     </dl>

@@ -14,7 +14,7 @@ export class File implements BaseEntity {
         public fileType?: FileType,
         public fileContentType?: string,
         public file?: any,
-        public owner?: BaseEntity,
+        public company?: BaseEntity,
     ) {
     }
 }

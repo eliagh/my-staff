@@ -20,7 +20,7 @@
             "url": "Url",
             "fileType": "File Type",
             "file": "File",
-            "owner": "Owner"
+            "company": "Company"
         }
     }
 }
