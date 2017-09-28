@@ -49,21 +49,21 @@ public class ItemResource {
 
   private static final String ENTITY_NAME = "item";
 
-    private final HttpServletRequest request;
+  private final HttpServletRequest request;
 
   private final ItemService itemService;
 
-    private final TokenProvider tokenProvider;
+  private final TokenProvider tokenProvider;
 
-    public ItemResource(ItemService itemService, HttpServletRequest request, TokenProvider tokenProvider) {
+  public ItemResource(ItemService itemService, HttpServletRequest request, TokenProvider tokenProvider) {
     this.itemService = itemService;
-        this.request = request;
-        this.tokenProvider = tokenProvider;
-    }
+    this.request = request;
+    this.tokenProvider = tokenProvider;
+  }
 
-    private Company createMyCompany() {
-        final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
-        return new Company(companyId);
+  private Company createMyCompany() {
+    final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+    return new Company(companyId);
   }
 
   /**
@@ -83,7 +83,7 @@ public class ItemResource {
       return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new item cannot already have an ID")).body(null);
     }
 
-        item.setCompany(createMyCompany());
+    item.setCompany(createMyCompany());
 
     Item result = itemService.save(item);
     return ResponseEntity.created(new URI("/api/items/" + result.getId())).headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
@@ -107,7 +107,7 @@ public class ItemResource {
       return createItem(item);
     }
 
-        item.setCompany(createMyCompany());
+    item.setCompany(createMyCompany());
 
     Item result = itemService.save(item);
     return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, item.getId().toString())).body(result);
@@ -124,8 +124,8 @@ public class ItemResource {
   public ResponseEntity<List<Item>> getAllItems(@ApiParam Pageable pageable) {
     log.debug("REST request to get a page of Items");
 
-        final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
-        Page<Item> page = itemService.findByCompanyId(pageable, companyId);
+    final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+    Page<Item> page = itemService.findByCompanyId(pageable, companyId);
     HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/items");
     return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
   }
@@ -142,8 +142,8 @@ public class ItemResource {
   public ResponseEntity<Item> getItem(@PathVariable Long id) {
     log.debug("REST request to get Item : {}", id);
 
-        final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
-        Item item = itemService.findByIdAndCompanyId(id, companyId);
+    final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+    Item item = itemService.findByIdAndCompanyId(id, companyId);
     return ResponseUtil.wrapOrNotFound(Optional.ofNullable(item));
   }
 
@@ -158,8 +158,8 @@ public class ItemResource {
   public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
     log.debug("REST request to delete Item : {}", id);
 
-        final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
-        itemService.deleteByIdAndCompanyId(id, companyId);
+    final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+    itemService.deleteByIdAndCompanyId(id, companyId);
     return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
   }
 
@@ -175,8 +175,8 @@ public class ItemResource {
   public ResponseEntity<List<Item>> searchItems(@RequestParam String query, @ApiParam Pageable pageable) {
     log.debug("REST request to search for a page of Items for query {}", query);
 
-        final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
-        Page<Item> page = itemService.search(query, pageable, companyId);
+    final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+    Page<Item> page = itemService.search(query, pageable, companyId);
     HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/items");
     return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
   }

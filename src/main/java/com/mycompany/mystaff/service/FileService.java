@@ -39,6 +39,7 @@ public class FileService {
    */
   public File save(File file) {
     log.debug("Request to save File : {}", file);
+
     File result = fileRepository.save(file);
     fileSearchRepository.save(result);
     return result;
@@ -51,9 +52,10 @@ public class FileService {
    * @return the list of entities
    */
   @Transactional(readOnly = true)
-  public Page<File> findAll(Pageable pageable) {
-    log.debug("Request to get all Files");
-    return fileRepository.findAll(pageable);
+  public Page<File> findByCompanyId(Pageable pageable, Long companyId) {
+    log.debug("Request to get all Files by CompanyId : {}", companyId);
+
+    return fileRepository.findByCompanyId(pageable, companyId);
   }
 
   /**
@@ -63,9 +65,10 @@ public class FileService {
    * @return the entity
    */
   @Transactional(readOnly = true)
-  public File findOne(Long id) {
-    log.debug("Request to get File : {}", id);
-    return fileRepository.findOne(id);
+  public File findByIdAndCompanyId(Long id, Long companyId) {
+    log.debug("Request to get File : {}, CompanyId : {}", id, companyId);
+
+    return fileRepository.findByIdAndCompanyId(id, companyId);
   }
 
   /**
@@ -73,10 +76,11 @@ public class FileService {
    *
    * @param id the id of the entity
    */
-  public void delete(Long id) {
-    log.debug("Request to delete File : {}", id);
-    fileRepository.delete(id);
-    fileSearchRepository.delete(id);
+  public void deleteByIdAndCompanyId(Long id, Long companyId) {
+    log.debug("Request to delete File : {}, CompanyId : {}", id, companyId);
+
+    fileRepository.deleteByIdAndCompanyId(id, companyId);
+    fileSearchRepository.deleteByIdAndCompanyId(id, companyId);
   }
 
   /**
@@ -87,8 +91,9 @@ public class FileService {
    * @return the list of entities
    */
   @Transactional(readOnly = true)
-  public Page<File> search(String query, Pageable pageable) {
+  public Page<File> search(String query, Pageable pageable, Long companyId) {
     log.debug("Request to search for a page of Files for query {}", query);
+
     Page<File> result = fileSearchRepository.search(queryStringQuery(query), pageable);
     return result;
   }

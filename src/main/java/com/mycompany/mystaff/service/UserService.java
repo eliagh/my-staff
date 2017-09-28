@@ -96,10 +96,15 @@ public class UserService {
   }
 
   public User createUser(String login, String password, String firstName, String lastName, String email, String imageUrl, String langKey, Long companyId) {
-    User newUser = new User();
-    Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
+    Set<Authority> userRegistrationRoles = authorityRepository.retrieveUserRegistrationRoles(AuthoritiesConstants.USER, AuthoritiesConstants.COMPANY_ADMIN,
+        AuthoritiesConstants.LOCATION_ADMIN, AuthoritiesConstants.STAFF);
+
     Set<Authority> authorities = new HashSet<>();
+    authorities.addAll(userRegistrationRoles);
+
     String encryptedPassword = passwordEncoder.encode(password);
+
+    User newUser = new User();
     newUser.setLogin(login);
     // new user gets initially a generated password
     newUser.setPassword(encryptedPassword);
@@ -113,7 +118,6 @@ public class UserService {
     newUser.setActivated(false);
     // new user gets registration key
     newUser.setActivationKey(RandomUtil.generateActivationKey());
-    authorities.add(authority);
     newUser.setAuthorities(authorities);
     userRepository.save(newUser);
     userSearchRepository.save(newUser);
@@ -223,6 +227,7 @@ public class UserService {
 
   @Transactional(readOnly = true)
   public Optional<User> getUserWithAuthoritiesByLogin(String login) {
+    // TODO: verify if this is needed
     return userRepository.findOneWithAuthoritiesByLogin(login);
   }
 

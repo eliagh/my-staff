@@ -48,7 +48,7 @@ public class File implements Serializable {
 
   @ManyToOne(optional = false)
   @NotNull
-  private Company owner;
+  private Company company;
 
   // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
   public Long getId() {
@@ -124,17 +124,17 @@ public class File implements Serializable {
     this.fileContentType = fileContentType;
   }
 
-  public Company getOwner() {
-    return owner;
+  public Company getCompany() {
+    return company;
   }
 
-  public File owner(Company company) {
-    this.owner = company;
+  public File company(Company company) {
+    this.company = company;
     return this;
   }
 
-  public void setOwner(Company company) {
-    this.owner = company;
+  public void setCompany(Company company) {
+    this.company = company;
   }
   // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not
   // remove

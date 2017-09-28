@@ -52,10 +52,10 @@ public class LocationService {
    * @return the list of entities
    */
   @Transactional(readOnly = true)
-    public Page<Location> findByCompanyId(Pageable pageable, Long companyId) {
-        log.debug("Request to get all Locations by CompanyId : {}", companyId);
+  public Page<Location> findByCompanyId(Pageable pageable, Long companyId) {
+    log.debug("Request to get all Locations by CompanyId : {}", companyId);
 
-        return locationRepository.findByCompanyId(pageable, companyId);
+    return locationRepository.findByCompanyId(pageable, companyId);
   }
 
   /**
@@ -65,10 +65,10 @@ public class LocationService {
    * @return the entity
    */
   @Transactional(readOnly = true)
-    public Location findByIdAndCompanyId(Long id, Long companyId) {
-        log.debug("Request to get LocationId : {}, CompanyId : {}", id, companyId);
+  public Location findByIdAndCompanyId(Long id, Long companyId) {
+    log.debug("Request to get LocationId : {}, CompanyId : {}", id, companyId);
 
-        return locationRepository.findByIdAndCompanyId(id, companyId);
+    return locationRepository.findByIdAndCompanyId(id, companyId);
   }
 
   /**
@@ -76,11 +76,11 @@ public class LocationService {
    *
    * @param id the id of the entity
    */
-    public void deleteByIdAndCompanyId(Long id, Long companyId) {
-        log.debug("Request to delete LocationId : {}, CompanyId : {}", id, companyId);
+  public void deleteByIdAndCompanyId(Long id, Long companyId) {
+    log.debug("Request to delete LocationId : {}, CompanyId : {}", id, companyId);
 
-        locationRepository.deleteByIdAndCompanyId(id, companyId);
-        locationSearchRepository.deleteByIdAndCompanyId(id, companyId);
+    locationRepository.deleteByIdAndCompanyId(id, companyId);
+    locationSearchRepository.deleteByIdAndCompanyId(id, companyId);
   }
 
   /**
@@ -91,7 +91,7 @@ public class LocationService {
    * @return the list of entities
    */
   @Transactional(readOnly = true)
-    public Page<Location> search(String query, Pageable pageable, Long companyId) {
+  public Page<Location> search(String query, Pageable pageable, Long companyId) {
     log.debug("Request to search for a page of Locations for query {}", query);
 
     Page<Location> result = locationSearchRepository.search(queryStringQuery(query), pageable);

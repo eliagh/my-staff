@@ -13,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,6 +36,7 @@ import com.mycompany.mystaff.domain.File;
 import com.mycompany.mystaff.domain.enumeration.FileType;
 import com.mycompany.mystaff.repository.FileRepository;
 import com.mycompany.mystaff.repository.search.FileSearchRepository;
+import com.mycompany.mystaff.security.jwt.TokenProvider;
 import com.mycompany.mystaff.service.FileService;
 import com.mycompany.mystaff.web.rest.errors.ExceptionTranslator;
 
@@ -82,6 +84,12 @@ public class FileResourceIntTest {
   @Autowired
   private EntityManager em;
 
+  @Autowired
+  private TokenProvider tokenProvider;
+
+  @Autowired
+  private HttpServletRequest request;
+
   private MockMvc restFileMockMvc;
 
   private File file;
@@ -89,7 +97,7 @@ public class FileResourceIntTest {
   @Before
   public void setup() {
     MockitoAnnotations.initMocks(this);
-    final FileResource fileResource = new FileResource(fileService);
+    final FileResource fileResource = new FileResource(fileService, request, tokenProvider);
     this.restFileMockMvc = MockMvcBuilders.standaloneSetup(fileResource).setCustomArgumentResolvers(pageableArgumentResolver).setControllerAdvice(exceptionTranslator)
         .setMessageConverters(jacksonMessageConverter).build();
   }
@@ -103,10 +111,10 @@ public class FileResourceIntTest {
   public static File createEntity(EntityManager em) {
     File file = new File().name(DEFAULT_NAME).url(DEFAULT_URL).fileType(DEFAULT_FILE_TYPE).file(DEFAULT_FILE).fileContentType(DEFAULT_FILE_CONTENT_TYPE);
     // Add required entity
-    Company owner = CompanyResourceIntTest.createEntity(em);
-    em.persist(owner);
+    Company company = CompanyResourceIntTest.createEntity(em);
+    em.persist(company);
     em.flush();
-    file.setOwner(owner);
+    file.setCompany(company);
     return file;
   }
 

@@ -92,11 +92,11 @@ public class LocationResourceIntTest {
   @Autowired
   private EntityManager em;
 
-    @Autowired
-    private TokenProvider tokenProvider;
+  @Autowired
+  private TokenProvider tokenProvider;
 
-    @Autowired
-    private HttpServletRequest request;
+  @Autowired
+  private HttpServletRequest request;
 
   private MockMvc restLocationMockMvc;
 
@@ -105,7 +105,7 @@ public class LocationResourceIntTest {
   @Before
   public void setup() {
     MockitoAnnotations.initMocks(this);
-        final LocationResource locationResource = new LocationResource(locationService, request, tokenProvider);
+    final LocationResource locationResource = new LocationResource(locationService, request, tokenProvider);
     this.restLocationMockMvc = MockMvcBuilders.standaloneSetup(locationResource).setCustomArgumentResolvers(pageableArgumentResolver).setControllerAdvice(exceptionTranslator)
         .setMessageConverters(jacksonMessageConverter).build();
   }

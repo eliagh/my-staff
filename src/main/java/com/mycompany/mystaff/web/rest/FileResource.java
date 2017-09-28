@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -25,8 +26,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
+import com.mycompany.mystaff.domain.Company;
 import com.mycompany.mystaff.domain.File;
+import com.mycompany.mystaff.security.jwt.JWTConfigurer;
+import com.mycompany.mystaff.security.jwt.TokenProvider;
 import com.mycompany.mystaff.service.FileService;
+import com.mycompany.mystaff.service.util.ResolveTokenUtil;
 import com.mycompany.mystaff.web.rest.util.HeaderUtil;
 import com.mycompany.mystaff.web.rest.util.PaginationUtil;
 
@@ -44,10 +49,21 @@ public class FileResource {
 
   private static final String ENTITY_NAME = "file";
 
+  private final HttpServletRequest request;
+
   private final FileService fileService;
 
-  public FileResource(FileService fileService) {
+  private final TokenProvider tokenProvider;
+
+  public FileResource(FileService fileService, HttpServletRequest request, TokenProvider tokenProvider) {
     this.fileService = fileService;
+    this.request = request;
+    this.tokenProvider = tokenProvider;
+  }
+
+  private Company createMyCompany() {
+    final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+    return new Company(companyId);
   }
 
   /**
@@ -62,9 +78,13 @@ public class FileResource {
   @Timed
   public ResponseEntity<File> createFile(@Valid @RequestBody File file) throws URISyntaxException {
     log.debug("REST request to save File : {}", file);
+
     if (file.getId() != null) {
       return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new file cannot already have an ID")).body(null);
     }
+
+    file.setCompany(createMyCompany());
+
     File result = fileService.save(file);
     return ResponseEntity.created(new URI("/api/files/" + result.getId())).headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
   }
@@ -82,9 +102,13 @@ public class FileResource {
   @Timed
   public ResponseEntity<File> updateFile(@Valid @RequestBody File file) throws URISyntaxException {
     log.debug("REST request to update File : {}", file);
+
     if (file.getId() == null) {
       return createFile(file);
     }
+
+    file.setCompany(createMyCompany());
+
     File result = fileService.save(file);
     return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, file.getId().toString())).body(result);
   }
@@ -99,7 +123,9 @@ public class FileResource {
   @Timed
   public ResponseEntity<List<File>> getAllFiles(@ApiParam Pageable pageable) {
     log.debug("REST request to get a page of Files");
-    Page<File> page = fileService.findAll(pageable);
+
+    final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+    Page<File> page = fileService.findByCompanyId(pageable, companyId);
     HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/files");
     return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
   }
@@ -115,7 +141,9 @@ public class FileResource {
   @Timed
   public ResponseEntity<File> getFile(@PathVariable Long id) {
     log.debug("REST request to get File : {}", id);
-    File file = fileService.findOne(id);
+
+    final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+    File file = fileService.findByIdAndCompanyId(id, companyId);
     return ResponseUtil.wrapOrNotFound(Optional.ofNullable(file));
   }
 
@@ -129,7 +157,9 @@ public class FileResource {
   @Timed
   public ResponseEntity<Void> deleteFile(@PathVariable Long id) {
     log.debug("REST request to delete File : {}", id);
-    fileService.delete(id);
+
+    final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+    fileService.deleteByIdAndCompanyId(id, companyId);
     return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
   }
 
@@ -144,7 +174,9 @@ public class FileResource {
   @Timed
   public ResponseEntity<List<File>> searchFiles(@RequestParam String query, @ApiParam Pageable pageable) {
     log.debug("REST request to search for a page of Files for query {}", query);
-    Page<File> page = fileService.search(query, pageable);
+
+    final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+    Page<File> page = fileService.search(query, pageable, companyId);
     HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/files");
     return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
   }
