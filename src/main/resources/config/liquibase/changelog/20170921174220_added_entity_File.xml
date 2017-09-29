@@ -43,7 +43,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="owner_id" type="bigint">
+            <column name="company_id" type="bigint">
                 <constraints nullable="false" />
             </column>
 

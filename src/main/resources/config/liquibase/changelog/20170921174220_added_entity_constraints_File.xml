@@ -8,9 +8,9 @@
     -->
     <changeSet id="20170921174220-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="owner_id"
+        <addForeignKeyConstraint baseColumnNames="company_id"
                                  baseTableName="file"
-                                 constraintName="fk_file_owner_id"
+                                 constraintName="fk_file_company_id"
                                  deferrable="false"
                                  initiallyDeferred="false"
                                  onDelete="CASCADE"
