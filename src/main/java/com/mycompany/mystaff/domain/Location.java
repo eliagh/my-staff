@@ -16,6 +16,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 /**
  * A Location.
@@ -61,6 +63,7 @@ public class Location implements Serializable {
 
   @ManyToOne(optional = false)
   @NotNull
+  @Field(type = FieldType.Nested)
   private Company company;
 
   // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
