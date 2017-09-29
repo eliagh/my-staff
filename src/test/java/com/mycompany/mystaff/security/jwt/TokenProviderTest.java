@@ -2,20 +2,15 @@ package com.mycompany.mystaff.security.jwt;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import com.mycompany.mystaff.security.AuthoritiesConstants;
+import com.mycompany.mystaff.web.rest.TestUtil;
 
 import io.github.jhipster.config.JHipsterProperties;
 import io.jsonwebtoken.Jwts;
@@ -45,7 +40,7 @@ public class TokenProviderTest {
 
   @Test
   public void testReturnFalseWhenJWTisMalformed() {
-    Authentication authentication = createAuthentication();
+    Authentication authentication = TestUtil.createAuthentication();
     String token = tokenProvider.createToken(authentication, false, 0L);
     String invalidToken = token.substring(1);
     boolean isTokenValid = tokenProvider.validateToken(invalidToken);
@@ -57,7 +52,7 @@ public class TokenProviderTest {
   public void testReturnFalseWhenJWTisExpired() {
     ReflectionTestUtils.setField(tokenProvider, "tokenValidityInMilliseconds", -ONE_MINUTE);
 
-    Authentication authentication = createAuthentication();
+    Authentication authentication = TestUtil.createAuthentication();
     String token = tokenProvider.createToken(authentication, false, 0L);
 
     boolean isTokenValid = tokenProvider.validateToken(token);
@@ -79,12 +74,6 @@ public class TokenProviderTest {
     boolean isTokenValid = tokenProvider.validateToken("");
 
     assertThat(isTokenValid).isEqualTo(false);
-  }
-
-  private Authentication createAuthentication() {
-    Collection<GrantedAuthority> authorities = new ArrayList<>();
-    authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.ANONYMOUS));
-    return new UsernamePasswordAuthenticationToken("anonymous", "anonymous", authorities);
   }
 
   private String createUnsupportedToken() {

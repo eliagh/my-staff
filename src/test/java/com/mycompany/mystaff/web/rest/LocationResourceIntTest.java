@@ -10,8 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -26,10 +24,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -40,7 +35,6 @@ import com.mycompany.mystaff.domain.Company;
 import com.mycompany.mystaff.domain.Location;
 import com.mycompany.mystaff.repository.LocationRepository;
 import com.mycompany.mystaff.repository.search.LocationSearchRepository;
-import com.mycompany.mystaff.security.AuthoritiesConstants;
 import com.mycompany.mystaff.security.jwt.TokenProvider;
 import com.mycompany.mystaff.service.LocationService;
 import com.mycompany.mystaff.web.rest.errors.ExceptionTranslator;
@@ -79,9 +73,9 @@ public class LocationResourceIntTest {
 	private static final String UPDATED_STATE_PROVINCE = "BBBBBBBBBB";
 
 	private static final Long DEFAULT_COMPANY_ID = 1L;
-	
+
 	private String JWT = "";
-	
+
 	@Autowired
 	private LocationRepository locationRepository;
 
@@ -115,21 +109,15 @@ public class LocationResourceIntTest {
 
 	@Before
 	public void setup() {
-	    Authentication authentication = createAuthentication();
-		JWT = tokenProvider.createToken(authentication, false, DEFAULT_COMPANY_ID);
-		
+		Authentication authentication = TestUtil.createAuthentication();
+		this.JWT = tokenProvider.createToken(authentication, false, DEFAULT_COMPANY_ID);
+
 		MockitoAnnotations.initMocks(this);
 		final LocationResource locationResource = new LocationResource(locationService, request, tokenProvider);
 		this.restLocationMockMvc = MockMvcBuilders.standaloneSetup(locationResource)
 				.setCustomArgumentResolvers(pageableArgumentResolver).setControllerAdvice(exceptionTranslator)
 				.setMessageConverters(jacksonMessageConverter).build();
 	}
-
-	  private Authentication createAuthentication() {
-	    Collection<GrantedAuthority> authorities = new ArrayList<>();
-	    authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.ANONYMOUS));
-	    return new UsernamePasswordAuthenticationToken("anonymous", "anonymous", authorities);
-	  }
 
 	/**
 	 * Create an entity for this test.
@@ -161,7 +149,7 @@ public class LocationResourceIntTest {
 		int databaseSizeBeforeCreate = locationRepository.findAll().size();
 
 		// Create the Location
-		restLocationMockMvc.perform(post("/api/locations").contentType(TestUtil.APPLICATION_JSON_UTF8)
+		restLocationMockMvc.perform(post("/api/locations").contentType(TestUtil.APPLICATION_JSON_UTF8).header("Authorization", "Bearer " + JWT)
 				.content(TestUtil.convertObjectToJsonBytes(location))).andExpect(status().isCreated());
 
 		// Validate the Location in the database
@@ -191,7 +179,7 @@ public class LocationResourceIntTest {
 		location.setId(1L);
 
 		// An entity with an existing ID cannot be created, so this API call must fail
-		restLocationMockMvc.perform(post("/api/locations").contentType(TestUtil.APPLICATION_JSON_UTF8)
+		restLocationMockMvc.perform(post("/api/locations").contentType(TestUtil.APPLICATION_JSON_UTF8).header("Authorization", "Bearer " + JWT)
 				.content(TestUtil.convertObjectToJsonBytes(location))).andExpect(status().isBadRequest());
 
 		// Validate the Location in the database
@@ -208,7 +196,7 @@ public class LocationResourceIntTest {
 
 		// Create the Location, which fails.
 
-		restLocationMockMvc.perform(post("/api/locations").contentType(TestUtil.APPLICATION_JSON_UTF8)
+		restLocationMockMvc.perform(post("/api/locations").contentType(TestUtil.APPLICATION_JSON_UTF8).header("Authorization", "Bearer " + JWT)
 				.content(TestUtil.convertObjectToJsonBytes(location))).andExpect(status().isBadRequest());
 
 		List<Location> locationList = locationRepository.findAll();
@@ -222,7 +210,8 @@ public class LocationResourceIntTest {
 		locationRepository.saveAndFlush(location);
 
 		// Get all the locationList
-		restLocationMockMvc.perform(get("/api/locations?sort=id,desc").header("Authorization", "Bearer " + JWT)).andExpect(status().isOk()) //
+		restLocationMockMvc.perform(get("/api/locations?sort=id,desc").header("Authorization", "Bearer " + JWT))
+				.andExpect(status().isOk()) //
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)) //
 				.andExpect(jsonPath("$.[*].id").value(hasItem(location.getId().intValue()))) //
 				.andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString()))) //
@@ -242,8 +231,8 @@ public class LocationResourceIntTest {
 		locationRepository.saveAndFlush(location);
 
 		// Get the location
-		restLocationMockMvc.perform(get("/api/locations/{id}", location.getId())) //
-		.andExpect(status().isOk()) //
+		restLocationMockMvc.perform(get("/api/locations/{id}", location.getId()).header("Authorization", "Bearer " + JWT)) //
+				.andExpect(status().isOk()) //
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)) //
 				.andExpect(jsonPath("$.id").value(location.getId().intValue())) //
 				.andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString())) //
@@ -260,7 +249,7 @@ public class LocationResourceIntTest {
 	@Transactional
 	public void getNonExistingLocation() throws Exception {
 		// Get the location
-		restLocationMockMvc.perform(get("/api/locations/{id}", Long.MAX_VALUE)).andExpect(status().isNotFound());
+		restLocationMockMvc.perform(get("/api/locations/{id}", Long.MAX_VALUE).header("Authorization", "Bearer " + JWT)).andExpect(status().isNotFound());
 	}
 
 	@Test
@@ -277,7 +266,7 @@ public class LocationResourceIntTest {
 				.address3(UPDATED_ADDRESS_3).number(UPDATED_NUMBER).postcode(UPDATED_POSTCODE).city(UPDATED_CITY)
 				.stateProvince(UPDATED_STATE_PROVINCE);
 
-		restLocationMockMvc.perform(put("/api/locations").contentType(TestUtil.APPLICATION_JSON_UTF8)
+		restLocationMockMvc.perform(put("/api/locations").contentType(TestUtil.APPLICATION_JSON_UTF8).header("Authorization", "Bearer " + JWT)
 				.content(TestUtil.convertObjectToJsonBytes(updatedLocation))).andExpect(status().isOk());
 
 		// Validate the Location in the database
@@ -307,7 +296,7 @@ public class LocationResourceIntTest {
 
 		// If the entity doesn't have an ID, it will be created instead of just being
 		// updated
-		restLocationMockMvc.perform(put("/api/locations").contentType(TestUtil.APPLICATION_JSON_UTF8)
+		restLocationMockMvc.perform(put("/api/locations").contentType(TestUtil.APPLICATION_JSON_UTF8).header("Authorization", "Bearer " + JWT)
 				.content(TestUtil.convertObjectToJsonBytes(location))).andExpect(status().isCreated());
 
 		// Validate the Location in the database
@@ -325,7 +314,7 @@ public class LocationResourceIntTest {
 
 		// Get the location
 		restLocationMockMvc
-				.perform(delete("/api/locations/{id}", location.getId()).accept(TestUtil.APPLICATION_JSON_UTF8))
+				.perform(delete("/api/locations/{id}", location.getId()).header("Authorization", "Bearer " + JWT).accept(TestUtil.APPLICATION_JSON_UTF8))
 				.andExpect(status().isOk());
 
 		// Validate Elasticsearch is empty
@@ -344,9 +333,10 @@ public class LocationResourceIntTest {
 		locationService.save(location);
 
 		// Search the location
-		restLocationMockMvc.perform(get("/api/_search/locations?query=id:" + location.getId()).header("Authorization", "Bearer " + JWT))
-				.andExpect(status().isOk())
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+		restLocationMockMvc
+				.perform(get("/api/_search/locations?query=id:" + location.getId()).header("Authorization",
+						"Bearer " + JWT))
+				.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(jsonPath("$.[*].id").value(hasItem(location.getId().intValue())))
 				.andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
 				.andExpect(jsonPath("$.[*].address1").value(hasItem(DEFAULT_ADDRESS_1.toString())))

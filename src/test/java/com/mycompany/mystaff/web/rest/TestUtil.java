@@ -6,22 +6,37 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.mycompany.mystaff.security.AuthoritiesConstants;
 
 /**
  * Utility class for testing REST controllers.
  */
 public class TestUtil {
 
+	private TestUtil() {}
+	
   /** MediaType for JSON UTF8 */
   public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
+	
+  public static Authentication createAuthentication() {
+    Collection<GrantedAuthority> authorities = new ArrayList<>();
+    authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.ANONYMOUS));
+    return new UsernamePasswordAuthenticationToken("anonymous", "anonymous", authorities);
+  }
 
   /**
    * Convert an object to JSON byte array.
