@@ -26,11 +26,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
-import com.mycompany.mystaff.domain.Company;
-import com.mycompany.mystaff.domain.Item;
 import com.mycompany.mystaff.security.jwt.JWTConfigurer;
 import com.mycompany.mystaff.security.jwt.TokenProvider;
 import com.mycompany.mystaff.service.ItemService;
+import com.mycompany.mystaff.service.dto.ItemDTO;
 import com.mycompany.mystaff.service.util.ResolveTokenUtil;
 import com.mycompany.mystaff.web.rest.util.HeaderUtil;
 import com.mycompany.mystaff.web.rest.util.PaginationUtil;
@@ -61,56 +60,51 @@ public class ItemResource {
     this.tokenProvider = tokenProvider;
   }
 
-  private Company createMyCompany() {
-    final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
-    return new Company(companyId);
-  }
-
   /**
    * POST /items : Create a new item.
    *
-   * @param item the item to create
-   * @return the ResponseEntity with status 201 (Created) and with body the new item, or with status
-   *         400 (Bad Request) if the item has already an ID
+   * @param itemDTO the itemDTO to create
+   * @return the ResponseEntity with status 201 (Created) and with body the new itemDTO, or with
+   *         status 400 (Bad Request) if the item has already an ID
    * @throws URISyntaxException if the Location URI syntax is incorrect
    */
   @PostMapping("/items")
   @Timed
-  public ResponseEntity<Item> createItem(@Valid @RequestBody Item item) throws URISyntaxException {
-    log.debug("REST request to save Item : {}", item);
+  public ResponseEntity<ItemDTO> createItem(@Valid @RequestBody ItemDTO itemDTO) throws URISyntaxException {
+    log.debug("REST request to save Item : {}", itemDTO);
 
-    if (item.getId() != null) {
+    if (itemDTO.getId() != null) {
       return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new item cannot already have an ID")).body(null);
     }
 
-    item.setCompany(createMyCompany());
+    final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
 
-    Item result = itemService.save(item);
+    ItemDTO result = itemService.save(itemDTO, companyId);
     return ResponseEntity.created(new URI("/api/items/" + result.getId())).headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
   }
 
   /**
    * PUT /items : Updates an existing item.
    *
-   * @param item the item to update
-   * @return the ResponseEntity with status 200 (OK) and with body the updated item, or with status
-   *         400 (Bad Request) if the item is not valid, or with status 500 (Internal Server Error)
-   *         if the item couldn't be updated
+   * @param itemDTO the itemDTO to update
+   * @return the ResponseEntity with status 200 (OK) and with body the updated itemDTO, or with
+   *         status 400 (Bad Request) if the itemDTO is not valid, or with status 500 (Internal
+   *         Server Error) if the itemDTO couldn't be updated
    * @throws URISyntaxException if the Location URI syntax is incorrect
    */
   @PutMapping("/items")
   @Timed
-  public ResponseEntity<Item> updateItem(@Valid @RequestBody Item item) throws URISyntaxException {
-    log.debug("REST request to update Item : {}", item);
+  public ResponseEntity<ItemDTO> updateItem(@Valid @RequestBody ItemDTO itemDTO) throws URISyntaxException {
+    log.debug("REST request to update Item : {}", itemDTO);
 
-    if (item.getId() == null) {
-      return createItem(item);
+    if (itemDTO.getId() == null) {
+      return createItem(itemDTO);
     }
 
-    item.setCompany(createMyCompany());
+    final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
 
-    Item result = itemService.save(item);
-    return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, item.getId().toString())).body(result);
+    ItemDTO result = itemService.save(itemDTO, companyId);
+    return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, itemDTO.getId().toString())).body(result);
   }
 
   /**
@@ -121,11 +115,11 @@ public class ItemResource {
    */
   @GetMapping("/items")
   @Timed
-  public ResponseEntity<List<Item>> getAllItems(@ApiParam Pageable pageable) {
+  public ResponseEntity<List<ItemDTO>> getAllItems(@ApiParam Pageable pageable) {
     log.debug("REST request to get a page of Items");
 
     final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
-    Page<Item> page = itemService.findByCompanyId(pageable, companyId);
+    Page<ItemDTO> page = itemService.findByCompanyId(pageable, companyId);
     HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/items");
     return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
   }
@@ -133,24 +127,24 @@ public class ItemResource {
   /**
    * GET /items/:id : get the "id" item.
    *
-   * @param id the id of the item to retrieve
-   * @return the ResponseEntity with status 200 (OK) and with body the item, or with status 404 (Not
-   *         Found)
+   * @param id the id of the itemDTO to retrieve
+   * @return the ResponseEntity with status 200 (OK) and with body the itemDTO, or with status 404
+   *         (Not Found)
    */
   @GetMapping("/items/{id}")
   @Timed
-  public ResponseEntity<Item> getItem(@PathVariable Long id) {
+  public ResponseEntity<ItemDTO> getItem(@PathVariable Long id) {
     log.debug("REST request to get Item : {}", id);
 
     final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
-    Item item = itemService.findByIdAndCompanyId(id, companyId);
-    return ResponseUtil.wrapOrNotFound(Optional.ofNullable(item));
+    ItemDTO itemDTO = itemService.findByIdAndCompanyId(id, companyId);
+    return ResponseUtil.wrapOrNotFound(Optional.ofNullable(itemDTO));
   }
 
   /**
    * DELETE /items/:id : delete the "id" item.
    *
-   * @param id the id of the item to delete
+   * @param id the id of the itemDTO to delete
    * @return the ResponseEntity with status 200 (OK)
    */
   @DeleteMapping("/items/{id}")
@@ -172,11 +166,11 @@ public class ItemResource {
    */
   @GetMapping("/_search/items")
   @Timed
-  public ResponseEntity<List<Item>> searchItems(@RequestParam String query, @ApiParam Pageable pageable) {
+  public ResponseEntity<List<ItemDTO>> searchItems(@RequestParam String query, @ApiParam Pageable pageable) {
     log.debug("REST request to search for a page of Items for query {}", query);
 
     final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
-    Page<Item> page = itemService.search(query, pageable, companyId);
+    Page<ItemDTO> page = itemService.search(query, pageable, companyId);
     HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/items");
     return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
   }

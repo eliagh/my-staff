@@ -29,6 +29,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 
 import com.mycompany.mystaff.MystaffApp;
+import com.mycompany.mystaff.config.Constants;
 import com.mycompany.mystaff.domain.User;
 
 import io.github.jhipster.config.JHipsterProperties;
@@ -140,7 +141,7 @@ public class MailServiceIntTest {
   @Test
   public void testSendActivationEmail() throws Exception {
     User user = new User();
-    user.setLangKey("en");
+    user.setLangKey(Constants.DEFAULT_LANGUAGE);
     user.setLogin("john");
     user.setEmail("john.doe@example.com");
     mailService.sendActivationEmail(user);
@@ -155,7 +156,7 @@ public class MailServiceIntTest {
   @Test
   public void testCreationEmail() throws Exception {
     User user = new User();
-    user.setLangKey("en");
+    user.setLangKey(Constants.DEFAULT_LANGUAGE);
     user.setLogin("john");
     user.setEmail("john.doe@example.com");
     mailService.sendCreationEmail(user);
@@ -170,7 +171,7 @@ public class MailServiceIntTest {
   @Test
   public void testSendPasswordResetMail() throws Exception {
     User user = new User();
-    user.setLangKey("en");
+    user.setLangKey(Constants.DEFAULT_LANGUAGE);
     user.setLogin("john");
     user.setEmail("john.doe@example.com");
     mailService.sendPasswordResetMail(user);

@@ -94,9 +94,9 @@
 
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="mystaffApp.item.company" for="field_company">Company</label>
-            <select class="form-control" id="field_company" name="company" [(ngModel)]="item.company"  required>
+            <select class="form-control" id="field_company" name="company" [(ngModel)]="item.companyId"  required>
                 <option *ngIf="!editForm.value.company" [ngValue]="null" selected></option>
-                <option [ngValue]="companyOption.id === item.company?.id ? item.company : companyOption" *ngFor="let companyOption of companies; trackBy: trackCompanyById">{{companyOption.name}}</option>
+                <option [ngValue]="companyOption.id" *ngFor="let companyOption of companies; trackBy: trackCompanyById">{{companyOption.name}}</option>
             </select>
         </div>
         <div [hidden]="!(editForm.controls.company?.dirty && editForm.controls.company?.invalid)">

@@ -1,7 +1,9 @@
 package com.mycompany.mystaff.service;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mycompany.mystaff.domain.Company;
 import com.mycompany.mystaff.repository.CompanyRepository;
+import com.mycompany.mystaff.service.dto.CompanyDTO;
+import com.mycompany.mystaff.service.mapper.CompanyMapper;
 
 /**
  * Service Implementation for managing Company.
@@ -23,10 +27,13 @@ public class CompanyService {
 
   private final CompanyRepository companyRepository;
 
+  private final CompanyMapper companyMapper;
+
   private final MessageSource messageSource;
 
-  public CompanyService(CompanyRepository companyRepository, MessageSource messageSource) {
+  public CompanyService(CompanyRepository companyRepository, CompanyMapper companyMapper, MessageSource messageSource) {
     this.companyRepository = companyRepository;
+    this.companyMapper = companyMapper;
     this.messageSource = messageSource;
   }
 
@@ -50,12 +57,16 @@ public class CompanyService {
   /**
    * Save a company.
    *
-   * @param company the entity to save
+   * @param companyDTO the entity to save
    * @return the persisted entity
    */
-  public Company save(Company company) {
-    log.debug("Request to save Company : {}", company);
-    return companyRepository.save(company);
+  public CompanyDTO save(CompanyDTO companyDTO) {
+    log.debug("Request to save Company : {}", companyDTO);
+
+    Company company = companyMapper.toEntity(companyDTO);
+    company = companyRepository.save(company);
+    CompanyDTO result = companyMapper.toDto(company);
+    return result;
   }
 
   /**
@@ -64,9 +75,10 @@ public class CompanyService {
    * @return the list of entities
    */
   @Transactional(readOnly = true)
-  public List<Company> findAll() {
+  public List<CompanyDTO> findAll() {
     log.debug("Request to get all Companies");
-    return companyRepository.findAll();
+
+    return companyRepository.findAll().stream().map(companyMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
   }
 
   /**
@@ -76,9 +88,11 @@ public class CompanyService {
    * @return the entity
    */
   @Transactional(readOnly = true)
-  public Company findOne(Long id) {
+  public CompanyDTO findOne(Long id) {
     log.debug("Request to get Company : {}", id);
-    return companyRepository.findOne(id);
+
+    Company company = companyRepository.findOne(id);
+    return companyMapper.toDto(company);
   }
 
   /**
@@ -88,6 +102,7 @@ public class CompanyService {
    */
   public void delete(Long id) {
     log.debug("Request to delete Company : {}", id);
+
     companyRepository.delete(id);
   }
 

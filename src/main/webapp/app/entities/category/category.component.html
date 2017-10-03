@@ -42,8 +42,8 @@
                 <td>{{category.name}}</td>
                 <td>{{category.description}}</td>
                 <td>
-                    <div *ngIf="category.company">
-                        <a [routerLink]="['../company', category.company?.id ]" >{{category.company?.name}}</a>
+                    <div *ngIf="category.companyId">
+                        <a [routerLink]="['../company', category.companyId  ]" >{{category.companyName}}</a>
                     </div>
                 </td>
                 <td class="text-right">

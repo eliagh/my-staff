@@ -1,0 +1,26 @@
+{
+    "mystaffApp": {
+        "file" : {
+            "home": {
+                "title": "Files",
+                "createLabel": "Ստեղծել նոր File",
+                "createOrEditLabel": "Ստեղծել կամ փոփոխել File",
+                "search": "Գտնել File"
+            },
+            "created": "Նոր File ստեղծված է {{ param }} նունացուցիչով",
+            "updated": "File թարմացվաց է {{ param }} նունացուցիչով",
+            "deleted": "File հեռացված է {{ param }}  նունացուցիչով",
+            "delete": {
+                "question": "Դուք վստահ ե՞ք, որ ցանկանում եք հեռացնել File {{ id }}?"
+            },
+            "detail": {
+                "title": "File"
+            },
+            "name": "Name",
+            "url": "Url",
+            "fileType": "File Type",
+            "file": "File",
+            "company": "Company"
+        }
+    }
+}

@@ -4,7 +4,7 @@
 */
 export const LANGUAGES: string[] = [
     'en',
-    'ar-ly',
+    'hy',
     'ca',
     'cs',
     'da',

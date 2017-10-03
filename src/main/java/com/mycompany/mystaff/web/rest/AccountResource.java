@@ -74,7 +74,7 @@ public class AccountResource {
       return new ResponseEntity<>(CHECK_ERROR_MESSAGE, HttpStatus.BAD_REQUEST);
     }
     return userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase()).map(user -> new ResponseEntity<>("login already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
-        .orElseGet(() -> userRepository.findOneByEmail(managedUserVM.getEmail())
+        .orElseGet(() -> userRepository.findOneByEmailIgnoreCase(managedUserVM.getEmail())
             .map(user -> new ResponseEntity<>("email address already in use", textPlainHeaders, HttpStatus.BAD_REQUEST)).orElseGet(() -> {
               Company company = companyService.create(managedUserVM.getLangKey());
               User user = userService.createUser(managedUserVM.getLogin(), managedUserVM.getPassword(), managedUserVM.getFirstName(), managedUserVM.getLastName(),
@@ -135,7 +135,7 @@ public class AccountResource {
   @Timed
   public ResponseEntity<?> saveAccount(@Valid @RequestBody UserDTO userDTO) {
     final String userLogin = SecurityUtils.getCurrentUserLogin();
-    Optional<User> existingUser = userRepository.findOneByEmail(userDTO.getEmail());
+    Optional<User> existingUser = userRepository.findOneByEmailIgnoreCase(userDTO.getEmail());
     if (existingUser.isPresent() && (!existingUser.get().getLogin().equalsIgnoreCase(userLogin))) {
       return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("user-management", "emailexists", "Email already in use")).body(null);
     }

@@ -1,0 +1,25 @@
+{
+    "mystaffApp": {
+        "inventory" : {
+            "home": {
+                "title": "Inventories",
+                "createLabel": "Ստեղծել նոր Inventory",
+                "createOrEditLabel": "Ստեղծել կամ փոփոխել Inventory",
+                "search": "Գտնել Inventory"
+            },
+            "created": "Նոր Inventory ստեղծված է {{ param }} նունացուցիչով",
+            "updated": "Inventory թարմացվաց է {{ param }} նունացուցիչով",
+            "deleted": "Inventory հեռացված է {{ param }}  նունացուցիչով",
+            "delete": {
+                "question": "Դուք վստահ ե՞ք, որ ցանկանում եք հեռացնել Inventory {{ id }}?"
+            },
+            "detail": {
+                "title": "Inventory"
+            },
+            "quantity": "Quantity",
+            "inventoryDate": "Inventory Date",
+            "location": "Location",
+            "item": "Item"
+        }
+    }
+}

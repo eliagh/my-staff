@@ -9,9 +9,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mycompany.mystaff.domain.Company;
 import com.mycompany.mystaff.domain.Item;
 import com.mycompany.mystaff.repository.ItemRepository;
 import com.mycompany.mystaff.repository.search.ItemSearchRepository;
+import com.mycompany.mystaff.service.dto.ItemDTO;
+import com.mycompany.mystaff.service.mapper.ItemMapper;
 
 /**
  * Service Implementation for managing Item.
@@ -24,24 +27,30 @@ public class ItemService {
 
   private final ItemRepository itemRepository;
 
+  private final ItemMapper itemMapper;
+
   private final ItemSearchRepository itemSearchRepository;
 
-  public ItemService(ItemRepository itemRepository, ItemSearchRepository itemSearchRepository) {
+  public ItemService(ItemRepository itemRepository, ItemMapper itemMapper, ItemSearchRepository itemSearchRepository) {
     this.itemRepository = itemRepository;
+    this.itemMapper = itemMapper;
     this.itemSearchRepository = itemSearchRepository;
   }
 
   /**
    * Save a item.
    *
-   * @param item the entity to save
+   * @param itemDTO the entity to save
    * @return the persisted entity
    */
-  public Item save(Item item) {
-    log.debug("Request to save Item : {}", item);
+  public ItemDTO save(ItemDTO itemDTO, Long companyId) {
+    log.debug("Request to save Item : {}, companyId : {}", itemDTO, companyId);
 
-    Item result = itemRepository.save(item);
-    itemSearchRepository.save(result);
+    Item item = itemMapper.toEntity(itemDTO);
+    item = itemRepository.save(item);
+    item.setCompany(new Company(companyId));
+    ItemDTO result = itemMapper.toDto(item);
+    itemSearchRepository.save(item);
     return result;
   }
 
@@ -52,10 +61,10 @@ public class ItemService {
    * @return the list of entities
    */
   @Transactional(readOnly = true)
-    public Page<Item> findByCompanyId(Pageable pageable, Long companyId) {
-        log.debug("Request to get all Items by CompanyId : {}", companyId);
+  public Page<ItemDTO> findByCompanyId(Pageable pageable, Long companyId) {
+    log.debug("Request to get all Items by CompanyId : {}", companyId);
 
-        return itemRepository.findAByCompanyId(pageable, companyId);
+    return itemRepository.findAByCompanyId(pageable, companyId).map(itemMapper::toDto);
   }
 
   /**
@@ -65,10 +74,11 @@ public class ItemService {
    * @return the entity
    */
   @Transactional(readOnly = true)
-    public Item findByIdAndCompanyId(Long id, Long companyId) {
-        log.debug("Request to get Item : {}, CompanyId : {}", id, companyId);
+  public ItemDTO findByIdAndCompanyId(Long id, Long companyId) {
+    log.debug("Request to get Item : {}, CompanyId : {}", id, companyId);
 
-        return itemRepository.findByIdAndCompanyId(id, companyId);
+    Item item = itemRepository.findByIdAndCompanyId(id, companyId);
+    return itemMapper.toDto(item);
   }
 
   /**
@@ -76,11 +86,11 @@ public class ItemService {
    *
    * @param id the id of the entity
    */
-    public void deleteByIdAndCompanyId(Long id, Long companyId) {
-        log.debug("Request to delete Item : {}, CompanyId : {}", id, companyId);
+  public void deleteByIdAndCompanyId(Long id, Long companyId) {
+    log.debug("Request to delete Item : {}, CompanyId : {}", id, companyId);
 
-        itemRepository.deleteByIdAndCompanyId(id, companyId);
-        itemSearchRepository.deleteByIdAndCompanyId(id, companyId);
+    itemRepository.deleteByIdAndCompanyId(id, companyId);
+    itemSearchRepository.deleteByIdAndCompanyId(id, companyId);
   }
 
   /**
@@ -91,11 +101,11 @@ public class ItemService {
    * @return the list of entities
    */
   @Transactional(readOnly = true)
-    public Page<Item> search(String query, Pageable pageable, Long companyId) {
+  public Page<ItemDTO> search(String query, Pageable pageable, Long companyId) {
     log.debug("Request to search for a page of Items for query {}", query);
 
     Page<Item> result = itemSearchRepository.search(queryStringQuery(query), pageable);
-    return result;
+    return result.map(itemMapper::toDto);
   }
 
 }

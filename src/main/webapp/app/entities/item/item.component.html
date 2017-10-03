@@ -37,7 +37,7 @@
             <th jhiSortBy="code"><span jhiTranslate="mystaffApp.item.code">Code</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="description"><span jhiTranslate="mystaffApp.item.description">Description</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="showInShop"><span jhiTranslate="mystaffApp.item.showInShop">Show In Shop</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="company.name"><span jhiTranslate="mystaffApp.item.company">Company</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="companyName"><span jhiTranslate="mystaffApp.item.company">Company</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
@@ -52,8 +52,8 @@
                 <td>{{item.description}}</td>
                 <td>{{item.showInShop}}</td>
                 <td>
-                    <div *ngIf="item.company">
-                        <a [routerLink]="['../company', item.company?.id ]" >{{item.company?.name}}</a>
+                    <div *ngIf="item.companyId">
+                        <a [routerLink]="['../company', item.companyId  ]" >{{item.companyName}}</a>
                     </div>
                 </td>
                 <td class="text-right">

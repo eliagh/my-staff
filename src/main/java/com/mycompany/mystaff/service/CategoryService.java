@@ -2,6 +2,7 @@ package com.mycompany.mystaff.service;
 
 import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -12,8 +13,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mycompany.mystaff.domain.Category;
+import com.mycompany.mystaff.domain.Company;
 import com.mycompany.mystaff.repository.CategoryRepository;
 import com.mycompany.mystaff.repository.search.CategorySearchRepository;
+import com.mycompany.mystaff.service.dto.CategoryDTO;
+import com.mycompany.mystaff.service.mapper.CategoryMapper;
 
 /**
  * Service Implementation for managing Category.
@@ -26,24 +30,30 @@ public class CategoryService {
 
   private final CategoryRepository categoryRepository;
 
+  private final CategoryMapper categoryMapper;
+
   private final CategorySearchRepository categorySearchRepository;
 
-  public CategoryService(CategoryRepository categoryRepository, CategorySearchRepository categorySearchRepository) {
+  public CategoryService(CategoryRepository categoryRepository, CategoryMapper categoryMapper, CategorySearchRepository categorySearchRepository) {
     this.categoryRepository = categoryRepository;
+    this.categoryMapper = categoryMapper;
     this.categorySearchRepository = categorySearchRepository;
   }
 
   /**
    * Save a category.
    *
-   * @param category the entity to save
+   * @param categoryDTO the entity to save
    * @return the persisted entity
    */
-  public Category save(Category category) {
-    log.debug("Request to save Category : {}", category);
+  public CategoryDTO save(CategoryDTO categoryDTO, Long companyId) {
+    log.debug("Request to save Category : {}, companyId : {}", categoryDTO, companyId);
 
-    Category result = categoryRepository.save(category);
-    categorySearchRepository.save(result);
+    Category category = categoryMapper.toEntity(categoryDTO);
+    category = categoryRepository.save(category);
+    category.setCompany(new Company(companyId));
+    CategoryDTO result = categoryMapper.toDto(category);
+    categorySearchRepository.save(category);
     return result;
   }
 
@@ -53,10 +63,10 @@ public class CategoryService {
    * @return the list of entities
    */
   @Transactional(readOnly = true)
-  public List<Category> findByCompanyId(Long companyId) {
+  public List<CategoryDTO> findByCompanyId(Long companyId) {
     log.debug("Request to get all Categories by CompanyId : {}", companyId);
 
-    return categoryRepository.findByCompanyId(companyId);
+    return categoryRepository.findByCompanyId(companyId).stream().map(categoryMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
   }
 
   /**
@@ -66,10 +76,11 @@ public class CategoryService {
    * @return the entity
    */
   @Transactional(readOnly = true)
-  public Category findByIdAndCompanyID(Long id, Long companyId) {
+  public CategoryDTO findByIdAndCompanyID(Long id, Long companyId) {
     log.debug("Request to get CategoryId : {}, CompanyId : {}", id, companyId);
 
-    return categoryRepository.findByIdAndCompanyID(id, companyId);
+    Category category = categoryRepository.findByIdAndCompanyID(id, companyId);
+    return categoryMapper.toDto(category);
   }
 
   /**
@@ -91,10 +102,10 @@ public class CategoryService {
    * @return the list of entities
    */
   @Transactional(readOnly = true)
-  public List<Category> search(String query, Long companyId) {
+  public List<CategoryDTO> search(String query, Long companyId) {
     log.debug("Request to search Categories for query {}", query);
 
-    return StreamSupport.stream(categorySearchRepository.search(queryStringQuery(query)).spliterator(), false).collect(Collectors.toList());
+    return StreamSupport.stream(categorySearchRepository.search(queryStringQuery(query)).spliterator(), false).map(categoryMapper::toDto).collect(Collectors.toList());
   }
 
 }

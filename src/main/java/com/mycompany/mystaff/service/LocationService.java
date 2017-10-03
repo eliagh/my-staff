@@ -9,9 +9,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mycompany.mystaff.domain.Company;
 import com.mycompany.mystaff.domain.Location;
 import com.mycompany.mystaff.repository.LocationRepository;
 import com.mycompany.mystaff.repository.search.LocationSearchRepository;
+import com.mycompany.mystaff.service.dto.LocationDTO;
+import com.mycompany.mystaff.service.mapper.LocationMapper;
 
 /**
  * Service Implementation for managing Location.
@@ -24,24 +27,30 @@ public class LocationService {
 
   private final LocationRepository locationRepository;
 
+  private final LocationMapper locationMapper;
+
   private final LocationSearchRepository locationSearchRepository;
 
-  public LocationService(LocationRepository locationRepository, LocationSearchRepository locationSearchRepository) {
+  public LocationService(LocationRepository locationRepository, LocationMapper locationMapper, LocationSearchRepository locationSearchRepository) {
     this.locationRepository = locationRepository;
+    this.locationMapper = locationMapper;
     this.locationSearchRepository = locationSearchRepository;
   }
 
   /**
    * Save a location.
    *
-   * @param location the entity to save
+   * @param locationDTO the entity to save
    * @return the persisted entity
    */
-  public Location save(Location location) {
-    log.debug("Request to save Location : {}", location);
+  public LocationDTO save(LocationDTO locationDTO, Long companyId) {
+    log.debug("Request to save Location : {}, companyId : {}", locationDTO, companyId);
 
-    Location result = locationRepository.save(location);
-    locationSearchRepository.save(result);
+    Location location = locationMapper.toEntity(locationDTO);
+    location = locationRepository.save(location);
+    location.setCompany(new Company(companyId));
+    LocationDTO result = locationMapper.toDto(location);
+    locationSearchRepository.save(location);
     return result;
   }
 
@@ -52,10 +61,10 @@ public class LocationService {
    * @return the list of entities
    */
   @Transactional(readOnly = true)
-  public Page<Location> findByCompanyId(Pageable pageable, Long companyId) {
+  public Page<LocationDTO> findByCompanyId(Pageable pageable, Long companyId) {
     log.debug("Request to get all Locations by CompanyId : {}", companyId);
 
-    return locationRepository.findByCompanyId(pageable, companyId);
+    return locationRepository.findByCompanyId(pageable, companyId).map(locationMapper::toDto);
   }
 
   /**
@@ -65,10 +74,11 @@ public class LocationService {
    * @return the entity
    */
   @Transactional(readOnly = true)
-  public Location findByIdAndCompanyId(Long id, Long companyId) {
+  public LocationDTO findByIdAndCompanyId(Long id, Long companyId) {
     log.debug("Request to get LocationId : {}, CompanyId : {}", id, companyId);
 
-    return locationRepository.findByIdAndCompanyId(id, companyId);
+    Location location = locationRepository.findByIdAndCompanyId(id, companyId);
+    return locationMapper.toDto(location);
   }
 
   /**
@@ -91,11 +101,11 @@ public class LocationService {
    * @return the list of entities
    */
   @Transactional(readOnly = true)
-  public Page<Location> search(String query, Pageable pageable, Long companyId) {
+  public Page<LocationDTO> search(String query, Pageable pageable, Long companyId) {
     log.debug("Request to search for a page of Locations for query {}", query);
 
     Page<Location> result = locationSearchRepository.search(queryStringQuery(query), pageable);
-    return result;
+    return result.map(locationMapper::toDto);
   }
 
 }

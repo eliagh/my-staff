@@ -59,7 +59,7 @@ import com.mycompany.mystaff.web.rest.vm.ManagedUserVM;
 @SpringBootTest(classes = MystaffApp.class)
 public class UserResourceIntTest {
 
-    private static final Long DEFAULT_COMPANY_ID = 1L;
+  private static final Long DEFAULT_COMPANY_ID = 1L;
 
   private static final Long DEFAULT_ID = 1L;
 
@@ -111,11 +111,11 @@ public class UserResourceIntTest {
   @Autowired
   private EntityManager em;
 
-    @Autowired
-    private TokenProvider tokenProvider;
+  @Autowired
+  private TokenProvider tokenProvider;
 
-    @Autowired
-    private HttpServletRequest request;
+  @Autowired
+  private HttpServletRequest request;
 
   private MockMvc restUserMockMvc;
 
@@ -124,7 +124,7 @@ public class UserResourceIntTest {
   @Before
   public void setup() {
     MockitoAnnotations.initMocks(this);
-        UserResource userResource = new UserResource(userRepository, mailService, userService, userSearchRepository, request, tokenProvider);
+    UserResource userResource = new UserResource(userRepository, mailService, userService, userSearchRepository, request, tokenProvider);
     this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource).setCustomArgumentResolvers(pageableArgumentResolver).setControllerAdvice(exceptionTranslator)
         .setMessageConverters(jacksonMessageConverter).build();
   }
@@ -162,7 +162,7 @@ public class UserResourceIntTest {
     Set<String> authorities = new HashSet<>();
     authorities.add("ROLE_USER");
     ManagedUserVM managedUserVM = new ManagedUserVM(null, DEFAULT_LOGIN, DEFAULT_PASSWORD, DEFAULT_FIRSTNAME, DEFAULT_LASTNAME, DEFAULT_EMAIL, true, DEFAULT_IMAGEURL,
-                DEFAULT_LANGKEY, null, null, null, null, authorities, DEFAULT_COMPANY_ID);
+        DEFAULT_LANGKEY, null, null, null, null, authorities, DEFAULT_COMPANY_ID);
 
     restUserMockMvc.perform(post("/api/users").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
         .andExpect(status().isCreated());
@@ -187,7 +187,7 @@ public class UserResourceIntTest {
     Set<String> authorities = new HashSet<>();
     authorities.add("ROLE_USER");
     ManagedUserVM managedUserVM = new ManagedUserVM(1L, DEFAULT_LOGIN, DEFAULT_PASSWORD, DEFAULT_FIRSTNAME, DEFAULT_LASTNAME, DEFAULT_EMAIL, true, DEFAULT_IMAGEURL,
-                DEFAULT_LANGKEY, null, null, null, null, authorities, DEFAULT_COMPANY_ID);
+        DEFAULT_LANGKEY, null, null, null, null, authorities, DEFAULT_COMPANY_ID);
 
     // An entity with an existing ID cannot be created, so this API call must fail
     restUserMockMvc.perform(post("/api/users").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
@@ -210,8 +210,8 @@ public class UserResourceIntTest {
     authorities.add("ROLE_USER");
     ManagedUserVM managedUserVM = new ManagedUserVM(null, DEFAULT_LOGIN, // this login should
                                                                          // already be used
-                DEFAULT_PASSWORD, DEFAULT_FIRSTNAME, DEFAULT_LASTNAME, "anothermail@localhost", true, DEFAULT_IMAGEURL, DEFAULT_LANGKEY, null, null, null, null, authorities,
-                DEFAULT_COMPANY_ID);
+        DEFAULT_PASSWORD, DEFAULT_FIRSTNAME, DEFAULT_LASTNAME, "anothermail@localhost", true, DEFAULT_IMAGEURL, DEFAULT_LANGKEY, null, null, null, null, authorities,
+        DEFAULT_COMPANY_ID);
 
     // Create the User
     restUserMockMvc.perform(post("/api/users").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
@@ -238,7 +238,7 @@ public class UserResourceIntTest {
                                                                                                                                                 // already
                                                                                                                                                 // be
                                                                                                                                                 // used
-                true, DEFAULT_IMAGEURL, DEFAULT_LANGKEY, null, null, null, null, authorities, DEFAULT_COMPANY_ID);
+        true, DEFAULT_IMAGEURL, DEFAULT_LANGKEY, null, null, null, null, authorities, DEFAULT_COMPANY_ID);
 
     // Create the User
     restUserMockMvc.perform(post("/api/users").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
@@ -298,7 +298,7 @@ public class UserResourceIntTest {
     authorities.add("ROLE_USER");
     ManagedUserVM managedUserVM = new ManagedUserVM(updatedUser.getId(), updatedUser.getLogin(), UPDATED_PASSWORD, UPDATED_FIRSTNAME, UPDATED_LASTNAME, UPDATED_EMAIL,
         updatedUser.getActivated(), UPDATED_IMAGEURL, UPDATED_LANGKEY, updatedUser.getCreatedBy(), updatedUser.getCreatedDate(), updatedUser.getLastModifiedBy(),
-                updatedUser.getLastModifiedDate(), authorities, DEFAULT_COMPANY_ID);
+        updatedUser.getLastModifiedDate(), authorities, DEFAULT_COMPANY_ID);
 
     restUserMockMvc.perform(put("/api/users").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(managedUserVM))).andExpect(status().isOk());
 
@@ -328,7 +328,7 @@ public class UserResourceIntTest {
     authorities.add("ROLE_USER");
     ManagedUserVM managedUserVM = new ManagedUserVM(updatedUser.getId(), UPDATED_LOGIN, UPDATED_PASSWORD, UPDATED_FIRSTNAME, UPDATED_LASTNAME, UPDATED_EMAIL,
         updatedUser.getActivated(), UPDATED_IMAGEURL, UPDATED_LANGKEY, updatedUser.getCreatedBy(), updatedUser.getCreatedDate(), updatedUser.getLastModifiedBy(),
-                updatedUser.getLastModifiedDate(), authorities, DEFAULT_COMPANY_ID);
+        updatedUser.getLastModifiedDate(), authorities, DEFAULT_COMPANY_ID);
 
     restUserMockMvc.perform(put("/api/users").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(managedUserVM))).andExpect(status().isOk());
 
@@ -371,7 +371,7 @@ public class UserResourceIntTest {
     ManagedUserVM managedUserVM = new ManagedUserVM(updatedUser.getId(), updatedUser.getLogin(), updatedUser.getPassword(), updatedUser.getFirstName(), updatedUser.getLastName(),
         "jhipster@localhost",  // this email should already be used by anotherUser
         updatedUser.getActivated(), updatedUser.getImageUrl(), updatedUser.getLangKey(), updatedUser.getCreatedBy(), updatedUser.getCreatedDate(), updatedUser.getLastModifiedBy(),
-                updatedUser.getLastModifiedDate(), authorities, DEFAULT_COMPANY_ID);
+        updatedUser.getLastModifiedDate(), authorities, DEFAULT_COMPANY_ID);
 
     restUserMockMvc.perform(put("/api/users").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
         .andExpect(status().isBadRequest());
@@ -407,8 +407,8 @@ public class UserResourceIntTest {
                                                                                      // used by
                                                                                      // anotherUser
         updatedUser.getPassword(), updatedUser.getFirstName(), updatedUser.getLastName(), updatedUser.getEmail(), updatedUser.getActivated(), updatedUser.getImageUrl(),
-                updatedUser.getLangKey(), updatedUser.getCreatedBy(), updatedUser.getCreatedDate(), updatedUser.getLastModifiedBy(), updatedUser.getLastModifiedDate(), authorities,
-                DEFAULT_COMPANY_ID);
+        updatedUser.getLangKey(), updatedUser.getCreatedBy(), updatedUser.getCreatedDate(), updatedUser.getLastModifiedBy(), updatedUser.getLastModifiedDate(), authorities,
+        DEFAULT_COMPANY_ID);
 
     restUserMockMvc.perform(put("/api/users").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
         .andExpect(status().isBadRequest());
@@ -462,7 +462,7 @@ public class UserResourceIntTest {
   @Test
   public void testUserDTOtoUser() {
     UserDTO userDTO = new UserDTO(DEFAULT_ID, DEFAULT_LOGIN, DEFAULT_FIRSTNAME, DEFAULT_LASTNAME, DEFAULT_EMAIL, true, DEFAULT_IMAGEURL, DEFAULT_LANGKEY, DEFAULT_LOGIN, null,
-                DEFAULT_LOGIN, null, Stream.of(AuthoritiesConstants.USER).collect(Collectors.toSet()), DEFAULT_COMPANY_ID);
+        DEFAULT_LOGIN, null, Stream.of(AuthoritiesConstants.USER).collect(Collectors.toSet()), DEFAULT_COMPANY_ID);
     User user = userMapper.userDTOToUser(userDTO);
     assertThat(user.getId()).isEqualTo(DEFAULT_ID);
     assertThat(user.getLogin()).isEqualTo(DEFAULT_LOGIN);

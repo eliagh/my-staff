@@ -26,7 +26,7 @@ export class CategoryDialogComponent implements OnInit {
     constructor(
         public activeModal: NgbActiveModal,
         private dataUtils: JhiDataUtils,
-        private alertService: JhiAlertService,
+        private jhiAlertService: JhiAlertService,
         private categoryService: CategoryService,
         private companyService: CompanyService,
         private eventManager: JhiEventManager
@@ -82,7 +82,7 @@ export class CategoryDialogComponent implements OnInit {
     }
 
     private onError(error: any) {
-        this.alertService.error(error.message, null, null);
+        this.jhiAlertService.error(error.message, null, null);
     }
 
     trackCompanyById(index: number, item: Company) {

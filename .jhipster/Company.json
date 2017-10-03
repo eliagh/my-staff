@@ -20,10 +20,7 @@
         },
         {
             "fieldName": "sector",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldType": "String"
         },
         {
             "fieldName": "thema",
@@ -33,9 +30,9 @@
             ]
         }
     ],
-    "changelogDate": "20170921174213",
+    "changelogDate": "20171002132545",
     "entityTableName": "company",
-    "dto": "no",
+    "dto": "mapstruct",
     "pagination": "no",
     "service": "serviceClass"
 }

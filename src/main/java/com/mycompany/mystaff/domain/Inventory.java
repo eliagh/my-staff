@@ -52,7 +52,7 @@ public class Inventory implements Serializable {
   @JoinColumn(unique = true)
   private Item item;
 
-  // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
+  // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
   public Long getId() {
     return id;
   }
@@ -112,7 +112,7 @@ public class Inventory implements Serializable {
   public void setItem(Item item) {
     this.item = item;
   }
-  // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not
+  // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not
   // remove
 
   @Override

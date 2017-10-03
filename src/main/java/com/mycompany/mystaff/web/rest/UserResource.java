@@ -124,7 +124,7 @@ public class UserResource {
       // Lowercase the user login before comparing with database
     } else if (userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase()).isPresent()) {
       return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "userexists", "Login already in use")).body(null);
-    } else if (userRepository.findOneByEmail(managedUserVM.getEmail()).isPresent()) {
+    } else if (userRepository.findOneByEmailIgnoreCase(managedUserVM.getEmail()).isPresent()) {
       return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "emailexists", "Email already in use")).body(null);
     } else {
       final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
@@ -152,7 +152,7 @@ public class UserResource {
 
     final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
 
-    Optional<User> existingUser = userRepository.findOneByEmail(managedUserVM.getEmail());
+    Optional<User> existingUser = userRepository.findOneByEmailIgnoreCase(managedUserVM.getEmail());
     if (!companyId.equals(existingUser.get().getCompanyId())) {
       return ResponseEntity.notFound().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "emailexists", "User not found")).build();
     }

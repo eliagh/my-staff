@@ -22,11 +22,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
-import com.mycompany.mystaff.domain.Category;
-import com.mycompany.mystaff.domain.Company;
 import com.mycompany.mystaff.security.jwt.JWTConfigurer;
 import com.mycompany.mystaff.security.jwt.TokenProvider;
 import com.mycompany.mystaff.service.CategoryService;
+import com.mycompany.mystaff.service.dto.CategoryDTO;
 import com.mycompany.mystaff.service.util.ResolveTokenUtil;
 import com.mycompany.mystaff.web.rest.util.HeaderUtil;
 
@@ -43,66 +42,63 @@ public class CategoryResource {
 
   private static final String ENTITY_NAME = "category";
 
-    private final HttpServletRequest request;
+  private final HttpServletRequest request;
 
   private final CategoryService categoryService;
 
-    private final TokenProvider tokenProvider;
+  private final TokenProvider tokenProvider;
 
-    public CategoryResource(CategoryService categoryService, HttpServletRequest request, TokenProvider tokenProvider) {
+  public CategoryResource(CategoryService categoryService, HttpServletRequest request, TokenProvider tokenProvider) {
     this.categoryService = categoryService;
-        this.request = request;
-        this.tokenProvider = tokenProvider;
-    }
-
-    private Company createMyCompany() {
-        final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
-        return new Company(companyId);
+    this.request = request;
+    this.tokenProvider = tokenProvider;
   }
 
   /**
    * POST /categories : Create a new category.
    *
-   * @param category the category to create
-   * @return the ResponseEntity with status 201 (Created) and with body the new category, or with
+   * @param categoryDTO the categoryDTO to create
+   * @return the ResponseEntity with status 201 (Created) and with body the new categoryDTO, or with
    *         status 400 (Bad Request) if the category has already an ID
    * @throws URISyntaxException if the Location URI syntax is incorrect
    */
   @PostMapping("/categories")
   @Timed
-  public ResponseEntity<Category> createCategory(@Valid @RequestBody Category category) throws URISyntaxException {
-    log.debug("REST request to save Category : {}", category);
+  public ResponseEntity<CategoryDTO> createCategory(@Valid @RequestBody CategoryDTO categoryDTO) throws URISyntaxException {
+    log.debug("REST request to save Category : {}", categoryDTO);
 
-    if (category.getId() != null) {
+    if (categoryDTO.getId() != null) {
       return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new category cannot already have an ID")).body(null);
     }
 
-        category.setCompany(createMyCompany());
-    Category result = categoryService.save(category);
+    final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+
+    CategoryDTO result = categoryService.save(categoryDTO, companyId);
     return ResponseEntity.created(new URI("/api/categories/" + result.getId())).headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
   }
 
   /**
    * PUT /categories : Updates an existing category.
    *
-   * @param category the category to update
-   * @return the ResponseEntity with status 200 (OK) and with body the updated category, or with
-   *         status 400 (Bad Request) if the category is not valid, or with status 500 (Internal
-   *         Server Error) if the category couldn't be updated
+   * @param categoryDTO the categoryDTO to update
+   * @return the ResponseEntity with status 200 (OK) and with body the updated categoryDTO, or with
+   *         status 400 (Bad Request) if the categoryDTO is not valid, or with status 500 (Internal
+   *         Server Error) if the categoryDTO couldn't be updated
    * @throws URISyntaxException if the Location URI syntax is incorrect
    */
   @PutMapping("/categories")
   @Timed
-  public ResponseEntity<Category> updateCategory(@Valid @RequestBody Category category) throws URISyntaxException {
-    log.debug("REST request to update Category : {}", category);
+  public ResponseEntity<CategoryDTO> updateCategory(@Valid @RequestBody CategoryDTO categoryDTO) throws URISyntaxException {
+    log.debug("REST request to update Category : {}", categoryDTO);
 
-    if (category.getId() == null) {
-      return createCategory(category);
+    if (categoryDTO.getId() == null) {
+      return createCategory(categoryDTO);
     }
 
-        category.setCompany(createMyCompany());
-    Category result = categoryService.save(category);
-    return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, category.getId().toString())).body(result);
+    final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+
+    CategoryDTO result = categoryService.save(categoryDTO, companyId);
+    return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, categoryDTO.getId().toString())).body(result);
   }
 
   /**
@@ -112,34 +108,34 @@ public class CategoryResource {
    */
   @GetMapping("/categories")
   @Timed
-  public List<Category> getAllCategories() {
+  public List<CategoryDTO> getAllCategories() {
     log.debug("REST request to get all Categories");
 
-        final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
-        return categoryService.findByCompanyId(companyId);
+    final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+    return categoryService.findByCompanyId(companyId);
   }
 
   /**
    * GET /categories/:id : get the "id" category.
    *
-   * @param id the id of the category to retrieve
-   * @return the ResponseEntity with status 200 (OK) and with body the category, or with status 404
-   *         (Not Found)
+   * @param id the id of the categoryDTO to retrieve
+   * @return the ResponseEntity with status 200 (OK) and with body the categoryDTO, or with status
+   *         404 (Not Found)
    */
   @GetMapping("/categories/{id}")
   @Timed
-  public ResponseEntity<Category> getCategory(@PathVariable Long id) {
+  public ResponseEntity<CategoryDTO> getCategory(@PathVariable Long id) {
     log.debug("REST request to get Category : {}", id);
 
-        final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
-        Category category = categoryService.findByIdAndCompanyID(id, companyId);
-    return ResponseUtil.wrapOrNotFound(Optional.ofNullable(category));
+    final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+    CategoryDTO categoryDTO = categoryService.findByIdAndCompanyID(id, companyId);
+    return ResponseUtil.wrapOrNotFound(Optional.ofNullable(categoryDTO));
   }
 
   /**
    * DELETE /categories/:id : delete the "id" category.
    *
-   * @param id the id of the category to delete
+   * @param id the id of the categoryDTO to delete
    * @return the ResponseEntity with status 200 (OK)
    */
   @DeleteMapping("/categories/{id}")
@@ -147,8 +143,8 @@ public class CategoryResource {
   public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
     log.debug("REST request to delete Category : {}", id);
 
-        final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
-        categoryService.deleteByIdAndCompanyId(id, companyId);
+    final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+    categoryService.deleteByIdAndCompanyId(id, companyId);
     return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
   }
 
@@ -160,11 +156,11 @@ public class CategoryResource {
    */
   @GetMapping("/_search/categories")
   @Timed
-  public List<Category> searchCategories(@RequestParam String query) {
+  public List<CategoryDTO> searchCategories(@RequestParam String query) {
     log.debug("REST request to search Categories for query {}", query);
 
-        final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
-        return categoryService.search(query, companyId);
+    final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
+    return categoryService.search(query, companyId);
   }
 
 }

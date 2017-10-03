@@ -80,7 +80,7 @@
             "fieldType": "String"
         }
     ],
-    "changelogDate": "20170921174219",
+    "changelogDate": "20171002132551",
     "entityTableName": "appointment",
     "dto": "no",
     "pagination": "infinite-scroll",

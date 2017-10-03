@@ -28,7 +28,7 @@ export class InventoryComponent implements OnInit, OnDestroy {
 
     constructor(
         private inventoryService: InventoryService,
-        private alertService: JhiAlertService,
+        private jhiAlertService: JhiAlertService,
         private eventManager: JhiEventManager,
         private parseLinks: JhiParseLinks,
         private activatedRoute: ActivatedRoute,
@@ -141,6 +141,6 @@ export class InventoryComponent implements OnInit, OnDestroy {
     }
 
     private onError(error) {
-        this.alertService.error(error.message, null, null);
+        this.jhiAlertService.error(error.message, null, null);
     }
 }

@@ -64,7 +64,7 @@
             "fieldType": "Integer"
         },
         {
-            "fieldName": "isNrivate",
+            "fieldName": "isPrivate",
             "fieldType": "Boolean",
             "fieldValidateRules": [
                 "required"
@@ -82,7 +82,7 @@
             "fieldType": "Long"
         }
     ],
-    "changelogDate": "20170921174218",
+    "changelogDate": "20171002132550",
     "entityTableName": "activity",
     "dto": "no",
     "pagination": "infinite-scroll",

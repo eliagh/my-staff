@@ -37,9 +37,10 @@
             ]
         }
     ],
-    "changelogDate": "20170921174216",
+    "changelogDate": "20171002132548",
     "entityTableName": "inventory",
     "dto": "no",
     "pagination": "infinite-scroll",
-    "service": "serviceClass"
+    "service": "serviceClass",
+    "searchEngine": "elasticsearch"
 }

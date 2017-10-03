@@ -22,7 +22,7 @@ export class CompanyDialogComponent implements OnInit {
     constructor(
         public activeModal: NgbActiveModal,
         private dataUtils: JhiDataUtils,
-        private alertService: JhiAlertService,
+        private jhiAlertService: JhiAlertService,
         private companyService: CompanyService,
         private elementRef: ElementRef,
         private eventManager: JhiEventManager
@@ -80,7 +80,7 @@ export class CompanyDialogComponent implements OnInit {
     }
 
     private onError(error: any) {
-        this.alertService.error(error.message, null, null);
+        this.jhiAlertService.error(error.message, null, null);
     }
 }
 

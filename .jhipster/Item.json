@@ -62,9 +62,9 @@
             ]
         }
     ],
-    "changelogDate": "20170921174215",
+    "changelogDate": "20171002132547",
     "entityTableName": "item",
-    "dto": "no",
+    "dto": "mapstruct",
     "pagination": "infinite-scroll",
     "service": "serviceClass",
     "searchEngine": "elasticsearch"

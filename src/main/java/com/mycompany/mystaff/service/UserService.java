@@ -87,7 +87,7 @@ public class UserService {
   }
 
   public Optional<User> requestPasswordReset(String mail) {
-    return userRepository.findOneByEmail(mail).filter(User::getActivated).map(user -> {
+    return userRepository.findOneByEmailIgnoreCase(mail).filter(User::getActivated).map(user -> {
       user.setResetKey(RandomUtil.generateResetKey());
       user.setResetDate(Instant.now());
       cacheManager.getCache("users").evict(user.getLogin());
@@ -134,7 +134,7 @@ public class UserService {
     user.setImageUrl(userDTO.getImageUrl());
     user.setCompanyId(userDTO.getCompanyId());
     if (userDTO.getLangKey() == null) {
-      user.setLangKey("en"); // default language
+      user.setLangKey(Constants.DEFAULT_LANGUAGE); // default language
     } else {
       user.setLangKey(userDTO.getLangKey());
     }

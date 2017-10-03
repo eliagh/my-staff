@@ -58,8 +58,7 @@ public class Company implements Serializable {
     this.id = id;
   }
 
-  // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
-
+  // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
   public Long getId() {
     return id;
   }
@@ -132,8 +131,7 @@ public class Company implements Serializable {
   public void setThema(String thema) {
     this.thema = thema;
   }
-
-  // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not
+  // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not
   // remove
 
   @Override

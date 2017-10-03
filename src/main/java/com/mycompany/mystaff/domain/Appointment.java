@@ -78,7 +78,7 @@ public class Appointment implements Serializable {
   @JoinColumn(unique = true)
   private User provider;
 
-  // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
+  // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
   public Long getId() {
     return id;
   }
@@ -216,7 +216,7 @@ public class Appointment implements Serializable {
   public void setProvider(User user) {
     this.provider = user;
   }
-  // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not
+  // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not
   // remove
 
   @Override

@@ -39,6 +39,7 @@ public class InventoryService {
    */
   public Inventory save(Inventory inventory) {
     log.debug("Request to save Inventory : {}", inventory);
+
     Inventory result = inventoryRepository.save(inventory);
     inventorySearchRepository.save(result);
     return result;
@@ -53,6 +54,7 @@ public class InventoryService {
   @Transactional(readOnly = true)
   public Page<Inventory> findAll(Pageable pageable) {
     log.debug("Request to get all Inventories");
+
     return inventoryRepository.findAll(pageable);
   }
 
@@ -65,6 +67,7 @@ public class InventoryService {
   @Transactional(readOnly = true)
   public Inventory findOne(Long id) {
     log.debug("Request to get Inventory : {}", id);
+
     return inventoryRepository.findOne(id);
   }
 
@@ -75,6 +78,7 @@ public class InventoryService {
    */
   public void delete(Long id) {
     log.debug("Request to delete Inventory : {}", id);
+
     inventoryRepository.delete(id);
     inventorySearchRepository.delete(id);
   }
@@ -89,6 +93,7 @@ public class InventoryService {
   @Transactional(readOnly = true)
   public Page<Inventory> search(String query, Pageable pageable) {
     log.debug("Request to search for a page of Inventories for query {}", query);
+
     Page<Inventory> result = inventorySearchRepository.search(queryStringQuery(query), pageable);
     return result;
   }

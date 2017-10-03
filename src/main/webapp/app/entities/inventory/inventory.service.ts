@@ -20,8 +20,7 @@ export class InventoryService {
         const copy = this.convert(inventory);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
             const jsonResponse = res.json();
-            this.convertItemFromServer(jsonResponse);
-            return jsonResponse;
+            return this.convertItemFromServer(jsonResponse);
         });
     }
 
@@ -29,16 +28,14 @@ export class InventoryService {
         const copy = this.convert(inventory);
         return this.http.put(this.resourceUrl, copy).map((res: Response) => {
             const jsonResponse = res.json();
-            this.convertItemFromServer(jsonResponse);
-            return jsonResponse;
+            return this.convertItemFromServer(jsonResponse);
         });
     }
 
     find(id: number): Observable<Inventory> {
         return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
             const jsonResponse = res.json();
-            this.convertItemFromServer(jsonResponse);
-            return jsonResponse;
+            return this.convertItemFromServer(jsonResponse);
         });
     }
 
@@ -60,17 +57,26 @@ export class InventoryService {
 
     private convertResponse(res: Response): ResponseWrapper {
         const jsonResponse = res.json();
+        const result = [];
         for (let i = 0; i < jsonResponse.length; i++) {
-            this.convertItemFromServer(jsonResponse[i]);
+            result.push(this.convertItemFromServer(jsonResponse[i]));
         }
-        return new ResponseWrapper(res.headers, jsonResponse, res.status);
+        return new ResponseWrapper(res.headers, result, res.status);
     }
 
-    private convertItemFromServer(entity: any) {
+    /**
+     * Convert a returned JSON object to Inventory.
+     */
+    private convertItemFromServer(json: any): Inventory {
+        const entity: Inventory = Object.assign(new Inventory(), json);
         entity.inventoryDate = this.dateUtils
-            .convertLocalDateFromServer(entity.inventoryDate);
+            .convertLocalDateFromServer(json.inventoryDate);
+        return entity;
     }
 
+    /**
+     * Convert a Inventory to a JSON which can be sent to the server.
+     */
     private convert(inventory: Inventory): Inventory {
         const copy: Inventory = Object.assign({}, inventory);
         copy.inventoryDate = this.dateUtils

@@ -34,6 +34,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mycompany.mystaff.MystaffApp;
+import com.mycompany.mystaff.config.Constants;
 import com.mycompany.mystaff.domain.Authority;
 import com.mycompany.mystaff.domain.User;
 import com.mycompany.mystaff.repository.AuthorityRepository;
@@ -144,7 +145,8 @@ public class AccountResourceIntTest {
   @Test
   @Transactional
   public void testRegisterValid() throws Exception {
-    ManagedUserVM validUser = new ManagedUserVM(null,                   // id
+    ManagedUserVM validUser = new ManagedUserVM( //
+        null,                   // id
         "joe",                  // login
         "password",             // password
         "Joe",                  // firstName
@@ -152,12 +154,13 @@ public class AccountResourceIntTest {
         "joe@example.com",      // email
         true,                   // activated
         "http://placehold.it/50x50", // imageUrl
-        "en",                   // langKey
+        Constants.DEFAULT_LANGUAGE,// langKey
         null,                   // createdBy
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)), 0L                      // companyId
+        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)), //
+        0L                      // companyId
     );
 
     restMvc.perform(post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(validUser))).andExpect(status().isCreated());
@@ -169,7 +172,8 @@ public class AccountResourceIntTest {
   @Test
   @Transactional
   public void testRegisterInvalidLogin() throws Exception {
-    ManagedUserVM invalidUser = new ManagedUserVM(null,                   // id
+    ManagedUserVM invalidUser = new ManagedUserVM( //
+        null,                   // id
         "funky-log!n",          // login <-- invalid
         "password",             // password
         "Funky",                // firstName
@@ -177,25 +181,27 @@ public class AccountResourceIntTest {
         "funky@example.com",    // email
         true,                   // activated
         "http://placehold.it/50x50", // imageUrl
-        "en",                   // langKey
+        Constants.DEFAULT_LANGUAGE,// langKey
         null,                   // createdBy
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)), 0L                      // companyId
+        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)), //
+        0L                      // companyId
     );
 
     restUserMockMvc.perform(post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(invalidUser)))
         .andExpect(status().isBadRequest());
 
-    Optional<User> user = userRepository.findOneByEmail("funky@example.com");
+    Optional<User> user = userRepository.findOneByEmailIgnoreCase("funky@example.com");
     assertThat(user.isPresent()).isFalse();
   }
 
   @Test
   @Transactional
   public void testRegisterInvalidEmail() throws Exception {
-    ManagedUserVM invalidUser = new ManagedUserVM(null,               // id
+    ManagedUserVM invalidUser = new ManagedUserVM( //
+        null,               // id
         "bob",              // login
         "password",         // password
         "Bob",              // firstName
@@ -203,12 +209,13 @@ public class AccountResourceIntTest {
         "invalid",          // email <-- invalid
         true,               // activated
         "http://placehold.it/50x50", // imageUrl
-        "en",                   // langKey
+        Constants.DEFAULT_LANGUAGE,// langKey
         null,                   // createdBy
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)), 0L                      // companyId
+        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)), //
+        0L                      // companyId
     );
 
     restUserMockMvc.perform(post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(invalidUser)))
@@ -221,7 +228,8 @@ public class AccountResourceIntTest {
   @Test
   @Transactional
   public void testRegisterInvalidPassword() throws Exception {
-    ManagedUserVM invalidUser = new ManagedUserVM(null,               // id
+    ManagedUserVM invalidUser = new ManagedUserVM( //
+        null,               // id
         "bob",              // login
         "123",              // password with only 3 digits
         "Bob",              // firstName
@@ -229,12 +237,13 @@ public class AccountResourceIntTest {
         "bob@example.com",  // email
         true,               // activated
         "http://placehold.it/50x50", // imageUrl
-        "en",                   // langKey
+        Constants.DEFAULT_LANGUAGE,// langKey
         null,                   // createdBy
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)), 0L                      // companyId
+        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)), //
+        0L                      // companyId
     );
 
     restUserMockMvc.perform(post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(invalidUser)))
@@ -247,7 +256,8 @@ public class AccountResourceIntTest {
   @Test
   @Transactional
   public void testRegisterNullPassword() throws Exception {
-    ManagedUserVM invalidUser = new ManagedUserVM(null,               // id
+    ManagedUserVM invalidUser = new ManagedUserVM( //
+        null,               // id
         "bob",              // login
         null,               // invalid null password
         "Bob",              // firstName
@@ -255,12 +265,13 @@ public class AccountResourceIntTest {
         "bob@example.com",  // email
         true,               // activated
         "http://placehold.it/50x50", // imageUrl
-        "en",                   // langKey
+        Constants.DEFAULT_LANGUAGE,// langKey
         null,                   // createdBy
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)), 0L                      // companyId
+        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)), //
+        0L                      // companyId
     );
 
     restUserMockMvc.perform(post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(invalidUser)))
@@ -274,7 +285,8 @@ public class AccountResourceIntTest {
   @Transactional
   public void testRegisterDuplicateLogin() throws Exception {
     // Good
-    ManagedUserVM validUser = new ManagedUserVM(null,                   // id
+    ManagedUserVM validUser = new ManagedUserVM( //
+        null,                   // id
         "alice",                // login
         "password",             // password
         "Alice",                // firstName
@@ -282,12 +294,13 @@ public class AccountResourceIntTest {
         "alice@example.com",    // email
         true,                   // activated
         "http://placehold.it/50x50", // imageUrl
-        "en",                   // langKey
+        Constants.DEFAULT_LANGUAGE,// langKey
         null,                   // createdBy
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)), 0L                      // companyId
+        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)), //
+        0L                      // companyId
     );
 
     // Duplicate login, different email
@@ -302,7 +315,7 @@ public class AccountResourceIntTest {
     restMvc.perform(post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(duplicatedUser)))
         .andExpect(status().is4xxClientError());
 
-    Optional<User> userDup = userRepository.findOneByEmail("alicejr@example.com");
+    Optional<User> userDup = userRepository.findOneByEmailIgnoreCase("alicejr@example.com");
     assertThat(userDup.isPresent()).isFalse();
   }
 
@@ -310,7 +323,8 @@ public class AccountResourceIntTest {
   @Transactional
   public void testRegisterDuplicateEmail() throws Exception {
     // Good
-    ManagedUserVM validUser = new ManagedUserVM(null,                   // id
+    ManagedUserVM validUser = new ManagedUserVM( //
+        null,                   // id
         "john",                 // login
         "password",             // password
         "John",                 // firstName
@@ -318,12 +332,13 @@ public class AccountResourceIntTest {
         "john@example.com",     // email
         true,                   // activated
         "http://placehold.it/50x50", // imageUrl
-        "en",                   // langKey
+        Constants.DEFAULT_LANGUAGE,// langKey
         null,                   // createdBy
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)), 0L                      // companyId
+        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)), //
+        0L                      // companyId
     );
 
     // Duplicate email, different login
@@ -337,6 +352,14 @@ public class AccountResourceIntTest {
     // Duplicate email
     restMvc.perform(post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(duplicatedUser)))
         .andExpect(status().is4xxClientError());
+    // Duplicate email - with uppercase email address
+
+    final ManagedUserVM userWithUpperCaseEmail = new ManagedUserVM(validUser.getId(), "johnjr", validUser.getPassword(), validUser.getLogin(), validUser.getLastName(),
+        validUser.getEmail().toUpperCase(), true, validUser.getImageUrl(), validUser.getLangKey(), validUser.getCreatedBy(), validUser.getCreatedDate(),
+        validUser.getLastModifiedBy(), validUser.getLastModifiedDate(), validUser.getAuthorities(), 0L);
+
+    restMvc.perform(post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(userWithUpperCaseEmail)))
+        .andExpect(status().is4xxClientError());
 
     Optional<User> userDup = userRepository.findOneByLogin("johnjr");
     assertThat(userDup.isPresent()).isFalse();
@@ -345,7 +368,8 @@ public class AccountResourceIntTest {
   @Test
   @Transactional
   public void testRegisterAdminIsIgnored() throws Exception {
-    ManagedUserVM validUser = new ManagedUserVM(null,                   // id
+    ManagedUserVM validUser = new ManagedUserVM( //
+        null,                   // id
         "badguy",               // login
         "password",             // password
         "Bad",                  // firstName
@@ -353,12 +377,13 @@ public class AccountResourceIntTest {
         "badguy@example.com",   // email
         true,                   // activated
         "http://placehold.it/50x50", // imageUrl
-        "en",                   // langKey
+        Constants.DEFAULT_LANGUAGE,// langKey
         null,                   // createdBy
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)), 0L                      // companyId
+        new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)), //
+        0L                      // companyId
     );
 
     restMvc.perform(post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(validUser))).andExpect(status().isCreated());
@@ -405,19 +430,21 @@ public class AccountResourceIntTest {
 
     userRepository.saveAndFlush(user);
 
-    UserDTO userDTO = new UserDTO(null,                   // id
+    UserDTO userDTO = new UserDTO( //
+        null,                   // id
         "not-used",          // login
         "firstname",                // firstName
         "lastname",                  // lastName
         "save-account@example.com",    // email
         false,                   // activated
         "http://placehold.it/50x50", // imageUrl
-        "en",                   // langKey
+        Constants.DEFAULT_LANGUAGE,// langKey
         null,                   // createdBy
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)), 0L                      // companyId
+        new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)), //
+        0L                      // companyId
     );
 
     restMvc.perform(post("/api/account").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(userDTO))).andExpect(status().isOk());
@@ -445,24 +472,26 @@ public class AccountResourceIntTest {
 
     userRepository.saveAndFlush(user);
 
-    UserDTO userDTO = new UserDTO(null,                   // id
+    UserDTO userDTO = new UserDTO( //
+        null,                   // id
         "not-used",          // login
         "firstname",                // firstName
         "lastname",                  // lastName
         "invalid email",    // email
         false,                   // activated
         "http://placehold.it/50x50", // imageUrl
-        "en",                   // langKey
+        Constants.DEFAULT_LANGUAGE,// langKey
         null,                   // createdBy
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)), 0L                      // companyId
+        new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)), //
+        0L                      // companyId
     );
 
     restMvc.perform(post("/api/account").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(userDTO))).andExpect(status().isBadRequest());
 
-    assertThat(userRepository.findOneByEmail("invalid email")).isNotPresent();
+    assertThat(userRepository.findOneByEmailIgnoreCase("invalid email")).isNotPresent();
   }
 
   @Test
@@ -485,19 +514,21 @@ public class AccountResourceIntTest {
 
     userRepository.saveAndFlush(anotherUser);
 
-    UserDTO userDTO = new UserDTO(null,                   // id
+    UserDTO userDTO = new UserDTO( //
+        null,                   // id
         "not-used",          // login
         "firstname",                // firstName
         "lastname",                  // lastName
         "save-existing-email2@example.com",    // email
         false,                   // activated
         "http://placehold.it/50x50", // imageUrl
-        "en",                   // langKey
+        Constants.DEFAULT_LANGUAGE,// langKey
         null,                   // createdBy
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)), 0L                      // companyId
+        new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)), //
+        0L                      // companyId
     );
 
     restMvc.perform(post("/api/account").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(userDTO))).andExpect(status().isBadRequest());
@@ -518,19 +549,21 @@ public class AccountResourceIntTest {
 
     userRepository.saveAndFlush(user);
 
-    UserDTO userDTO = new UserDTO(null,                   // id
+    UserDTO userDTO = new UserDTO( //
+        null,                   // id
         "not-used",          // login
         "firstname",                // firstName
         "lastname",                  // lastName
         "save-existing-email-and-login@example.com",    // email
         false,                   // activated
         "http://placehold.it/50x50", // imageUrl
-        "en",                   // langKey
+        Constants.DEFAULT_LANGUAGE,// langKey
         null,                   // createdBy
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)), 0L                      // companyId
+        new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)), //
+        0L                      // companyId
     );
 
     restMvc.perform(post("/api/account").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(userDTO))).andExpect(status().isOk());

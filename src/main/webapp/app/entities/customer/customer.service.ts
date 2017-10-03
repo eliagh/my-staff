@@ -20,8 +20,7 @@ export class CustomerService {
         const copy = this.convert(customer);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
             const jsonResponse = res.json();
-            this.convertItemFromServer(jsonResponse);
-            return jsonResponse;
+            return this.convertItemFromServer(jsonResponse);
         });
     }
 
@@ -29,16 +28,14 @@ export class CustomerService {
         const copy = this.convert(customer);
         return this.http.put(this.resourceUrl, copy).map((res: Response) => {
             const jsonResponse = res.json();
-            this.convertItemFromServer(jsonResponse);
-            return jsonResponse;
+            return this.convertItemFromServer(jsonResponse);
         });
     }
 
     find(id: number): Observable<Customer> {
         return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
             const jsonResponse = res.json();
-            this.convertItemFromServer(jsonResponse);
-            return jsonResponse;
+            return this.convertItemFromServer(jsonResponse);
         });
     }
 
@@ -60,21 +57,30 @@ export class CustomerService {
 
     private convertResponse(res: Response): ResponseWrapper {
         const jsonResponse = res.json();
+        const result = [];
         for (let i = 0; i < jsonResponse.length; i++) {
-            this.convertItemFromServer(jsonResponse[i]);
+            result.push(this.convertItemFromServer(jsonResponse[i]));
         }
-        return new ResponseWrapper(res.headers, jsonResponse, res.status);
+        return new ResponseWrapper(res.headers, result, res.status);
     }
 
-    private convertItemFromServer(entity: any) {
+    /**
+     * Convert a returned JSON object to Customer.
+     */
+    private convertItemFromServer(json: any): Customer {
+        const entity: Customer = Object.assign(new Customer(), json);
         entity.createdDate = this.dateUtils
-            .convertDateTimeFromServer(entity.createdDate);
+            .convertDateTimeFromServer(json.createdDate);
         entity.resetDate = this.dateUtils
-            .convertDateTimeFromServer(entity.resetDate);
+            .convertDateTimeFromServer(json.resetDate);
         entity.lastModifiedDate = this.dateUtils
-            .convertDateTimeFromServer(entity.lastModifiedDate);
+            .convertDateTimeFromServer(json.lastModifiedDate);
+        return entity;
     }
 
+    /**
+     * Convert a Customer to a JSON which can be sent to the server.
+     */
     private convert(customer: Customer): Customer {
         const copy: Customer = Object.assign({}, customer);
 

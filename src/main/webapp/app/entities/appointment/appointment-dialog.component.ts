@@ -35,7 +35,7 @@ export class AppointmentDialogComponent implements OnInit {
     constructor(
         public activeModal: NgbActiveModal,
         private dataUtils: JhiDataUtils,
-        private alertService: JhiAlertService,
+        private jhiAlertService: JhiAlertService,
         private appointmentService: AppointmentService,
         private customerService: CustomerService,
         private activityService: ActivityService,
@@ -133,7 +133,7 @@ export class AppointmentDialogComponent implements OnInit {
     }
 
     private onError(error: any) {
-        this.alertService.error(error.message, null, null);
+        this.jhiAlertService.error(error.message, null, null);
     }
 
     trackCustomerById(index: number, item: Customer) {

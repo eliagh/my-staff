@@ -4,7 +4,7 @@
         {
             "relationshipType": "many-to-one",
             "relationshipValidateRules": "required",
-            "relationshipName": "owner",
+            "relationshipName": "company",
             "otherEntityName": "company",
             "otherEntityField": "name"
         }
@@ -35,7 +35,7 @@
             "fieldTypeBlobContent": "image"
         }
     ],
-    "changelogDate": "20170921174220",
+    "changelogDate": "20171002132552",
     "entityTableName": "file",
     "dto": "no",
     "pagination": "infinite-scroll",

@@ -28,7 +28,7 @@ export class FileComponent implements OnInit, OnDestroy {
 
     constructor(
         private fileService: FileService,
-        private alertService: JhiAlertService,
+        private jhiAlertService: JhiAlertService,
         private dataUtils: JhiDataUtils,
         private eventManager: JhiEventManager,
         private parseLinks: JhiParseLinks,
@@ -150,6 +150,6 @@ export class FileComponent implements OnInit, OnDestroy {
     }
 
     private onError(error) {
-        this.alertService.error(error.message, null, null);
+        this.jhiAlertService.error(error.message, null, null);
     }
 }

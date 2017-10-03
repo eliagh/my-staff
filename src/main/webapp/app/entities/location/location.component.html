@@ -38,7 +38,7 @@
             <th jhiSortBy="postcode"><span jhiTranslate="mystaffApp.location.postcode">Postcode</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="city"><span jhiTranslate="mystaffApp.location.city">City</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="stateProvince"><span jhiTranslate="mystaffApp.location.stateProvince">State Province</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="company.name"><span jhiTranslate="mystaffApp.location.company">Company</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="companyName"><span jhiTranslate="mystaffApp.location.company">Company</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
@@ -54,8 +54,8 @@
                 <td>{{location.city}}</td>
                 <td>{{location.stateProvince}}</td>
                 <td>
-                    <div *ngIf="location.company">
-                        <a [routerLink]="['../company', location.company?.id ]" >{{location.company?.name}}</a>
+                    <div *ngIf="location.companyId">
+                        <a [routerLink]="['../company', location.companyId  ]" >{{location.companyName}}</a>
                     </div>
                 </td>
                 <td class="text-right">

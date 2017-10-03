@@ -131,6 +131,10 @@
         },
         {
             "fieldName": "resetDate",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "lastModifiedBy",
             "fieldType": "String",
             "fieldValidateRules": [
                 "minlength",
@@ -140,23 +144,13 @@
             "fieldValidateRulesMaxlength": 50
         },
         {
-            "fieldName": "lastModifiedBy",
-            "fieldType": "ZonedDateTime",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
             "fieldName": "lastModifiedDate",
-            "fieldType": "ZonedDateTime",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldType": "ZonedDateTime"
         }
     ],
-    "changelogDate": "20170921174221",
+    "changelogDate": "20171002132553",
     "entityTableName": "customer",
-    "dto": "no",
+    "dto": "mapstruct",
     "pagination": "infinite-scroll",
     "service": "serviceClass",
     "searchEngine": "elasticsearch"

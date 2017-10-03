@@ -86,7 +86,7 @@ public class Activity implements Serializable {
       inverseJoinColumns = @JoinColumn(name = "categories_id", referencedColumnName = "id"))
   private Set<Category> categories = new HashSet<>();
 
-  // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
+  // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
   public Long getId() {
     return id;
   }
@@ -283,7 +283,7 @@ public class Activity implements Serializable {
   public void setCategories(Set<Category> categories) {
     this.categories = categories;
   }
-  // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not
+  // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not
   // remove
 
   @Override

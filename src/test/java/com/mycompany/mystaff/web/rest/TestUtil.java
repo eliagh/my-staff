@@ -3,7 +3,7 @@ package com.mycompany.mystaff.web.rest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -27,11 +27,12 @@ import com.mycompany.mystaff.security.AuthoritiesConstants;
  */
 public class TestUtil {
 
-	private TestUtil() {}
-	
+  private TestUtil() {
+  }
+
   /** MediaType for JSON UTF8 */
-  public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
-	
+  public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(), StandardCharsets.UTF_8);
+
   public static Authentication createAuthentication() {
     Collection<GrantedAuthority> authorities = new ArrayList<>();
     authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.ANONYMOUS));

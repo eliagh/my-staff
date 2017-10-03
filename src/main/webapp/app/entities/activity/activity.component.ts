@@ -28,7 +28,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
 
     constructor(
         private activityService: ActivityService,
-        private alertService: JhiAlertService,
+        private jhiAlertService: JhiAlertService,
         private dataUtils: JhiDataUtils,
         private eventManager: JhiEventManager,
         private parseLinks: JhiParseLinks,
@@ -150,6 +150,6 @@ export class ActivityComponent implements OnInit, OnDestroy {
     }
 
     private onError(error) {
-        this.alertService.error(error.message, null, null);
+        this.jhiAlertService.error(error.message, null, null);
     }
 }

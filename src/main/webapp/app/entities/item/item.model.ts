@@ -10,7 +10,7 @@ export class Item implements BaseEntity {
         public code?: any,
         public description?: any,
         public showInShop?: boolean,
-        public company?: BaseEntity,
+        public companyId?: number,
     ) {
         this.showInShop = false;
     }

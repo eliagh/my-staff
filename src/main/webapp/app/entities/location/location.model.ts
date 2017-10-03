@@ -11,7 +11,7 @@ export class Location implements BaseEntity {
         public postcode?: string,
         public city?: string,
         public stateProvince?: string,
-        public company?: BaseEntity,
+        public companyId?: number,
     ) {
     }
 }

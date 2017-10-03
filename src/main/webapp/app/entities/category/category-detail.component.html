@@ -14,8 +14,8 @@
         </dd>
         <dt><span jhiTranslate="mystaffApp.category.company">Company</span></dt>
         <dd>
-            <div *ngIf="category.company">
-                <a [routerLink]="['/company', category.company?.id]">{{category.company?.name}}</a>
+            <div *ngIf="category.companyId">
+                <a [routerLink]="['/company', category.companyId]">{{category.companyName}}</a>
             </div>
         </dd>
     </dl>

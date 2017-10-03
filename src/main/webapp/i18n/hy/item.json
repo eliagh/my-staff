@@ -1,0 +1,29 @@
+{
+    "mystaffApp": {
+        "item" : {
+            "home": {
+                "title": "Items",
+                "createLabel": "Ստեղծել նոր Item",
+                "createOrEditLabel": "Ստեղծել կամ փոփոխել Item",
+                "search": "Գտնել Item"
+            },
+            "created": "Նոր Item ստեղծված է {{ param }} նունացուցիչով",
+            "updated": "Item թարմացվաց է {{ param }} նունացուցիչով",
+            "deleted": "Item հեռացված է {{ param }}  նունացուցիչով",
+            "delete": {
+                "question": "Դուք վստահ ե՞ք, որ ցանկանում եք հեռացնել Item {{ id }}?"
+            },
+            "detail": {
+                "title": "Item"
+            },
+            "name": "Name",
+            "pictureUrl": "Picture Url",
+            "pricePerUnit": "Price Per Unit",
+            "unit": "Unit",
+            "code": "Code",
+            "description": "Description",
+            "showInShop": "Show In Shop",
+            "company": "Company"
+        }
+    }
+}

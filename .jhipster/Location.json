@@ -56,9 +56,9 @@
             "fieldType": "String"
         }
     ],
-    "changelogDate": "20170921174214",
+    "changelogDate": "20171002132546",
     "entityTableName": "location",
-    "dto": "no",
+    "dto": "mapstruct",
     "pagination": "infinite-scroll",
     "service": "serviceClass",
     "searchEngine": "elasticsearch"

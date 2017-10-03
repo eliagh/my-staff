@@ -17,20 +17,23 @@ export class FileService {
     create(file: File): Observable<File> {
         const copy = this.convert(file);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
-            return res.json();
+            const jsonResponse = res.json();
+            return this.convertItemFromServer(jsonResponse);
         });
     }
 
     update(file: File): Observable<File> {
         const copy = this.convert(file);
         return this.http.put(this.resourceUrl, copy).map((res: Response) => {
-            return res.json();
+            const jsonResponse = res.json();
+            return this.convertItemFromServer(jsonResponse);
         });
     }
 
     find(id: number): Observable<File> {
         return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
-            return res.json();
+            const jsonResponse = res.json();
+            return this.convertItemFromServer(jsonResponse);
         });
     }
 
@@ -52,9 +55,24 @@ export class FileService {
 
     private convertResponse(res: Response): ResponseWrapper {
         const jsonResponse = res.json();
-        return new ResponseWrapper(res.headers, jsonResponse, res.status);
+        const result = [];
+        for (let i = 0; i < jsonResponse.length; i++) {
+            result.push(this.convertItemFromServer(jsonResponse[i]));
+        }
+        return new ResponseWrapper(res.headers, result, res.status);
     }
 
+    /**
+     * Convert a returned JSON object to File.
+     */
+    private convertItemFromServer(json: any): File {
+        const entity: File = Object.assign(new File(), json);
+        return entity;
+    }
+
+    /**
+     * Convert a File to a JSON which can be sent to the server.
+     */
     private convert(file: File): File {
         const copy: File = Object.assign({}, file);
         return copy;

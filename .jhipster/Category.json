@@ -27,9 +27,9 @@
             "fieldTypeBlobContent": "text"
         }
     ],
-    "changelogDate": "20170921174217",
+    "changelogDate": "20171002132549",
     "entityTableName": "category",
-    "dto": "no",
+    "dto": "mapstruct",
     "pagination": "no",
     "service": "serviceClass",
     "searchEngine": "elasticsearch"

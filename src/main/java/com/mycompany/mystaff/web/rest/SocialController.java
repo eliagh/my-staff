@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.mycompany.mystaff.config.Constants;
 import com.mycompany.mystaff.domain.Company;
 import com.mycompany.mystaff.service.CompanyService;
 import com.mycompany.mystaff.service.SocialService;
@@ -35,7 +36,7 @@ public class SocialController {
   }
 
   @GetMapping("/signup")
-  public RedirectView signUp(WebRequest webRequest, @CookieValue(name = "NG_TRANSLATE_LANG_KEY", required = false, defaultValue = "\"en\"") String langKey) {
+  public RedirectView signUp(WebRequest webRequest, @CookieValue(name = "NG_TRANSLATE_LANG_KEY", required = false, defaultValue = Constants.DEFAULT_LANGUAGE) String langKey) {
     try {
       String userLangKey = langKey.replace("\"", "");
       Connection<?> connection = providerSignInUtils.getConnectionFromSession(webRequest);
