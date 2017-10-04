@@ -36,6 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mycompany.mystaff.MystaffApp;
 import com.mycompany.mystaff.domain.Activity;
 import com.mycompany.mystaff.domain.Appointment;
+import com.mycompany.mystaff.domain.Company;
 import com.mycompany.mystaff.domain.Customer;
 import com.mycompany.mystaff.domain.Location;
 import com.mycompany.mystaff.domain.User;
@@ -114,6 +115,9 @@ public class AppointmentResourceIntTest {
     Appointment appointment = new Appointment().when(DEFAULT_WHEN).label(DEFAULT_LABEL).isRecurring(DEFAULT_IS_RECURRING).isFlexible(DEFAULT_IS_FLEXIBLE).notes(DEFAULT_NOTES)
         .reminder(DEFAULT_REMINDER);
     // Add required entity
+    Company company = CompanyResourceIntTest.createEntity(em);
+    em.persist(company);
+    em.flush();
     Customer customer = CustomerResourceIntTest.createEntity(em);
     em.persist(customer);
     em.flush();
@@ -125,11 +129,13 @@ public class AppointmentResourceIntTest {
     appointment.setActivityBooked(activityBooked);
     // Add required entity
     Location location = LocationResourceIntTest.createEntity(em);
+    location.setCompanyId(company.getId());
     em.persist(location);
     em.flush();
     appointment.setLocation(location);
     // Add required entity
     User provider = UserResourceIntTest.createEntity(em);
+    provider.setCompanyId(company.getId());
     em.persist(provider);
     em.flush();
     appointment.setProvider(provider);
