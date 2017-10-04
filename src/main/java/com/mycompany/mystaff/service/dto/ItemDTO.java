@@ -39,10 +39,6 @@ public class ItemDTO implements Serializable {
   @NotNull
   private Boolean showInShop;
 
-  private Long companyId;
-
-  private String companyName;
-
   public Long getId() {
     return id;
   }
@@ -105,22 +101,6 @@ public class ItemDTO implements Serializable {
 
   public void setShowInShop(Boolean showInShop) {
     this.showInShop = showInShop;
-  }
-
-  public Long getCompanyId() {
-    return companyId;
-  }
-
-  public void setCompanyId(Long companyId) {
-    this.companyId = companyId;
-  }
-
-  public String getCompanyName() {
-    return companyName;
-  }
-
-  public void setCompanyName(String companyName) {
-    this.companyName = companyName;
   }
 
   @Override

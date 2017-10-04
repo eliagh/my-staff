@@ -9,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mycompany.mystaff.domain.Company;
 import com.mycompany.mystaff.domain.Item;
 import com.mycompany.mystaff.repository.ItemRepository;
 import com.mycompany.mystaff.repository.search.ItemSearchRepository;
@@ -48,7 +47,7 @@ public class ItemService {
 
     Item item = itemMapper.toEntity(itemDTO);
     item = itemRepository.save(item);
-    item.setCompany(new Company(companyId));
+    item.setCompanyId(companyId);
     ItemDTO result = itemMapper.toDto(item);
     itemSearchRepository.save(item);
     return result;

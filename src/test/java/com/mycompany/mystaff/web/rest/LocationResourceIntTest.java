@@ -136,7 +136,7 @@ public class LocationResourceIntTest {
     Company company = CompanyResourceIntTest.createEntity(em);
     em.persist(company);
     em.flush();
-    location.setCompany(company);
+    location.setCompanyId(DEFAULT_COMPANY_ID);
     return location;
   }
 

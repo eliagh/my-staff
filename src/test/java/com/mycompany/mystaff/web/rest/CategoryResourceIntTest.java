@@ -109,7 +109,7 @@ public class CategoryResourceIntTest {
     Company company = CompanyResourceIntTest.createEntity(em);
     em.persist(company);
     em.flush();
-    category.setCompany(company);
+    category.setCompanyId(company.getId());
     return category;
   }
 

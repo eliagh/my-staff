@@ -128,9 +128,8 @@ public class UserResource {
       return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "emailexists", "Email already in use")).body(null);
     } else {
       final Long companyId = tokenProvider.getCompanyId(ResolveTokenUtil.resolveToken(request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER)));
-      managedUserVM.setCompanyId(companyId);
 
-      User newUser = userService.createUser(managedUserVM);
+      User newUser = userService.createUser(managedUserVM, companyId);
       mailService.sendCreationEmail(newUser);
       return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin())).headers(HeaderUtil.createAlert("userManagement.created", newUser.getLogin())).body(newUser);
     }

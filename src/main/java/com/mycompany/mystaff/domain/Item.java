@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
@@ -63,9 +62,9 @@ public class Item implements Serializable {
   @Column(name = "show_in_shop", nullable = false)
   private Boolean showInShop;
 
-  @ManyToOne(optional = false)
   @NotNull
-  private Company company;
+  @Column(name = "company_id")
+  private Long companyId;
 
   // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
   public Long getId() {
@@ -167,17 +166,17 @@ public class Item implements Serializable {
     this.showInShop = showInShop;
   }
 
-  public Company getCompany() {
-    return company;
+  public Long getCompanyId() {
+    return companyId;
   }
 
-  public Item company(Company company) {
-    this.company = company;
+  public Item companyId(Long companyId) {
+    this.companyId = companyId;
     return this;
   }
 
-  public void setCompany(Company company) {
-    this.company = company;
+  public void setCompanyId(Long companyId) {
+    this.companyId = companyId;
   }
   // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not
   // remove

@@ -125,14 +125,14 @@ public class UserService {
     return newUser;
   }
 
-  public User createUser(UserDTO userDTO) {
+  public User createUser(UserDTO userDTO, Long companyId) {
     User user = new User();
     user.setLogin(userDTO.getLogin());
     user.setFirstName(userDTO.getFirstName());
     user.setLastName(userDTO.getLastName());
     user.setEmail(userDTO.getEmail());
     user.setImageUrl(userDTO.getImageUrl());
-    user.setCompanyId(userDTO.getCompanyId());
+    user.setCompanyId(companyId);
     if (userDTO.getLangKey() == null) {
       user.setLangKey(Constants.DEFAULT_LANGUAGE); // default language
     } else {

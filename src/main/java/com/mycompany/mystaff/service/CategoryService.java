@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mycompany.mystaff.domain.Category;
-import com.mycompany.mystaff.domain.Company;
 import com.mycompany.mystaff.repository.CategoryRepository;
 import com.mycompany.mystaff.repository.search.CategorySearchRepository;
 import com.mycompany.mystaff.service.dto.CategoryDTO;
@@ -51,7 +50,7 @@ public class CategoryService {
 
     Category category = categoryMapper.toEntity(categoryDTO);
     category = categoryRepository.save(category);
-    category.setCompany(new Company(companyId));
+    category.setCompanyId(companyId);
     CategoryDTO result = categoryMapper.toDto(category);
     categorySearchRepository.save(category);
     return result;

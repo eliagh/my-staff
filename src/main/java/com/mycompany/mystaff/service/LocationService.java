@@ -9,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mycompany.mystaff.domain.Company;
 import com.mycompany.mystaff.domain.Location;
 import com.mycompany.mystaff.repository.LocationRepository;
 import com.mycompany.mystaff.repository.search.LocationSearchRepository;
@@ -48,7 +47,7 @@ public class LocationService {
 
     Location location = locationMapper.toEntity(locationDTO);
     location = locationRepository.save(location);
-    location.setCompany(new Company(companyId));
+    location.setCompanyId(companyId);
     LocationDTO result = locationMapper.toDto(location);
     locationSearchRepository.save(location);
     return result;

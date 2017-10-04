@@ -54,20 +54,17 @@ public class UserDTO {
 
   private Set<String> authorities;
 
-  private Long companyId;
-
   public UserDTO() {
     // Empty constructor needed for Jackson.
   }
 
   public UserDTO(User user) {
     this(user.getId(), user.getLogin(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getActivated(), user.getImageUrl(), user.getLangKey(), user.getCreatedBy(),
-        user.getCreatedDate(), user.getLastModifiedBy(), user.getLastModifiedDate(), user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet()),
-        user.getCompanyId());
+        user.getCreatedDate(), user.getLastModifiedBy(), user.getLastModifiedDate(), user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet()));
   }
 
   public UserDTO(Long id, String login, String firstName, String lastName, String email, boolean activated, String imageUrl, String langKey, String createdBy, Instant createdDate,
-      String lastModifiedBy, Instant lastModifiedDate, Set<String> authorities, Long companyId) {
+      String lastModifiedBy, Instant lastModifiedDate, Set<String> authorities) {
     this.id = id;
     this.login = login;
     this.firstName = firstName;
@@ -81,7 +78,6 @@ public class UserDTO {
     this.lastModifiedBy = lastModifiedBy;
     this.lastModifiedDate = lastModifiedDate;
     this.authorities = authorities;
-    this.companyId = companyId;
   }
 
   public Long getId() {
@@ -148,19 +144,11 @@ public class UserDTO {
     return authorities;
   }
 
-  public Long getCompanyId() {
-    return companyId;
-  }
-
-  public void setCompanyId(Long companyId) {
-    this.companyId = companyId;
-  }
-
   @Override
   public String toString() {
     return "UserDTO{" + "login='" + login + '\'' + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", email='" + email + '\'' + ", imageUrl='" + imageUrl
         + '\'' + ", activated=" + activated + ", langKey='" + langKey + '\'' + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", lastModifiedBy='" + lastModifiedBy
-        + '\'' + ", lastModifiedDate=" + lastModifiedDate + ", authorities=" + authorities + ", companyId='" + companyId + '\'' + "}";
+        + '\'' + ", lastModifiedDate=" + lastModifiedDate + ", authorities=" + authorities + '\'' + "}";
   }
 
 }

@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -16,8 +15,6 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 
 /**
  * A Location.
@@ -61,10 +58,9 @@ public class Location implements Serializable {
   @Column(name = "state_province")
   private String stateProvince;
 
-  @ManyToOne(optional = false)
   @NotNull
-  @Field(type = FieldType.Nested)
-  private Company company;
+  @Column(name = "company_id")
+  private Long companyId;
 
   // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
   public Long getId() {
@@ -179,17 +175,17 @@ public class Location implements Serializable {
     this.stateProvince = stateProvince;
   }
 
-  public Company getCompany() {
-    return company;
+  public Long getCompanyId() {
+    return companyId;
   }
 
-  public Location company(Company company) {
-    this.company = company;
+  public Location companyId(Long companyId) {
+    this.companyId = companyId;
     return this;
   }
 
-  public void setCompany(Company company) {
-    this.company = company;
+  public void setCompanyId(Long companyId) {
+    this.companyId = companyId;
   }
   // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not
   // remove

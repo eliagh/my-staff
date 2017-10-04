@@ -23,10 +23,6 @@ public class CategoryDTO implements Serializable {
   @Lob
   private String description;
 
-  private Long companyId;
-
-  private String companyName;
-
   public Long getId() {
     return id;
   }
@@ -49,22 +45,6 @@ public class CategoryDTO implements Serializable {
 
   public void setDescription(String description) {
     this.description = description;
-  }
-
-  public Long getCompanyId() {
-    return companyId;
-  }
-
-  public void setCompanyId(Long companyId) {
-    this.companyId = companyId;
-  }
-
-  public String getCompanyName() {
-    return companyName;
-  }
-
-  public void setCompanyName(String companyName) {
-    this.companyName = companyName;
   }
 
   @Override
