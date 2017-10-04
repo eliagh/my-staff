@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -36,10 +37,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mycompany.mystaff.MystaffApp;
 import com.mycompany.mystaff.config.Constants;
 import com.mycompany.mystaff.domain.Authority;
+import com.mycompany.mystaff.domain.Company;
 import com.mycompany.mystaff.domain.User;
 import com.mycompany.mystaff.repository.AuthorityRepository;
+import com.mycompany.mystaff.repository.CompanyRepository;
 import com.mycompany.mystaff.repository.UserRepository;
 import com.mycompany.mystaff.security.AuthoritiesConstants;
+import com.mycompany.mystaff.security.jwt.TokenProvider;
 import com.mycompany.mystaff.service.CompanyService;
 import com.mycompany.mystaff.service.MailService;
 import com.mycompany.mystaff.service.UserService;
@@ -55,6 +59,18 @@ import com.mycompany.mystaff.web.rest.vm.ManagedUserVM;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = MystaffApp.class)
 public class AccountResourceIntTest {
+
+  private String JWT = "";
+
+  private static final Long DEFAULT_COMPANY_ID = 1L;
+  private static final String DEFAULT_COMPANY_NAME = "AAAAAAAAAA";
+  private static final String DEFAULT_COMPANY_THEMA = "BBBBBBBBBB";
+
+  @Autowired
+  private TokenProvider tokenProvider;
+
+  @Autowired
+  private CompanyRepository companyRepository;
 
   @Autowired
   private UserRepository userRepository;
@@ -87,6 +103,9 @@ public class AccountResourceIntTest {
 
   @Before
   public void setup() {
+    Authentication authentication = TestUtil.createAuthentication();
+    this.JWT = tokenProvider.createToken(authentication, false, DEFAULT_COMPANY_ID);
+	    
     MockitoAnnotations.initMocks(this);
     doNothing().when(mockMailService).sendActivationEmail(anyObject());
 
@@ -100,7 +119,7 @@ public class AccountResourceIntTest {
 
   @Test
   public void testNonAuthenticatedUser() throws Exception {
-    restUserMockMvc.perform(get("/api/authenticate").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andExpect(content().string(""));
+    restUserMockMvc.perform(get("/api/authenticate").header("Authorization", "Bearer " + JWT).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andExpect(content().string(""));
   }
 
   @Test
@@ -126,6 +145,7 @@ public class AccountResourceIntTest {
     user.setImageUrl("http://placehold.it/50x50");
     user.setLangKey("en");
     user.setAuthorities(authorities);
+    user.setCompanyId(DEFAULT_COMPANY_ID);
     when(mockUserService.getUserWithAuthorities()).thenReturn(user);
 
     restUserMockMvc.perform(get("/api/account").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
@@ -139,12 +159,18 @@ public class AccountResourceIntTest {
   public void testGetUnknownAccount() throws Exception {
     when(mockUserService.getUserWithAuthorities()).thenReturn(null);
 
-    restUserMockMvc.perform(get("/api/account").accept(MediaType.APPLICATION_JSON)).andExpect(status().isInternalServerError());
+    restUserMockMvc.perform(get("/api/account").header("Authorization", "Bearer " + JWT).accept(MediaType.APPLICATION_JSON)).andExpect(status().isInternalServerError());
   }
 
   @Test
   @Transactional
   public void testRegisterValid() throws Exception {
+    Company company = new Company();
+    company.setName(DEFAULT_COMPANY_NAME);
+    company.setThema(DEFAULT_COMPANY_THEMA);
+    company = companyRepository.save(company);
+    when(mockCompanyService.create(Constants.DEFAULT_LANGUAGE)).thenReturn(company);
+
     ManagedUserVM validUser = new ManagedUserVM( //
         null,                   // id
         "joe",                  // login
@@ -159,8 +185,7 @@ public class AccountResourceIntTest {
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)), //
-        0L                      // companyId
+        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)) //
     );
 
     restMvc.perform(post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(validUser))).andExpect(status().isCreated());
@@ -186,8 +211,7 @@ public class AccountResourceIntTest {
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)), //
-        0L                      // companyId
+        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)) //
     );
 
     restUserMockMvc.perform(post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(invalidUser)))
@@ -214,8 +238,7 @@ public class AccountResourceIntTest {
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)), //
-        0L                      // companyId
+        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)) //
     );
 
     restUserMockMvc.perform(post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(invalidUser)))
@@ -242,11 +265,10 @@ public class AccountResourceIntTest {
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)), //
-        0L                      // companyId
+        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)) //
     );
 
-    restUserMockMvc.perform(post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(invalidUser)))
+    restUserMockMvc.perform(post("/api/register").header("Authorization", "Bearer " + JWT).contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(invalidUser)))
         .andExpect(status().isBadRequest());
 
     Optional<User> user = userRepository.findOneByLogin("bob");
@@ -270,11 +292,10 @@ public class AccountResourceIntTest {
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)), //
-        0L                      // companyId
+        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)) //
     );
 
-    restUserMockMvc.perform(post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(invalidUser)))
+    restUserMockMvc.perform(post("/api/register").header("Authorization", "Bearer " + JWT).contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(invalidUser)))
         .andExpect(status().isBadRequest());
 
     Optional<User> user = userRepository.findOneByLogin("bob");
@@ -284,6 +305,12 @@ public class AccountResourceIntTest {
   @Test
   @Transactional
   public void testRegisterDuplicateLogin() throws Exception {
+    Company company = new Company();
+    company.setName(DEFAULT_COMPANY_NAME);
+    company.setThema(DEFAULT_COMPANY_THEMA);
+    company = companyRepository.save(company);
+    when(mockCompanyService.create(Constants.DEFAULT_LANGUAGE)).thenReturn(company);
+
     // Good
     ManagedUserVM validUser = new ManagedUserVM( //
         null,                   // id
@@ -299,14 +326,13 @@ public class AccountResourceIntTest {
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)), //
-        0L                      // companyId
+        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)) //
     );
 
     // Duplicate login, different email
     ManagedUserVM duplicatedUser = new ManagedUserVM(validUser.getId(), validUser.getLogin(), validUser.getPassword(), validUser.getFirstName(), validUser.getLastName(),
         "alicejr@example.com", true, validUser.getImageUrl(), validUser.getLangKey(), validUser.getCreatedBy(), validUser.getCreatedDate(), validUser.getLastModifiedBy(),
-        validUser.getLastModifiedDate(), validUser.getAuthorities(), 0L);
+        validUser.getLastModifiedDate(), validUser.getAuthorities());
 
     // Good user
     restMvc.perform(post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(validUser))).andExpect(status().isCreated());
@@ -322,6 +348,12 @@ public class AccountResourceIntTest {
   @Test
   @Transactional
   public void testRegisterDuplicateEmail() throws Exception {
+    Company company = new Company();
+    company.setName(DEFAULT_COMPANY_NAME);
+    company.setThema(DEFAULT_COMPANY_THEMA);
+    company = companyRepository.save(company);
+    when(mockCompanyService.create(Constants.DEFAULT_LANGUAGE)).thenReturn(company);
+
     // Good
     ManagedUserVM validUser = new ManagedUserVM( //
         null,                   // id
@@ -337,14 +369,13 @@ public class AccountResourceIntTest {
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)), //
-        0L                      // companyId
+        new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)) //
     );
 
     // Duplicate email, different login
     ManagedUserVM duplicatedUser = new ManagedUserVM(validUser.getId(), "johnjr", validUser.getPassword(), validUser.getLogin(), validUser.getLastName(), validUser.getEmail(),
         true, validUser.getImageUrl(), validUser.getLangKey(), validUser.getCreatedBy(), validUser.getCreatedDate(), validUser.getLastModifiedBy(), validUser.getLastModifiedDate(),
-        validUser.getAuthorities(), 0L);
+        validUser.getAuthorities());
 
     // Good user
     restMvc.perform(post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(validUser))).andExpect(status().isCreated());
@@ -356,7 +387,7 @@ public class AccountResourceIntTest {
 
     final ManagedUserVM userWithUpperCaseEmail = new ManagedUserVM(validUser.getId(), "johnjr", validUser.getPassword(), validUser.getLogin(), validUser.getLastName(),
         validUser.getEmail().toUpperCase(), true, validUser.getImageUrl(), validUser.getLangKey(), validUser.getCreatedBy(), validUser.getCreatedDate(),
-        validUser.getLastModifiedBy(), validUser.getLastModifiedDate(), validUser.getAuthorities(), 0L);
+        validUser.getLastModifiedBy(), validUser.getLastModifiedDate(), validUser.getAuthorities());
 
     restMvc.perform(post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(userWithUpperCaseEmail)))
         .andExpect(status().is4xxClientError());
@@ -368,6 +399,12 @@ public class AccountResourceIntTest {
   @Test
   @Transactional
   public void testRegisterAdminIsIgnored() throws Exception {
+    Company company = new Company();
+    company.setName(DEFAULT_COMPANY_NAME);
+    company.setThema(DEFAULT_COMPANY_THEMA);
+    company = companyRepository.save(company);
+    when(mockCompanyService.create(Constants.DEFAULT_LANGUAGE)).thenReturn(company);
+
     ManagedUserVM validUser = new ManagedUserVM( //
         null,                   // id
         "badguy",               // login
@@ -382,24 +419,29 @@ public class AccountResourceIntTest {
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)), //
-        0L                      // companyId
+        new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)) //
     );
 
     restMvc.perform(post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(validUser))).andExpect(status().isCreated());
 
     Optional<User> userDup = userRepository.findOneByLogin("badguy");
     assertThat(userDup.isPresent()).isTrue();
-    assertThat(userDup.get().getAuthorities()).hasSize(1).containsExactly(authorityRepository.findOne(AuthoritiesConstants.USER));
+    assertThat(userDup.get().getAuthorities()).hasSize(4).containsAll(authorityRepository.retrieveUserRegistrationRoles(AuthoritiesConstants.USER, AuthoritiesConstants.COMPANY_ADMIN, AuthoritiesConstants.LOCATION_ADMIN, AuthoritiesConstants.STAFF));
   }
 
   @Test
   @Transactional
   public void testActivateAccount() throws Exception {
+    Company company = new Company();
+    company.setName(DEFAULT_COMPANY_NAME);
+    company.setThema(DEFAULT_COMPANY_THEMA);
+    company = companyRepository.save(company);
+
     final String activationKey = "some activation key";
     User user = new User();
     user.setLogin("activate-account");
     user.setEmail("activate-account@example.com");
+    user.setCompanyId(company.getId());
     user.setPassword(RandomStringUtils.random(60));
     user.setActivated(false);
     user.setActivationKey(activationKey);
@@ -422,9 +464,15 @@ public class AccountResourceIntTest {
   @Transactional
   @WithMockUser("save-account")
   public void testSaveAccount() throws Exception {
+    Company company = new Company();
+    company.setName(DEFAULT_COMPANY_NAME);
+    company.setThema(DEFAULT_COMPANY_THEMA);
+    company = companyRepository.save(company);
+
     User user = new User();
     user.setLogin("save-account");
     user.setEmail("save-account@example.com");
+    user.setCompanyId(company.getId());
     user.setPassword(RandomStringUtils.random(60));
     user.setActivated(true);
 
@@ -443,11 +491,10 @@ public class AccountResourceIntTest {
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)), //
-        0L                      // companyId
+        new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)) //
     );
 
-    restMvc.perform(post("/api/account").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(userDTO))).andExpect(status().isOk());
+    restMvc.perform(post("/api/account").header("Authorization", "Bearer " + JWT).contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(userDTO))).andExpect(status().isOk());
 
     User updatedUser = userRepository.findOneByLogin(user.getLogin()).orElse(null);
     assertThat(updatedUser.getFirstName()).isEqualTo(userDTO.getFirstName());
@@ -464,11 +511,17 @@ public class AccountResourceIntTest {
   @Transactional
   @WithMockUser("save-invalid-email")
   public void testSaveInvalidEmail() throws Exception {
+    Company company = new Company(DEFAULT_COMPANY_ID);
+    company.setName(DEFAULT_COMPANY_NAME);
+    company.setThema(DEFAULT_COMPANY_THEMA);
+    companyRepository.save(company);
+
     User user = new User();
     user.setLogin("save-invalid-email");
     user.setEmail("save-invalid-email@example.com");
     user.setPassword(RandomStringUtils.random(60));
     user.setActivated(true);
+    user.setCompanyId(DEFAULT_COMPANY_ID);
 
     userRepository.saveAndFlush(user);
 
@@ -485,11 +538,10 @@ public class AccountResourceIntTest {
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)), //
-        0L                      // companyId
+        new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)) //
     );
 
-    restMvc.perform(post("/api/account").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(userDTO))).andExpect(status().isBadRequest());
+    restMvc.perform(post("/api/account").header("Authorization", "Bearer " + JWT).contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(userDTO))).andExpect(status().isBadRequest());
 
     assertThat(userRepository.findOneByEmailIgnoreCase("invalid email")).isNotPresent();
   }
@@ -498,17 +550,29 @@ public class AccountResourceIntTest {
   @Transactional
   @WithMockUser("save-existing-email")
   public void testSaveExistingEmail() throws Exception {
+    Company company = new Company();
+    company.setName(DEFAULT_COMPANY_NAME);
+    company.setThema(DEFAULT_COMPANY_THEMA);
+    company = companyRepository.save(company);
+
     User user = new User();
     user.setLogin("save-existing-email");
     user.setEmail("save-existing-email@example.com");
+    user.setCompanyId(company.getId());
     user.setPassword(RandomStringUtils.random(60));
     user.setActivated(true);
 
     userRepository.saveAndFlush(user);
 
+    Company anotherCompany = new Company();
+    anotherCompany.setName(DEFAULT_COMPANY_NAME);
+    anotherCompany.setThema(DEFAULT_COMPANY_THEMA);
+    anotherCompany = companyRepository.save(anotherCompany);
+
     User anotherUser = new User();
     anotherUser.setLogin("save-existing-email2");
     anotherUser.setEmail("save-existing-email2@example.com");
+    anotherUser.setCompanyId(anotherCompany.getId());
     anotherUser.setPassword(RandomStringUtils.random(60));
     anotherUser.setActivated(true);
 
@@ -527,11 +591,10 @@ public class AccountResourceIntTest {
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)), //
-        0L                      // companyId
+        new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)) //
     );
 
-    restMvc.perform(post("/api/account").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(userDTO))).andExpect(status().isBadRequest());
+    restMvc.perform(post("/api/account").header("Authorization", "Bearer " + JWT).contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(userDTO))).andExpect(status().isBadRequest());
 
     User updatedUser = userRepository.findOneByLogin("save-existing-email").orElse(null);
     assertThat(updatedUser.getEmail()).isEqualTo("save-existing-email@example.com");
@@ -541,9 +604,15 @@ public class AccountResourceIntTest {
   @Transactional
   @WithMockUser("save-existing-email-and-login")
   public void testSaveExistingEmailAndLogin() throws Exception {
+    Company company = new Company();
+    company.setName(DEFAULT_COMPANY_NAME);
+    company.setThema(DEFAULT_COMPANY_THEMA);
+    company = companyRepository.save(company);
+
     User user = new User();
     user.setLogin("save-existing-email-and-login");
     user.setEmail("save-existing-email-and-login@example.com");
+    user.setCompanyId(company.getId());
     user.setPassword(RandomStringUtils.random(60));
     user.setActivated(true);
 
@@ -562,11 +631,10 @@ public class AccountResourceIntTest {
         null,                   // createdDate
         null,                   // lastModifiedBy
         null,                   // lastModifiedDate
-        new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)), //
-        0L                      // companyId
+        new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)) //
     );
 
-    restMvc.perform(post("/api/account").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(userDTO))).andExpect(status().isOk());
+    restMvc.perform(post("/api/account").header("Authorization", "Bearer " + JWT).contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(userDTO))).andExpect(status().isOk());
 
     User updatedUser = userRepository.findOneByLogin("save-existing-email-and-login").orElse(null);
     assertThat(updatedUser.getEmail()).isEqualTo("save-existing-email-and-login@example.com");
@@ -576,7 +644,13 @@ public class AccountResourceIntTest {
   @Transactional
   @WithMockUser("change-password")
   public void testChangePassword() throws Exception {
+    Company company = new Company();
+    company.setName(DEFAULT_COMPANY_NAME);
+    company.setThema(DEFAULT_COMPANY_THEMA);
+    company = companyRepository.save(company);
+
     User user = new User();
+    user.setCompanyId(company.getId());
     user.setPassword(RandomStringUtils.random(60));
     user.setLogin("change-password");
     user.setEmail("change-password@example.com");
@@ -592,7 +666,13 @@ public class AccountResourceIntTest {
   @Transactional
   @WithMockUser("change-password-too-small")
   public void testChangePasswordTooSmall() throws Exception {
+    Company company = new Company();
+    company.setName(DEFAULT_COMPANY_NAME);
+    company.setThema(DEFAULT_COMPANY_THEMA);
+    company = companyRepository.save(company);
+
     User user = new User();
+    user.setCompanyId(company.getId());
     user.setPassword(RandomStringUtils.random(60));
     user.setLogin("change-password-too-small");
     user.setEmail("change-password-too-small@example.com");
@@ -608,10 +688,16 @@ public class AccountResourceIntTest {
   @Transactional
   @WithMockUser("change-password-too-long")
   public void testChangePasswordTooLong() throws Exception {
+    Company company = new Company();
+    company.setName(DEFAULT_COMPANY_NAME);
+    company.setThema(DEFAULT_COMPANY_THEMA);
+    company = companyRepository.save(company);
+
     User user = new User();
     user.setPassword(RandomStringUtils.random(60));
     user.setLogin("change-password-too-long");
     user.setEmail("change-password-too-long@example.com");
+    user.setCompanyId(company.getId());
     userRepository.saveAndFlush(user);
 
     restMvc.perform(post("/api/account/change-password").content(RandomStringUtils.random(101))).andExpect(status().isBadRequest());
@@ -624,7 +710,13 @@ public class AccountResourceIntTest {
   @Transactional
   @WithMockUser("change-password-empty")
   public void testChangePasswordEmpty() throws Exception {
+    Company company = new Company();
+    company.setName(DEFAULT_COMPANY_NAME);
+    company.setThema(DEFAULT_COMPANY_THEMA);
+    company = companyRepository.save(company);
+
     User user = new User();
+    user.setCompanyId(company.getId());
     user.setPassword(RandomStringUtils.random(60));
     user.setLogin("change-password-empty");
     user.setEmail("change-password-empty@example.com");
@@ -639,11 +731,17 @@ public class AccountResourceIntTest {
   @Test
   @Transactional
   public void testRequestPasswordReset() throws Exception {
+    Company company = new Company();
+    company.setName(DEFAULT_COMPANY_NAME);
+    company.setThema(DEFAULT_COMPANY_THEMA);
+    company = companyRepository.save(company);
+
     User user = new User();
     user.setPassword(RandomStringUtils.random(60));
     user.setActivated(true);
     user.setLogin("password-reset");
     user.setEmail("password-reset@example.com");
+    user.setCompanyId(company.getId());
     userRepository.saveAndFlush(user);
 
     restMvc.perform(post("/api/account/reset-password/init").content("password-reset@example.com")).andExpect(status().isOk());
@@ -657,10 +755,16 @@ public class AccountResourceIntTest {
   @Test
   @Transactional
   public void testFinishPasswordReset() throws Exception {
+    Company company = new Company();
+    company.setName(DEFAULT_COMPANY_NAME);
+    company.setThema(DEFAULT_COMPANY_THEMA);
+    company = companyRepository.save(company);
+
     User user = new User();
     user.setPassword(RandomStringUtils.random(60));
     user.setLogin("finish-password-reset");
     user.setEmail("finish-password-reset@example.com");
+    user.setCompanyId(company.getId());
     user.setResetDate(Instant.now().plusSeconds(60));
     user.setResetKey("reset key");
     userRepository.saveAndFlush(user);
@@ -679,12 +783,18 @@ public class AccountResourceIntTest {
   @Test
   @Transactional
   public void testFinishPasswordResetTooSmall() throws Exception {
+    Company company = new Company();
+    company.setName(DEFAULT_COMPANY_NAME);
+    company.setThema(DEFAULT_COMPANY_THEMA);
+    company = companyRepository.save(company);
+
     User user = new User();
     user.setPassword(RandomStringUtils.random(60));
     user.setLogin("finish-password-reset-too-small");
     user.setEmail("finish-password-reset-too-small@example.com");
     user.setResetDate(Instant.now().plusSeconds(60));
     user.setResetKey("reset key too small");
+    user.setCompanyId(company.getId());
     userRepository.saveAndFlush(user);
 
     KeyAndPasswordVM keyAndPassword = new KeyAndPasswordVM();
