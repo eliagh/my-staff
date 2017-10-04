@@ -105,7 +105,7 @@ public class AccountResourceIntTest {
   public void setup() {
     Authentication authentication = TestUtil.createAuthentication();
     this.JWT = tokenProvider.createToken(authentication, false, DEFAULT_COMPANY_ID);
-	    
+
     MockitoAnnotations.initMocks(this);
     doNothing().when(mockMailService).sendActivationEmail(anyObject());
 
