@@ -24,6 +24,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.core.Authentication;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -48,6 +49,10 @@ import com.mycompany.mystaff.web.rest.errors.ExceptionTranslator;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = MystaffApp.class)
 public class CategoryResourceIntTest {
+
+  private String JWT = "";
+
+  private static final Long DEFAULT_COMPANY_ID = 1L;
 
   private static final String DEFAULT_NAME = "AAAAAAAAAA";
   private static final String UPDATED_NAME = "BBBBBBBBBB";
@@ -91,6 +96,9 @@ public class CategoryResourceIntTest {
 
   @Before
   public void setup() {
+    Authentication authentication = TestUtil.createAuthentication();
+    this.JWT = tokenProvider.createToken(authentication, false, DEFAULT_COMPANY_ID);
+
     MockitoAnnotations.initMocks(this);
     final CategoryResource categoryResource = new CategoryResource(categoryService, request, tokenProvider);
     this.restCategoryMockMvc = MockMvcBuilders.standaloneSetup(categoryResource).setCustomArgumentResolvers(pageableArgumentResolver).setControllerAdvice(exceptionTranslator)
@@ -126,7 +134,7 @@ public class CategoryResourceIntTest {
 
     // Create the Category
     CategoryDTO categoryDTO = categoryMapper.toDto(category);
-    restCategoryMockMvc.perform(post("/api/categories").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(categoryDTO)))
+    restCategoryMockMvc.perform(post("/api/categories").header("Authorization", "Bearer " + JWT).contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(categoryDTO)))
         .andExpect(status().isCreated());
 
     // Validate the Category in the database
@@ -183,8 +191,10 @@ public class CategoryResourceIntTest {
     categoryRepository.saveAndFlush(category);
 
     // Get all the categoryList
-    restCategoryMockMvc.perform(get("/api/categories?sort=id,desc")).andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-        .andExpect(jsonPath("$.[*].id").value(hasItem(category.getId().intValue()))).andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+    restCategoryMockMvc.perform(get("/api/categories?sort=id,desc").header("Authorization", "Bearer " + JWT)) //
+        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)) //
+        .andExpect(jsonPath("$.[*].id").value(hasItem(category.getId().intValue()))) //
+        .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString()))) //
         .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
   }
 
@@ -195,8 +205,10 @@ public class CategoryResourceIntTest {
     categoryRepository.saveAndFlush(category);
 
     // Get the category
-    restCategoryMockMvc.perform(get("/api/categories/{id}", category.getId())).andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-        .andExpect(jsonPath("$.id").value(category.getId().intValue())).andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+    restCategoryMockMvc.perform(get("/api/categories/{id}", category.getId()).header("Authorization", "Bearer " + JWT)) //
+    .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)) //
+        .andExpect(jsonPath("$.id").value(category.getId().intValue())) //
+        .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString())) //
         .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
   }
 
@@ -204,7 +216,7 @@ public class CategoryResourceIntTest {
   @Transactional
   public void getNonExistingCategory() throws Exception {
     // Get the category
-    restCategoryMockMvc.perform(get("/api/categories/{id}", Long.MAX_VALUE)).andExpect(status().isNotFound());
+    restCategoryMockMvc.perform(get("/api/categories/{id}", Long.MAX_VALUE).header("Authorization", "Bearer " + JWT)).andExpect(status().isNotFound());
   }
 
   @Test
@@ -220,7 +232,7 @@ public class CategoryResourceIntTest {
     updatedCategory.name(UPDATED_NAME).description(UPDATED_DESCRIPTION);
     CategoryDTO categoryDTO = categoryMapper.toDto(updatedCategory);
 
-    restCategoryMockMvc.perform(put("/api/categories").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(categoryDTO)))
+    restCategoryMockMvc.perform(put("/api/categories").header("Authorization", "Bearer " + JWT).contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(categoryDTO)))
         .andExpect(status().isOk());
 
     // Validate the Category in the database
@@ -244,7 +256,7 @@ public class CategoryResourceIntTest {
     CategoryDTO categoryDTO = categoryMapper.toDto(category);
 
     // If the entity doesn't have an ID, it will be created instead of just being updated
-    restCategoryMockMvc.perform(put("/api/categories").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(categoryDTO)))
+    restCategoryMockMvc.perform(put("/api/categories").header("Authorization", "Bearer " + JWT).contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(categoryDTO)))
         .andExpect(status().isCreated());
 
     // Validate the Category in the database
@@ -261,7 +273,7 @@ public class CategoryResourceIntTest {
     int databaseSizeBeforeDelete = categoryRepository.findAll().size();
 
     // Get the category
-    restCategoryMockMvc.perform(delete("/api/categories/{id}", category.getId()).accept(TestUtil.APPLICATION_JSON_UTF8)).andExpect(status().isOk());
+    restCategoryMockMvc.perform(delete("/api/categories/{id}", category.getId()).header("Authorization", "Bearer " + JWT).accept(TestUtil.APPLICATION_JSON_UTF8)).andExpect(status().isOk());
 
     // Validate Elasticsearch is empty
     boolean categoryExistsInEs = categorySearchRepository.exists(category.getId());
@@ -280,9 +292,12 @@ public class CategoryResourceIntTest {
     categorySearchRepository.save(category);
 
     // Search the category
-    restCategoryMockMvc.perform(get("/api/_search/categories?query=id:" + category.getId())).andExpect(status().isOk())
-        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)).andExpect(jsonPath("$.[*].id").value(hasItem(category.getId().intValue())))
-        .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString()))).andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
+    restCategoryMockMvc.perform(get("/api/_search/categories?query=id:" + category.getId()).header("Authorization", "Bearer " + JWT)) //
+        .andExpect(status().isOk()) //
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)) //
+        .andExpect(jsonPath("$.[*].id").value(hasItem(category.getId().intValue()))) //
+        .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString()))) //
+        .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
   }
 
   @Test

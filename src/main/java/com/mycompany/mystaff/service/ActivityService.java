@@ -39,8 +39,10 @@ public class ActivityService {
    */
   public Activity save(Activity activity) {
     log.debug("Request to save Activity : {}", activity);
+
     Activity result = activityRepository.save(activity);
     activitySearchRepository.save(result);
+
     return result;
   }
 
@@ -53,6 +55,7 @@ public class ActivityService {
   @Transactional(readOnly = true)
   public Page<Activity> findAll(Pageable pageable) {
     log.debug("Request to get all Activities");
+
     return activityRepository.findAll(pageable);
   }
 
@@ -65,6 +68,7 @@ public class ActivityService {
   @Transactional(readOnly = true)
   public Activity findOne(Long id) {
     log.debug("Request to get Activity : {}", id);
+
     return activityRepository.findOneWithEagerRelationships(id);
   }
 
@@ -75,6 +79,7 @@ public class ActivityService {
    */
   public void delete(Long id) {
     log.debug("Request to delete Activity : {}", id);
+
     activityRepository.delete(id);
     activitySearchRepository.delete(id);
   }
@@ -89,6 +94,7 @@ public class ActivityService {
   @Transactional(readOnly = true)
   public Page<Activity> search(String query, Pageable pageable) {
     log.debug("Request to search for a page of Activities for query {}", query);
+
     Page<Activity> result = activitySearchRepository.search(queryStringQuery(query), pageable);
     return result;
   }

@@ -49,11 +49,11 @@ public class CategoryService {
     log.debug("Request to save Category : {}, companyId : {}", categoryDTO, companyId);
 
     Category category = categoryMapper.toEntity(categoryDTO);
-    category = categoryRepository.save(category);
     category.setCompanyId(companyId);
-    CategoryDTO result = categoryMapper.toDto(category);
+    category = categoryRepository.save(category);
     categorySearchRepository.save(category);
-    return result;
+
+    return categoryMapper.toDto(category);
   }
 
   /**
@@ -91,7 +91,7 @@ public class CategoryService {
     log.debug("Request to delete CategoryId : {}, CompanyId : {}", id, companyId);
 
     categoryRepository.deleteByIdAndCompanyId(id, companyId);
-    categorySearchRepository.deleteByIdAndCompanyId(id, companyId);
+    categorySearchRepository.delete(id);
   }
 
   /**

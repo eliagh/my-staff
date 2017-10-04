@@ -42,6 +42,7 @@ public class FileService {
 
     File result = fileRepository.save(file);
     fileSearchRepository.save(result);
+
     return result;
   }
 
@@ -80,7 +81,7 @@ public class FileService {
     log.debug("Request to delete File : {}, CompanyId : {}", id, companyId);
 
     fileRepository.deleteByIdAndCompanyId(id, companyId);
-    fileSearchRepository.deleteByIdAndCompanyId(id, companyId);
+    fileSearchRepository.delete(id);
   }
 
   /**

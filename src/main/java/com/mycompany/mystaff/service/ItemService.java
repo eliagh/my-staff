@@ -46,11 +46,11 @@ public class ItemService {
     log.debug("Request to save Item : {}, companyId : {}", itemDTO, companyId);
 
     Item item = itemMapper.toEntity(itemDTO);
-    item = itemRepository.save(item);
     item.setCompanyId(companyId);
-    ItemDTO result = itemMapper.toDto(item);
+    item = itemRepository.save(item);
     itemSearchRepository.save(item);
-    return result;
+
+    return itemMapper.toDto(item);
   }
 
   /**

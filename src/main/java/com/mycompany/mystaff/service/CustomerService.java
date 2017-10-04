@@ -47,9 +47,9 @@ public class CustomerService {
 
     Customer customer = customerMapper.toEntity(customerDTO);
     customer = customerRepository.save(customer);
-    CustomerDTO result = customerMapper.toDto(customer);
     customerSearchRepository.save(customer);
-    return result;
+
+    return customerMapper.toDto(customer);
   }
 
   /**

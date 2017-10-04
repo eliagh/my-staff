@@ -42,6 +42,7 @@ public class InventoryService {
 
     Inventory result = inventoryRepository.save(inventory);
     inventorySearchRepository.save(result);
+
     return result;
   }
 

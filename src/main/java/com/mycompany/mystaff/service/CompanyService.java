@@ -66,6 +66,7 @@ public class CompanyService {
     Company company = companyMapper.toEntity(companyDTO);
     company = companyRepository.save(company);
     CompanyDTO result = companyMapper.toDto(company);
+
     return result;
   }
 

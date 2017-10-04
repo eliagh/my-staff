@@ -46,11 +46,11 @@ public class LocationService {
     log.debug("Request to save Location : {}, companyId : {}", locationDTO, companyId);
 
     Location location = locationMapper.toEntity(locationDTO);
-    location = locationRepository.save(location);
     location.setCompanyId(companyId);
-    LocationDTO result = locationMapper.toDto(location);
+    location = locationRepository.save(location);
     locationSearchRepository.save(location);
-    return result;
+
+    return locationMapper.toDto(location);
   }
 
   /**

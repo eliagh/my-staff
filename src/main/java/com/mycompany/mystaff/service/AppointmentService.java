@@ -39,8 +39,10 @@ public class AppointmentService {
    */
   public Appointment save(Appointment appointment) {
     log.debug("Request to save Appointment : {}", appointment);
+
     Appointment result = appointmentRepository.save(appointment);
     appointmentSearchRepository.save(result);
+
     return result;
   }
 
@@ -53,6 +55,7 @@ public class AppointmentService {
   @Transactional(readOnly = true)
   public Page<Appointment> findAll(Pageable pageable) {
     log.debug("Request to get all Appointments");
+
     return appointmentRepository.findAll(pageable);
   }
 
@@ -65,6 +68,7 @@ public class AppointmentService {
   @Transactional(readOnly = true)
   public Appointment findOne(Long id) {
     log.debug("Request to get Appointment : {}", id);
+
     return appointmentRepository.findOne(id);
   }
 
@@ -75,6 +79,7 @@ public class AppointmentService {
    */
   public void delete(Long id) {
     log.debug("Request to delete Appointment : {}", id);
+
     appointmentRepository.delete(id);
     appointmentSearchRepository.delete(id);
   }
@@ -89,6 +94,7 @@ public class AppointmentService {
   @Transactional(readOnly = true)
   public Page<Appointment> search(String query, Pageable pageable) {
     log.debug("Request to search for a page of Appointments for query {}", query);
+
     Page<Appointment> result = appointmentSearchRepository.search(queryStringQuery(query), pageable);
     return result;
   }
